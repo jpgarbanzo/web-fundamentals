@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .grid-demo {
+            display: grid;
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            gap: 10px;
+        }
+
+        .grid-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .grid-3col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-2col {
+            grid-template-columns: 1fr 2fr;
+        }
+
+        .grid-auto {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        .grid-areas {
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 80px 1fr 60px;
+            min-height: 300px;
+        }
+
+        .header { grid-area: header; background: #f59e0b; }
+        .sidebar { grid-area: sidebar; background: #8b5cf6; }
+        .main { grid-area: main; background: #667eea; }
+        .footer { grid-area: footer; background: #10b981; }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .span-demo {
+            grid-column: span 2;
+            background: #f59e0b !important;
+        }
+
+        .gap-demo {
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Introducción a CSS Grid</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Una guía completa para dominar el diseño en cuadrícula</p>
+            <p style="margin-top: 60px;">CSS Grid es un sistema de diseño bidimensional que permite crear layouts complejos de manera eficiente y con código limpio.</p>
+            <p>Con Grid, puedes controlar tanto filas como columnas simultáneamente, creando diseños que antes requerían frameworks complejos o soluciones complicadas.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es CSS Grid? -->
+        <div class="slide">
+            <h2>¿Qué es CSS Grid?</h2>
+            <p>CSS Grid es un sistema de diseño <strong>bidimensional</strong> que trabaja con filas y columnas al mismo tiempo.</p>
+
+            <div class="code">
+                .contenedor {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                }
+            </div>
+
+            <p><strong>Conceptos clave:</strong></p>
+            <ul>
+                <li><span class="property">Grid Container:</span> El elemento padre que contiene los grid items</li>
+                <li><span class="property">Grid Items:</span> Los elementos hijos directos del contenedor</li>
+                <li><span class="property">Grid Lines:</span> Líneas divisorias que forman la estructura</li>
+                <li><span class="property">Grid Tracks:</span> Filas o columnas entre dos líneas</li>
+                <li><span class="property">Grid Cell:</span> Espacio entre 4 líneas (intersección)</li>
+                <li><span class="property">Grid Area:</span> Área rectangular formada por varias celdas</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Display Grid -->
+        <div class="slide">
+            <h2>Activando Grid</h2>
+            <p>Para convertir un elemento en grid container, usa <span class="highlight">display: grid</span></p>
+
+            <div class="code">
+                .contenedor {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;grid-template-columns: 1fr 1fr 1fr;<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Ejemplo - 3 columnas iguales:</strong></p>
+                <div class="grid-demo grid-3col">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+            </div>
+
+            <p>Los elementos se organizan automáticamente en una cuadrícula de 3 columnas.</p>
+        </div>
+
+        <!-- Slide 4: Grid Template Columns -->
+        <div class="slide">
+            <h2>Grid-Template-Columns</h2>
+            <p>Define el número y tamaño de las columnas:</p>
+
+            <div class="code">
+                /* Unidad fr (fraction) - distribuye espacio disponible */<br>
+                grid-template-columns: 1fr 2fr 1fr;<br>
+                <br>
+                /* Píxeles fijos */<br>
+                grid-template-columns: 200px 400px 200px;<br>
+                <br>
+                /* Repetir */<br>
+                grid-template-columns: repeat(3, 1fr);
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Columnas: 1fr 2fr (1/3 y 2/3):</strong></p>
+                <div class="grid-demo grid-2col">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Gap -->
+        <div class="slide">
+            <h2>Gap (Espaciado)</h2>
+            <p>Controla el espacio entre filas y columnas:</p>
+
+            <div class="code">
+                /* Espacio igual para filas y columnas */<br>
+                gap: 20px;<br>
+                <br>
+                /* Diferente para filas y columnas */<br>
+                gap: 20px 10px; /* row-gap column-gap */<br>
+                <br>
+                /* Propiedades individuales */<br>
+                row-gap: 20px;<br>
+                column-gap: 10px;
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Con gap: 20px:</strong></p>
+                <div class="grid-demo grid-3col gap-demo">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Grid Column/Row Span -->
+        <div class="slide">
+            <h2>Expandir Items</h2>
+            <p>Los items pueden ocupar múltiples columnas o filas:</p>
+
+            <div class="code">
+                .item {<br>
+                &nbsp;&nbsp;/* Ocupa 2 columnas */<br>
+                &nbsp;&nbsp;grid-column: span 2;<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;/* Ocupa 2 filas */<br>
+                &nbsp;&nbsp;grid-row: span 2;<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Item 1 ocupa 2 columnas:</strong></p>
+                <div class="grid-demo grid-3col">
+                    <div class="grid-item span-demo">1 (span 2)</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Grid Template Areas -->
+        <div class="slide">
+            <h2>Grid-Template-Areas</h2>
+            <p>Define layouts con nombres descriptivos:</p>
+
+            <div class="code">
+                .contenedor {<br>
+                &nbsp;&nbsp;grid-template-areas:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"header header header"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"sidebar main main"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"footer footer footer";<br>
+                }<br>
+                <br>
+                .header { grid-area: header; }<br>
+                .sidebar { grid-area: sidebar; }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Layout típico de página:</strong></p>
+                <div class="grid-demo grid-areas">
+                    <div class="grid-item header">Header</div>
+                    <div class="grid-item sidebar">Sidebar</div>
+                    <div class="grid-item main">Main Content</div>
+                    <div class="grid-item footer">Footer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Auto-Fit y Auto-Fill -->
+        <div class="slide">
+            <h2>Diseños Responsivos</h2>
+            <p>Grid puede crear layouts responsivos sin media queries:</p>
+
+            <div class="code">
+                /* Auto-fit: Ajusta automáticamente el número de columnas */<br>
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));<br>
+                <br>
+                /* Auto-fill: Llena el espacio con columnas adicionales */<br>
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            </div>
+
+            <div class="demo-container">
+                <p><strong>auto-fit con minmax(100px, 1fr):</strong></p>
+                <div class="grid-demo grid-auto">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+
+            <p>Los items se ajustan automáticamente al ancho disponible.</p>
+        </div>
+
+        <!-- Slide 9: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Layouts de páginas:</strong> Usa <span class="property">grid-template-areas</span> para estructuras claras</li>
+                <li><strong>Galerías de imágenes:</strong> <span class="property">auto-fit</span> con <span class="property">minmax</span> para responsividad</li>
+                <li><strong>Dashboards:</strong> Combina <span class="property">grid-column</span> y <span class="property">grid-row</span> para widgets</li>
+                <li><strong>Forms complejos:</strong> Alinea labels e inputs en columnas precisas</li>
+                <li><strong>Cards con diferentes tamaños:</strong> Usa <span class="property">span</span> para items destacados</li>
+                <li><strong>Layouts de revista:</strong> Diseños complejos con areas superpuestas</li>
+            </ul>
+
+            <p style="margin-top: 40px;">Grid es ideal para layouts de página completa y diseños bidimensionales complejos.</p>
+        </div>
+
+        <!-- Slide 10: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina CSS Grid!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Grid trabaja en dos dimensiones: filas y columnas</li>
+                <li>Usa <span class="property">grid-template-columns/rows</span> para definir la estructura</li>
+                <li><span class="property">gap</span> controla el espaciado entre items</li>
+                <li><span class="property">grid-template-areas</span> crea layouts semánticos</li>
+                <li><span class="property">auto-fit/auto-fill</span> + <span class="property">minmax</span> = diseños responsivos</li>
+                <li>Items pueden <span class="property">span</span> múltiples filas/columnas</li>
+                <li>Grid + Flexbox = Combo perfecto para layouts modernos</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Grid revolucionó el diseño web moderno!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

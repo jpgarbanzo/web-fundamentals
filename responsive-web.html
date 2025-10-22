@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Design - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .devices-demo {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            background: #e0e7ff;
+            padding: 20px;
+            border-radius: 8px;
+            gap: 15px;
+        }
+
+        .device {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .phone {
+            width: 80px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .tablet {
+            width: 120px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .desktop {
+            width: 200px;
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .device-header {
+            background: #667eea;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .device-content {
+            background: #e0e7ff;
+            flex: 1;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .viewport-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .viewport-box {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 300px;
+            border-radius: 5px;
+        }
+
+        .units-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .unit-box {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .breakpoint-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .breakpoint-bar {
+            height: 40px;
+            background: linear-gradient(to right, #ef4444 0%, #ef4444 33%, #f59e0b 33%, #f59e0b 66%, #10b981 66%, #10b981 100%);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .responsive-layout {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .layout-container {
+            display: grid;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .layout-mobile {
+            grid-template-columns: 1fr;
+        }
+
+        .layout-desktop {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .layout-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .benefit-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .bad-example {
+            background: #fee;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .good-example {
+            background: #efe;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .image-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .image-example {
+            background: #667eea;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Responsive Web Design</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Diseña sitios que se adaptan a cualquier dispositivo</p>
+            <p style="margin-top: 60px;">El diseño web responsivo (Responsive Web Design) es una metodología que permite que tu sitio web se adapte y funcione perfectamente en cualquier dispositivo y tamaño de pantalla.</p>
+            <p>En un mundo donde los usuarios acceden desde smartphones, tablets, laptops y monitores grandes, es esencial que tu sitio se vea y funcione bien en todos ellos.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Responsive Design? -->
+        <div class="slide">
+            <h2>¿Qué es Responsive Design?</h2>
+            <p>Responsive Web Design es la práctica de construir un sitio web que responde y se adapta al tamaño de pantalla del dispositivo del usuario.</p>
+
+            <div class="demo-container">
+                <p><strong>Un mismo sitio en diferentes dispositivos:</strong></p>
+                <div class="devices-demo">
+                    <div class="device phone">
+                        <div class="device-header"></div>
+                        <div class="device-content">📱<br>Mobile</div>
+                    </div>
+                    <div class="device tablet">
+                        <div class="device-header"></div>
+                        <div class="device-content">📱<br>Tablet</div>
+                    </div>
+                    <div class="device desktop">
+                        <div class="device-header"></div>
+                        <div class="device-content">💻 Desktop</div>
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Principios fundamentales:</strong></p>
+            <ul>
+                <li><span class="property">Fluid Grids:</span> Layouts flexibles basados en proporciones</li>
+                <li><span class="property">Flexible Images:</span> Imágenes que se escalan proporcionalmente</li>
+                <li><span class="property">Media Queries:</span> CSS condicional según características del dispositivo</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Viewport Meta Tag -->
+        <div class="slide">
+            <h2>Viewport Meta Tag</h2>
+            <p>El primer paso para un sitio responsivo es configurar correctamente el viewport:</p>
+
+            <div class="code">
+                &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            </div>
+
+            <p><strong>¿Qué hace?</strong></p>
+            <ul>
+                <li><span class="property">width=device-width:</span> El ancho de la página iguala el ancho del dispositivo</li>
+                <li><span class="property">initial-scale=1.0:</span> Nivel de zoom inicial al cargar</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> Sin este meta tag, los sitios móviles se verán como versión de escritorio reducida y los usuarios tendrán que hacer zoom para leer.
+            </div>
+
+            <div class="demo-container">
+                <div class="viewport-demo">
+                    <div class="viewport-box">
+                        <strong>Con viewport correcto</strong><br>
+                        Texto legible y contenido adaptado
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Media Queries -->
+        <div class="slide">
+            <h2>Media Queries</h2>
+            <p>Las media queries permiten aplicar estilos CSS específicos según características del dispositivo:</p>
+
+            <div class="code">
+                /* Móvil (por defecto) */<br>
+                .container {<br>
+                &nbsp;&nbsp;width: 100%;<br>
+                }<br>
+                <br>
+                /* Tablet y superior (768px+) */<br>
+                @media (min-width: 768px) {<br>
+                &nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: 750px;<br>
+                &nbsp;&nbsp;}<br>
+                }<br>
+                <br>
+                /* Desktop (1024px+) */<br>
+                @media (min-width: 1024px) {<br>
+                &nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: 960px;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+
+            <p>También puedes combinar condiciones y usar otras características como orientación, resolución, etc.</p>
+        </div>
+
+        <!-- Slide 5: Breakpoints Comunes -->
+        <div class="slide">
+            <h2>Breakpoints Comunes</h2>
+            <p>Los breakpoints son los puntos donde el diseño cambia para adaptarse mejor al dispositivo:</p>
+
+            <div class="demo-container">
+                <div class="breakpoint-demo">
+                    <div class="breakpoint-bar">
+                        <span>📱 0-767px</span>
+                        <span>📱 768-1023px</span>
+                        <span>💻 1024px+</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                /* Breakpoints estándar */<br>
+                <br>
+                /* Mobile First (diseño base) */<br>
+                /* 0px - 767px */<br>
+                <br>
+                @media (min-width: 768px) {<br>
+                &nbsp;&nbsp;/* Tablets */<br>
+                }<br>
+                <br>
+                @media (min-width: 1024px) {<br>
+                &nbsp;&nbsp;/* Desktop pequeño */<br>
+                }<br>
+                <br>
+                @media (min-width: 1440px) {<br>
+                &nbsp;&nbsp;/* Desktop grande */<br>
+                }
+            </div>
+
+            <p>No hay breakpoints "correctos" universales - depende de tu diseño específico.</p>
+        </div>
+
+        <!-- Slide 6: Mobile-First Approach -->
+        <div class="slide">
+            <h2>Enfoque Mobile-First</h2>
+            <p>Mobile-first significa diseñar primero para móvil y luego agregar complejidad para pantallas más grandes:</p>
+
+            <div class="comparison">
+                <div class="bad-example">
+                    <strong>❌ Desktop-First:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        /* Diseño complejo */<br>
+                        .grid { display: grid; }<br>
+                        <br>
+                        @media (max-width: 768px) {<br>
+                        &nbsp;&nbsp;/* Simplificar */<br>
+                        &nbsp;&nbsp;.grid { display: block; }<br>
+                        }
+                    </div>
+                </div>
+
+                <div class="good-example">
+                    <strong>✅ Mobile-First:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        /* Diseño simple */<br>
+                        .grid { display: block; }<br>
+                        <br>
+                        @media (min-width: 768px) {<br>
+                        &nbsp;&nbsp;/* Agregar complejidad */<br>
+                        &nbsp;&nbsp;.grid { display: grid; }<br>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Ventajas:</strong></p>
+            <ul>
+                <li>Mejor rendimiento en móviles (carga menos CSS)</li>
+                <li>Fuerza a priorizar contenido esencial</li>
+                <li>Más fácil agregar que quitar complejidad</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Unidades Responsivas -->
+        <div class="slide">
+            <h2>Unidades Flexibles</h2>
+            <p>Usa unidades flexibles en lugar de píxeles fijos para layouts responsivos:</p>
+
+            <div class="code">
+                /* Porcentajes - relativo al padre */<br>
+                width: 50%;<br>
+                <br>
+                /* Viewport units - relativo a la ventana */<br>
+                width: 100vw;  /* 100% del ancho del viewport */<br>
+                height: 100vh; /* 100% del alto del viewport */<br>
+                <br>
+                /* em - relativo al font-size del padre */<br>
+                padding: 1em;<br>
+                <br>
+                /* rem - relativo al font-size del root */<br>
+                font-size: 1.5rem;
+            </div>
+
+            <div class="demo-container">
+                <div class="units-demo">
+                    <div class="unit-box">50%</div>
+                    <div class="unit-box">50%</div>
+                    <div class="unit-box" style="grid-column: 1 / -1;">100%</div>
+                </div>
+            </div>
+
+            <p>Combina unidades según el contexto: % para layouts, rem para texto, px solo cuando necesites valores exactos.</p>
+        </div>
+
+        <!-- Slide 8: Imágenes Responsivas -->
+        <div class="slide">
+            <h2>Imágenes Responsivas</h2>
+            <p>Las imágenes deben adaptarse al contenedor sin desbordarse:</p>
+
+            <div class="code">
+                /* Técnica básica */<br>
+                img {<br>
+                &nbsp;&nbsp;max-width: 100%;<br>
+                &nbsp;&nbsp;height: auto;<br>
+                }<br>
+                <br>
+                /* Usando el elemento picture */<br>
+                &lt;picture&gt;<br>
+                &nbsp;&nbsp;&lt;source media="(min-width: 1024px)" srcset="large.jpg"&gt;<br>
+                &nbsp;&nbsp;&lt;source media="(min-width: 768px)" srcset="medium.jpg"&gt;<br>
+                &nbsp;&nbsp;&lt;img src="small.jpg" alt="Descripción"&gt;<br>
+                &lt;/picture&gt;
+            </div>
+
+            <div class="demo-container">
+                <div class="image-demo">
+                    <div class="image-example">
+                        📸 Imagen responsiva<br>
+                        (se adapta al contenedor)
+                    </div>
+                </div>
+            </div>
+
+            <p>Para rendimiento óptimo, sirve diferentes tamaños de imagen según el dispositivo.</p>
+        </div>
+
+        <!-- Slide 9: Layouts Responsivos -->
+        <div class="slide">
+            <h2>Patrones de Layout</h2>
+            <p>Los layouts responsivos reorganizan el contenido según el espacio disponible:</p>
+
+            <div class="demo-container">
+                <p><strong>Mobile (1 columna):</strong></p>
+                <div class="responsive-layout">
+                    <div class="layout-container layout-mobile">
+                        <div class="layout-item">1</div>
+                        <div class="layout-item">2</div>
+                        <div class="layout-item">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Desktop (3 columnas):</strong></p>
+                <div class="responsive-layout">
+                    <div class="layout-container layout-desktop">
+                        <div class="layout-item">1</div>
+                        <div class="layout-item">2</div>
+                        <div class="layout-item">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                .grid {<br>
+                &nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;gap: 20px;<br>
+                &nbsp;&nbsp;grid-template-columns: 1fr; /* Mobile */<br>
+                }<br>
+                <br>
+                @media (min-width: 768px) {<br>
+                &nbsp;&nbsp;.grid {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grid-template-columns: repeat(3, 1fr); /* Desktop */<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 10: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Navegación hamburguesa:</strong> Menú completo en desktop, icono hamburguesa en mobile</li>
+                <li><strong>Grids flexibles:</strong> Usa <span class="property">auto-fit</span> con <span class="property">minmax()</span> para layouts automáticos</li>
+                <li><strong>Ocultar contenido:</strong> <span class="property">display: none</span> en mobile para elementos no esenciales</li>
+                <li><strong>Tipografía fluida:</strong> Usa <span class="property">clamp()</span> para tamaños de fuente que escalan suavemente</li>
+                <li><strong>Imágenes hero:</strong> Diferentes crops o imágenes según el dispositivo</li>
+                <li><strong>Formularios:</strong> Inputs de ancho completo en mobile, layouts más compactos en desktop</li>
+            </ul>
+
+            <div class="benefit-box" style="margin-top: 30px;">
+                <strong>💡 Consejo:</strong> Prueba siempre tu diseño en dispositivos reales, no solo en las herramientas de desarrollo del navegador.
+            </div>
+        </div>
+
+        <!-- Slide 11: Herramientas y Técnicas -->
+        <div class="slide">
+            <h2>Herramientas Útiles</h2>
+
+            <p><strong>CSS Moderno para Responsive:</strong></p>
+            <div class="code">
+                /* Container queries (nuevo) */<br>
+                @container (min-width: 400px) {<br>
+                &nbsp;&nbsp;.card { display: grid; }<br>
+                }<br>
+                <br>
+                /* clamp() para valores fluidos */<br>
+                font-size: clamp(1rem, 2vw, 2rem);<br>
+                <br>
+                /* Grid responsivo sin media queries */<br>
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            </div>
+
+            <p><strong>Herramientas de desarrollo:</strong></p>
+            <ul>
+                <li>Chrome DevTools - Simulador de dispositivos</li>
+                <li>Firefox Responsive Design Mode</li>
+                <li>Lighthouse - Auditoría de rendimiento mobile</li>
+                <li>Real devices - Prueba en dispositivos reales cuando sea posible</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina Responsive Design!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Siempre incluye el <span class="property">viewport meta tag</span> en el HTML</li>
+                <li>Usa enfoque <span class="property">mobile-first</span> con <span class="highlight">min-width</span> media queries</li>
+                <li>Diseña con <span class="property">unidades flexibles</span> (%, rem, vw/vh) en lugar de píxeles fijos</li>
+                <li>Las <span class="property">media queries</span> permiten estilos condicionales por tamaño</li>
+                <li>Haz imágenes responsivas con <span class="highlight">max-width: 100%</span></li>
+                <li>Usa <span class="property">Grid</span> y <span class="property">Flexbox</span> para layouts flexibles</li>
+                <li>Prueba en dispositivos reales, no solo en simuladores</li>
+                <li>Prioriza el contenido esencial en pantallas pequeñas</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Más del 60% del tráfico web es móvil - diseña responsivo desde el inicio!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

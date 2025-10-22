@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[TOPIC] - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        /* ADD YOUR DEMO-SPECIFIC STYLES HERE */
+        .demo-area {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .demo-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Optional: Warning box */
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        /* Optional: Comparison boxes */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .bad-example {
+            background: #fee;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .good-example {
+            background: #efe;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Introducción a [TOPIC]</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">[Descripción breve y atractiva]</p>
+            <p style="margin-top: 60px;">[Párrafo de introducción explicando qué es...]</p>
+            <p>[Párrafo adicional con contexto o importancia...]</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es? -->
+        <div class="slide">
+            <h2>¿Qué es [TOPIC]?</h2>
+            <p>[Definición clara del concepto...]</p>
+
+            <div class="code">
+                .selector {<br>
+                &nbsp;&nbsp;property: value;<br>
+                }
+            </div>
+
+            <p><strong>Conceptos clave:</strong></p>
+            <ul>
+                <li><span class="property">Concepto 1:</span> Explicación</li>
+                <li><span class="property">Concepto 2:</span> Explicación</li>
+                <li><span class="property">Concepto 3:</span> Explicación</li>
+                <li><span class="property">Concepto 4:</span> Explicación</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Concepto Principal 1 -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación del concepto...]</p>
+
+            <div class="code">
+                /* Código de ejemplo */<br>
+                .ejemplo {<br>
+                &nbsp;&nbsp;propiedad: valor;<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Ejemplo:</strong></p>
+                <div class="demo-area">
+                    <div class="demo-item">Demo Item 1</div>
+                    <div class="demo-item">Demo Item 2</div>
+                    <div class="demo-item">Demo Item 3</div>
+                </div>
+            </div>
+
+            <p>[Explicación adicional sobre el ejemplo...]</p>
+        </div>
+
+        <!-- Slide 4: Concepto Principal 2 -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación...]</p>
+
+            <div class="code">
+                /* Otro ejemplo de código */
+            </div>
+
+            <!-- Add demos or additional content -->
+        </div>
+
+        <!-- Slide 5: Concepto Principal 3 -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación...]</p>
+
+            <!-- Add content -->
+        </div>
+
+        <!-- Slide 6: Concepto Principal 4 -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación...]</p>
+
+            <!-- Add content -->
+        </div>
+
+        <!-- Slide 7: Concepto Principal 5 -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación...]</p>
+
+            <!-- Add content -->
+        </div>
+
+        <!-- Slide 8: Concepto Adicional -->
+        <div class="slide">
+            <h2>[Título del Concepto]</h2>
+            <p>[Explicación...]</p>
+
+            <!-- Add content -->
+        </div>
+
+        <!-- Slide 9: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Caso de uso 1:</strong> Descripción con <span class="property">propiedades</span> relevantes</li>
+                <li><strong>Caso de uso 2:</strong> Descripción con <span class="property">propiedades</span> relevantes</li>
+                <li><strong>Caso de uso 3:</strong> Descripción con <span class="property">propiedades</span> relevantes</li>
+                <li><strong>Caso de uso 4:</strong> Descripción con <span class="property">propiedades</span> relevantes</li>
+                <li><strong>Caso de uso 5:</strong> Descripción con <span class="property">propiedades</span> relevantes</li>
+            </ul>
+
+            <p style="margin-top: 40px;">[TOPIC] es ideal para [resumen de cuándo usarlo].</p>
+        </div>
+
+        <!-- Slide 10: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina [TOPIC]!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Punto clave 1 sobre el tema</li>
+                <li>Usa <span class="property">propiedad-importante</span> para [propósito]</li>
+                <li>Punto clave 3 con énfasis importante</li>
+                <li><span class="property">Concepto-clave</span> permite [beneficio]</li>
+                <li>Punto clave 5 - combinación o mejores prácticas</li>
+                <li>Punto clave 6 - cuándo usar o evitar</li>
+                <li>Punto clave final sobre el valor del tema</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡[Mensaje motivacional final]!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

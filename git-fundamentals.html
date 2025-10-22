@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Fundamentals - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .code .comment {
+            color: #6a9955;
+        }
+
+        .code .command {
+            color: #4ec9b0;
+        }
+
+        .code .output {
+            color: #ce9178;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .workflow-demo {
+            background: #e0e7ff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .workflow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .workflow-step {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #764ba2;
+        }
+
+        .branch-demo {
+            background: #e0e7ff;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .branch-line {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .commit {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin: 0 10px;
+        }
+
+        .commit.branch {
+            background: #f59e0b;
+        }
+
+        .commit.merge {
+            background: #10b981;
+        }
+
+        .branch-label {
+            background: #764ba2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .line {
+            flex: 1;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .line.branch {
+            background: #f59e0b;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .benefit-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .git-icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Git Fundamentals</h1>
+            <div class="git-icon">🔀</div>
+            <p style="font-size: 1.5em; margin-top: 20px;">Control de versiones para desarrolladores</p>
+            <p style="margin-top: 60px;"><strong>Git</strong> es un sistema de control de versiones distribuido que permite rastrear cambios en tu código, colaborar con otros desarrolladores y mantener un historial completo de tu proyecto.</p>
+            <p>Es la herramienta más utilizada en desarrollo de software moderno y esencial para trabajar en equipo.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Git? -->
+        <div class="slide">
+            <h2>¿Qué es Git?</h2>
+            <p>Git es un sistema de control de versiones que permite:</p>
+
+            <div class="benefit-box">
+                <strong>📜 Historial Completo:</strong> Guarda todos los cambios realizados en el código
+            </div>
+
+            <div class="benefit-box">
+                <strong>👥 Colaboración:</strong> Múltiples desarrolladores trabajando en paralelo
+            </div>
+
+            <div class="benefit-box">
+                <strong>🔄 Reversión:</strong> Volver a versiones anteriores cuando sea necesario
+            </div>
+
+            <div class="benefit-box">
+                <strong>🌿 Ramificación:</strong> Trabajar en features sin afectar el código principal
+            </div>
+
+            <p><strong>Conceptos clave:</strong></p>
+            <ul>
+                <li><span class="property">Repository (Repo):</span> Carpeta del proyecto con historial Git</li>
+                <li><span class="property">Commit:</span> Snapshot (instantánea) de cambios guardados</li>
+                <li><span class="property">Branch:</span> Línea independiente de desarrollo</li>
+                <li><span class="property">Remote:</span> Versión del repositorio en un servidor (GitHub, GitLab)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Git Clone -->
+        <div class="slide">
+            <h2>Git Clone - Clonar Repositorios</h2>
+            <p>Clonar copia un repositorio remoto a tu computadora local:</p>
+
+            <div class="code">
+                <span class="comment"># Clonar desde GitHub/GitLab</span><br>
+                git clone https://github.com/usuario/proyecto.git<br>
+                <br>
+                <span class="comment"># Clonar con un nombre diferente</span><br>
+                git clone https://github.com/usuario/proyecto.git mi-carpeta<br>
+                <br>
+                <span class="comment"># Clonar una rama específica</span><br>
+                git clone -b nombre-rama https://github.com/usuario/proyecto.git
+            </div>
+
+            <p><strong>¿Qué sucede al clonar?</strong></p>
+            <ul>
+                <li>Descarga todo el código del proyecto</li>
+                <li>Descarga el historial completo de commits</li>
+                <li>Crea una carpeta con el nombre del proyecto</li>
+                <li>Configura automáticamente el remote "origin"</li>
+            </ul>
+
+            <div class="benefit-box">
+                <strong>💡 Tip:</strong> Solo necesitas clonar una vez. Después usarás git pull para actualizar.
+            </div>
+        </div>
+
+        <!-- Slide 4: Workflow Básico -->
+        <div class="slide">
+            <h2>Workflow Básico de Git</h2>
+            <p>El flujo de trabajo típico con Git:</p>
+
+            <div class="demo-container">
+                <div class="workflow-demo">
+                    <div class="workflow-steps">
+                        <div class="workflow-step">Modificar<br>archivos</div>
+                        <div class="arrow">→</div>
+                        <div class="workflow-step">git add</div>
+                        <div class="arrow">→</div>
+                        <div class="workflow-step">git commit</div>
+                        <div class="arrow">→</div>
+                        <div class="workflow-step">git push</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                <span class="comment"># 1. Ver el estado actual</span><br>
+                git status<br>
+                <br>
+                <span class="comment"># 2. Agregar cambios al staging area</span><br>
+                git add archivo.js<br>
+                git add .  <span class="comment"># agregar todos los cambios</span><br>
+                <br>
+                <span class="comment"># 3. Crear un commit</span><br>
+                git commit -m "Descripción de los cambios"<br>
+                <br>
+                <span class="comment"># 4. Enviar al repositorio remoto</span><br>
+                git push
+            </div>
+        </div>
+
+        <!-- Slide 5: Git Add - Staging Area -->
+        <div class="slide">
+            <h2>Git Add - Preparar Cambios</h2>
+            <p>El <strong>staging area</strong> es donde preparas los cambios antes de hacer commit:</p>
+
+            <div class="code">
+                <span class="comment"># Agregar un archivo específico</span><br>
+                git add index.html<br>
+                <br>
+                <span class="comment"># Agregar múltiples archivos</span><br>
+                git add index.html style.css app.js<br>
+                <br>
+                <span class="comment"># Agregar todos los archivos modificados</span><br>
+                git add .<br>
+                <br>
+                <span class="comment"># Agregar archivos por patrón</span><br>
+                git add *.js  <span class="comment"># todos los archivos .js</span><br>
+                git add css/  <span class="comment"># toda la carpeta css</span><br>
+                <br>
+                <span class="comment"># Quitar del staging (sin perder cambios)</span><br>
+                git reset archivo.js
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> Los cambios no preparados (unstaged) no se incluirán en el commit.
+            </div>
+        </div>
+
+        <!-- Slide 6: Git Commit - Guardar Cambios -->
+        <div class="slide">
+            <h2>Git Commit - Crear Snapshots</h2>
+            <p>Un commit guarda permanentemente los cambios en el historial:</p>
+
+            <div class="code">
+                <span class="comment"># Commit con mensaje</span><br>
+                git commit -m "Agrega funcionalidad de login"<br>
+                <br>
+                <span class="comment"># Commit con mensaje detallado</span><br>
+                git commit -m "Título del commit" -m "Descripción más larga"<br>
+                <br>
+                <span class="comment"># Add + commit en un solo paso (solo archivos tracked)</span><br>
+                git commit -am "Actualiza estilos del header"<br>
+                <br>
+                <span class="comment"># Ver historial de commits</span><br>
+                git log<br>
+                git log --oneline  <span class="comment"># versión compacta</span>
+            </div>
+
+            <p><strong>Buenas prácticas para mensajes de commit:</strong></p>
+            <ul>
+                <li>Usa verbos en presente: "Agrega" no "Agregado"</li>
+                <li>Sé conciso pero descriptivo</li>
+                <li>Explica el QUÉ y el POR QUÉ, no el CÓMO</li>
+                <li>Un commit = una funcionalidad o fix</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Git Branches - Crear Ramas -->
+        <div class="slide">
+            <h2>Git Branch - Ramas de Desarrollo</h2>
+            <p>Las ramas permiten trabajar en features sin afectar el código principal:</p>
+
+            <div class="code">
+                <span class="comment"># Ver todas las ramas</span><br>
+                git branch<br>
+                <br>
+                <span class="comment"># Crear una nueva rama</span><br>
+                git branch feature-login<br>
+                <br>
+                <span class="comment"># Cambiar a una rama</span><br>
+                git checkout feature-login<br>
+                <br>
+                <span class="comment"># Crear y cambiar a la rama en un solo paso</span><br>
+                git checkout -b feature-login<br>
+                <br>
+                <span class="comment"># Eliminar una rama</span><br>
+                git branch -d feature-login
+            </div>
+
+            <div class="demo-container">
+                <div class="branch-demo">
+                    <div class="branch-line">
+                        <span class="branch-label">main</span>
+                        <div class="commit">C1</div>
+                        <div class="line"></div>
+                        <div class="commit">C2</div>
+                        <div class="line"></div>
+                        <div class="commit">C3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Trabajando con Ramas -->
+        <div class="slide">
+            <h2>Workflow con Branches</h2>
+            <p>Patrón común: crear rama, desarrollar, hacer merge:</p>
+
+            <div class="demo-container">
+                <div class="branch-demo">
+                    <div class="branch-line">
+                        <span class="branch-label">main</span>
+                        <div class="commit">C1</div>
+                        <div class="line"></div>
+                        <div class="commit">C2</div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="commit merge">M</div>
+                    </div>
+                    <div class="branch-line" style="margin-left: 170px;">
+                        <span class="branch-label" style="background: #f59e0b;">feature</span>
+                        <div class="commit branch">F1</div>
+                        <div class="line branch"></div>
+                        <div class="commit branch">F2</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                <span class="comment"># 1. Crear rama para nueva feature</span><br>
+                git checkout -b feature-dashboard<br>
+                <br>
+                <span class="comment"># 2. Hacer cambios y commits en la rama</span><br>
+                git add .<br>
+                git commit -m "Implementa dashboard básico"<br>
+                <br>
+                <span class="comment"># 3. Volver a main</span><br>
+                git checkout main<br>
+                <br>
+                <span class="comment"># 4. Fusionar la rama feature a main</span><br>
+                git merge feature-dashboard
+            </div>
+        </div>
+
+        <!-- Slide 9: Git Push - Enviar Cambios -->
+        <div class="slide">
+            <h2>Git Push - Subir al Remoto</h2>
+            <p>Push envía tus commits locales al repositorio remoto (GitHub, GitLab, etc.):</p>
+
+            <div class="code">
+                <span class="comment"># Push a la rama actual</span><br>
+                git push<br>
+                <br>
+                <span class="comment"># Primera vez que haces push de una rama nueva</span><br>
+                git push -u origin nombre-rama<br>
+                <br>
+                <span class="comment"># Push a una rama específica</span><br>
+                git push origin main<br>
+                <br>
+                <span class="comment"># Push de todas las ramas</span><br>
+                git push --all<br>
+                <br>
+                <span class="comment"># Push forzado (¡usar con cuidado!)</span><br>
+                git push --force
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Advertencia:</strong> Nunca uses --force en ramas compartidas (main, develop). Puede sobrescribir el trabajo de otros.
+            </div>
+        </div>
+
+        <!-- Slide 10: Git Pull - Obtener Cambios -->
+        <div class="slide">
+            <h2>Git Pull - Actualizar desde Remoto</h2>
+            <p>Pull obtiene y fusiona cambios del repositorio remoto:</p>
+
+            <div class="code">
+                <span class="comment"># Obtener cambios de la rama actual</span><br>
+                git pull<br>
+                <br>
+                <span class="comment"># Pull de una rama específica</span><br>
+                git pull origin main<br>
+                <br>
+                <span class="comment"># Solo descargar sin fusionar</span><br>
+                git fetch<br>
+                <br>
+                <span class="comment"># Ver qué cambió (después de fetch)</span><br>
+                git log origin/main
+            </div>
+
+            <p><strong>Diferencia entre pull y fetch:</strong></p>
+            <ul>
+                <li><span class="property">git pull:</span> Descarga + fusiona automáticamente (fetch + merge)</li>
+                <li><span class="property">git fetch:</span> Solo descarga, no fusiona (más seguro)</li>
+            </ul>
+
+            <div class="benefit-box">
+                <strong>💡 Buena práctica:</strong> Haz git pull antes de empezar a trabajar cada día para tener los últimos cambios.
+            </div>
+        </div>
+
+        <!-- Slide 11: Comandos Útiles -->
+        <div class="slide">
+            <h2>Comandos Git Esenciales</h2>
+
+            <div class="code">
+                <span class="comment"># Ver estado de archivos</span><br>
+                git status<br>
+                <br>
+                <span class="comment"># Ver diferencias antes de commit</span><br>
+                git diff<br>
+                <br>
+                <span class="comment"># Ver historial de commits</span><br>
+                git log --oneline --graph<br>
+                <br>
+                <span class="comment"># Ver información del repositorio remoto</span><br>
+                git remote -v<br>
+                <br>
+                <span class="comment"># Descartar cambios en un archivo</span><br>
+                git checkout -- archivo.js<br>
+                <br>
+                <span class="comment"># Ver quién modificó cada línea</span><br>
+                git blame archivo.js<br>
+                <br>
+                <span class="comment"># Configurar usuario (primera vez)</span><br>
+                git config --global user.name "Tu Nombre"<br>
+                git config --global user.email "tu@email.com"
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina Git!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li><span class="property">git clone</span> - Copia un repositorio remoto a tu máquina (solo una vez)</li>
+                <li><span class="property">git status</span> - Revisa qué archivos han cambiado</li>
+                <li><span class="property">git add</span> - Prepara archivos para el commit</li>
+                <li><span class="property">git commit -m "mensaje"</span> - Guarda cambios en el historial</li>
+                <li><span class="property">git push</span> - Envía commits al repositorio remoto</li>
+                <li><span class="property">git pull</span> - Obtiene cambios del remoto</li>
+                <li><span class="property">git branch</span> - Trabaja en features sin afectar main</li>
+                <li><span class="property">git merge</span> - Fusiona ramas cuando la feature está lista</li>
+                <li>Haz commits pequeños y frecuentes con mensajes descriptivos</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Git es esencial para todo desarrollador moderno!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

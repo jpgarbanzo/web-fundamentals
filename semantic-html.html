@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Semántico - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .semantic-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .tag-box {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .layout-demo {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "nav main"
+                "aside main"
+                "footer footer";
+            grid-template-columns: 200px 1fr;
+            grid-template-rows: 60px auto auto 50px;
+            gap: 5px;
+            background: #e0e7ff;
+            padding: 10px;
+            border-radius: 8px;
+            min-height: 300px;
+        }
+
+        .demo-header { grid-area: header; background: #ef4444; }
+        .demo-nav { grid-area: nav; background: #f59e0b; }
+        .demo-main { grid-area: main; background: #10b981; }
+        .demo-aside { grid-area: aside; background: #3b82f6; }
+        .demo-footer { grid-area: footer; background: #8b5cf6; }
+
+        .layout-part {
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .bad-example {
+            background: #fee;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .good-example {
+            background: #efe;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .benefit-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 HTML Semántico</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Construye web accesible y con significado</p>
+            <p style="margin-top: 60px;">HTML Semántico usa etiquetas que describen claramente su contenido y propósito, tanto para desarrolladores como para navegadores y tecnologías asistivas.</p>
+            <p>En lugar de usar solo <span class="highlight">&lt;div&gt;</span> y <span class="highlight">&lt;span&gt;</span>, usamos etiquetas con significado específico.</p>
+        </div>
+
+        <!-- Slide 2: ¿Por qué es importante? -->
+        <div class="slide">
+            <h2>¿Por qué HTML Semántico?</h2>
+
+            <p><strong>Beneficios principales:</strong></p>
+
+            <div class="benefit-box">
+                <strong>📱 Accesibilidad:</strong> Los lectores de pantalla entienden mejor la estructura
+            </div>
+
+            <div class="benefit-box">
+                <strong>🔍 SEO:</strong> Los motores de búsqueda indexan mejor el contenido
+            </div>
+
+            <div class="benefit-box">
+                <strong>👥 Mantenibilidad:</strong> El código es más fácil de leer y mantener
+            </div>
+
+            <div class="benefit-box">
+                <strong>🎨 Estilo:</strong> Más fácil aplicar estilos CSS consistentes
+            </div>
+
+            <p style="margin-top: 30px;">HTML semántico hace que tu sitio sea mejor para usuarios, desarrolladores y máquinas.</p>
+        </div>
+
+        <!-- Slide 3: No Semántico vs Semántico -->
+        <div class="slide">
+            <h2>No Semántico vs Semántico</h2>
+
+            <div class="comparison">
+                <div class="bad-example">
+                    <strong>❌ No Semántico:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        &lt;div class="header"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="nav"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;<br>
+                        &lt;div class="content"&gt;<br>
+                        &nbsp;&nbsp;...<br>
+                        &lt;/div&gt;
+                    </div>
+                </div>
+
+                <div class="good-example">
+                    <strong>✅ Semántico:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        &lt;header&gt;<br>
+                        &nbsp;&nbsp;&lt;nav&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                        &nbsp;&nbsp;&lt;/nav&gt;<br>
+                        &lt;/header&gt;<br>
+                        &lt;main&gt;<br>
+                        &nbsp;&nbsp;...<br>
+                        &lt;/main&gt;
+                    </div>
+                </div>
+            </div>
+
+            <p>El código semántico es autodescriptivo y más fácil de entender.</p>
+        </div>
+
+        <!-- Slide 4: Estructura de Página -->
+        <div class="slide">
+            <h2>Etiquetas de Estructura</h2>
+
+            <div class="tag-box">&lt;header&gt; - Encabezado de la página o sección</div>
+            <div class="tag-box">&lt;nav&gt; - Navegación principal</div>
+            <div class="tag-box">&lt;main&gt; - Contenido principal (único por página)</div>
+            <div class="tag-box">&lt;aside&gt; - Contenido lateral relacionado</div>
+            <div class="tag-box">&lt;footer&gt; - Pie de página o sección</div>
+
+            <div class="code" style="margin-top: 20px;">
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;header&gt;Logo y navegación&lt;/header&gt;<br>
+                &nbsp;&nbsp;&lt;main&gt;Contenido principal&lt;/main&gt;<br>
+                &nbsp;&nbsp;&lt;footer&gt;Copyright y links&lt;/footer&gt;<br>
+                &lt;/body&gt;
+            </div>
+        </div>
+
+        <!-- Slide 5: Layout Visual -->
+        <div class="slide">
+            <h2>Estructura Visual de Página</h2>
+            <p>Así se vería una página típica con HTML semántico:</p>
+
+            <div class="demo-container">
+                <div class="layout-demo">
+                    <div class="layout-part demo-header">&lt;header&gt;</div>
+                    <div class="layout-part demo-nav">&lt;nav&gt;</div>
+                    <div class="layout-part demo-main">&lt;main&gt;</div>
+                    <div class="layout-part demo-aside">&lt;aside&gt;</div>
+                    <div class="layout-part demo-footer">&lt;footer&gt;</div>
+                </div>
+            </div>
+
+            <p>Cada etiqueta tiene un propósito claro en la estructura.</p>
+        </div>
+
+        <!-- Slide 6: Etiquetas de Contenido -->
+        <div class="slide">
+            <h2>Etiquetas de Contenido</h2>
+
+            <div class="tag-box">&lt;article&gt; - Contenido independiente y reutilizable</div>
+            <div class="tag-box">&lt;section&gt; - Sección temática del contenido</div>
+            <div class="tag-box">&lt;figure&gt; - Contenido referenciado (imágenes, diagramas)</div>
+            <div class="tag-box">&lt;figcaption&gt; - Descripción de un figure</div>
+
+            <div class="code" style="margin-top: 20px;">
+                &lt;article&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;Título del artículo&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;section&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Introducción...&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;/section&gt;<br>
+                &nbsp;&nbsp;&lt;figure&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="grafico.png"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;figcaption&gt;Gráfico 1&lt;/figcaption&gt;<br>
+                &nbsp;&nbsp;&lt;/figure&gt;<br>
+                &lt;/article&gt;
+            </div>
+        </div>
+
+        <!-- Slide 7: Article vs Section -->
+        <div class="slide">
+            <h2>&lt;article&gt; vs &lt;section&gt;</h2>
+
+            <p><strong>&lt;article&gt;:</strong></p>
+            <ul>
+                <li>Contenido independiente y autocontenido</li>
+                <li>Podría distribuirse por separado (post de blog, noticia)</li>
+                <li>Tiene sentido fuera de contexto</li>
+            </ul>
+
+            <p><strong>&lt;section&gt;:</strong></p>
+            <ul>
+                <li>Agrupa contenido relacionado temáticamente</li>
+                <li>Generalmente tiene un encabezado</li>
+                <li>Es parte de algo más grande</li>
+            </ul>
+
+            <div class="code">
+                &lt;article&gt; &lt;!-- Post de blog --&gt;<br>
+                &nbsp;&nbsp;&lt;section&gt; &lt;!-- Introducción --&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                &nbsp;&nbsp;&lt;/section&gt;<br>
+                &nbsp;&nbsp;&lt;section&gt; &lt;!-- Desarrollo --&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                &nbsp;&nbsp;&lt;/section&gt;<br>
+                &lt;/article&gt;
+            </div>
+        </div>
+
+        <!-- Slide 8: Etiquetas de Texto -->
+        <div class="slide">
+            <h2>Etiquetas Semánticas de Texto</h2>
+
+            <ul>
+                <li><span class="highlight">&lt;strong&gt;</span> - Texto importante (negrita semántica)</li>
+                <li><span class="highlight">&lt;em&gt;</span> - Énfasis (cursiva semántica)</li>
+                <li><span class="highlight">&lt;mark&gt;</span> - Texto resaltado/destacado</li>
+                <li><span class="highlight">&lt;time&gt;</span> - Fechas y horas</li>
+                <li><span class="highlight">&lt;code&gt;</span> - Código de programación</li>
+                <li><span class="highlight">&lt;kbd&gt;</span> - Entrada de teclado</li>
+                <li><span class="highlight">&lt;abbr&gt;</span> - Abreviaciones</li>
+                <li><span class="highlight">&lt;blockquote&gt;</span> - Citas largas</li>
+                <li><span class="highlight">&lt;cite&gt;</span> - Referencia a trabajo creativo</li>
+            </ul>
+
+            <div class="code" style="margin-top: 20px;">
+                &lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; Usa &lt;code&gt;npm install&lt;/code&gt;&lt;/p&gt;<br>
+                &lt;p&gt;&lt;time datetime="2024-01-01"&gt;1 de enero&lt;/time&gt;&lt;/p&gt;
+            </div>
+        </div>
+
+        <!-- Slide 9: Etiquetas de Formulario -->
+        <div class="slide">
+            <h2>Formularios Semánticos</h2>
+
+            <ul>
+                <li><span class="highlight">&lt;form&gt;</span> - Contenedor del formulario</li>
+                <li><span class="highlight">&lt;label&gt;</span> - Etiqueta para input (crucial para accesibilidad)</li>
+                <li><span class="highlight">&lt;fieldset&gt;</span> - Agrupa controles relacionados</li>
+                <li><span class="highlight">&lt;legend&gt;</span> - Título del fieldset</li>
+                <li><span class="highlight">&lt;input type="..."&gt;</span> - Tipos específicos (email, tel, date, etc.)</li>
+            </ul>
+
+            <div class="code" style="margin-top: 20px;">
+                &lt;form&gt;<br>
+                &nbsp;&nbsp;&lt;fieldset&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;legend&gt;Información Personal&lt;/legend&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="nombre"&gt;Nombre:&lt;/label&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" id="nombre"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email"&gt;Email:&lt;/label&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" id="email"&gt;<br>
+                &nbsp;&nbsp;&lt;/fieldset&gt;<br>
+                &lt;/form&gt;
+            </div>
+        </div>
+
+        <!-- Slide 10: Mejores Prácticas -->
+        <div class="slide">
+            <h2>Mejores Prácticas</h2>
+
+            <ul>
+                <li>Usa <span class="highlight">&lt;h1&gt;-&lt;h6&gt;</span> en orden jerárquico</li>
+                <li>Un solo <span class="highlight">&lt;main&gt;</span> por página</li>
+                <li>Siempre usa <span class="highlight">&lt;label&gt;</span> con inputs</li>
+                <li>Añade <span class="property">alt</span> a todas las imágenes</li>
+                <li>Usa <span class="highlight">&lt;button&gt;</span> para acciones, no <span class="highlight">&lt;div&gt;</span></li>
+                <li>Prefiere etiquetas semánticas sobre divs con clases</li>
+                <li>Usa <span class="property">role</span> y <span class="property">aria-*</span> solo cuando sea necesario</li>
+            </ul>
+
+            <div class="benefit-box" style="margin-top: 30px;">
+                <strong>💡 Regla de oro:</strong> Si existe una etiqueta HTML específica para tu propósito, úsala en lugar de un div genérico.
+            </div>
+        </div>
+
+        <!-- Slide 11: Etiquetas Multimedia -->
+        <div class="slide">
+            <h2>Multimedia Semántico</h2>
+
+            <div class="tag-box">&lt;video&gt; - Contenido de video</div>
+            <div class="tag-box">&lt;audio&gt; - Contenido de audio</div>
+            <div class="tag-box">&lt;picture&gt; - Imágenes responsivas</div>
+            <div class="tag-box">&lt;source&gt; - Fuentes alternativas de media</div>
+
+            <div class="code" style="margin-top: 20px;">
+                &lt;figure&gt;<br>
+                &nbsp;&nbsp;&lt;video controls&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;source src="video.mp4" type="video/mp4"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;source src="video.webm" type="video/webm"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Tu navegador no soporta video.<br>
+                &nbsp;&nbsp;&lt;/video&gt;<br>
+                &nbsp;&nbsp;&lt;figcaption&gt;Tutorial de CSS Grid&lt;/figcaption&gt;<br>
+                &lt;/figure&gt;
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina HTML Semántico!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>HTML semántico mejora <span class="property">accesibilidad</span> y <span class="property">SEO</span></li>
+                <li>Usa <span class="highlight">&lt;header&gt;</span>, <span class="highlight">&lt;nav&gt;</span>, <span class="highlight">&lt;main&gt;</span>, <span class="highlight">&lt;footer&gt;</span> para estructura</li>
+                <li><span class="highlight">&lt;article&gt;</span> para contenido independiente</li>
+                <li><span class="highlight">&lt;section&gt;</span> para agrupar contenido relacionado</li>
+                <li>Siempre asocia <span class="highlight">&lt;label&gt;</span> con inputs</li>
+                <li>Usa etiquetas específicas antes que divs genéricos</li>
+                <li>El código semántico es más <span class="property">mantenible</span> y <span class="property">profesional</span></li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Construye web accesible e inclusiva para todos!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

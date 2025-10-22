@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura HTML - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .structure-demo {
+            background: #e0e7ff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .html-section {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .section-label {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .section-content {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .head-section {
+            border-color: #f59e0b;
+        }
+
+        .head-section .section-label {
+            background: #f59e0b;
+        }
+
+        .body-section {
+            border-color: #10b981;
+        }
+
+        .body-section .section-label {
+            background: #10b981;
+        }
+
+        .path-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .path-example {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .benefit-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .bad-example {
+            background: #fee;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .good-example {
+            background: #efe;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .folder-structure {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Estructura HTML Básica</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Los cimientos de toda página web</p>
+            <p style="margin-top: 60px;">Todo documento HTML sigue una estructura fundamental compuesta por tres secciones principales: <strong>&lt;html&gt;</strong>, <strong>&lt;head&gt;</strong> y <strong>&lt;body&gt;</strong>.</p>
+            <p>Entender esta estructura es esencial para crear páginas web bien formadas, accesibles y que funcionen correctamente en todos los navegadores.</p>
+        </div>
+
+        <!-- Slide 2: Anatomía de un Documento HTML -->
+        <div class="slide">
+            <h2>Anatomía de un Documento HTML</h2>
+            <p>Estructura básica de cualquier página web:</p>
+
+            <div class="code">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html lang="es"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;head&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Mi Página&lt;/title&gt;<br>
+                &nbsp;&nbsp;&lt;/head&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;body&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hola Mundo&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&lt;/body&gt;<br>
+                <br>
+                &lt;/html&gt;
+            </div>
+
+            <p><strong>Componentes principales:</strong></p>
+            <ul>
+                <li><span class="property">&lt;!DOCTYPE html&gt;:</span> Declaración del tipo de documento</li>
+                <li><span class="property">&lt;html&gt;:</span> Elemento raíz que contiene todo</li>
+                <li><span class="property">&lt;head&gt;:</span> Metadatos e información no visible</li>
+                <li><span class="property">&lt;body&gt;:</span> Contenido visible de la página</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: El Elemento <html> -->
+        <div class="slide">
+            <h2>El Elemento &lt;html&gt;</h2>
+            <p>El elemento raíz que envuelve todo el contenido del documento:</p>
+
+            <div class="code">
+                &lt;html lang="es"&gt;<br>
+                &nbsp;&nbsp;&lt;!-- Todo el contenido aquí --&gt;<br>
+                &lt;/html&gt;
+            </div>
+
+            <p><strong>Atributos importantes:</strong></p>
+            <ul>
+                <li><span class="property">lang:</span> Idioma del documento (esencial para accesibilidad y SEO)</li>
+                <li><span class="property">dir:</span> Dirección del texto (ltr = izquierda a derecha, rtl = derecha a izquierda)</li>
+            </ul>
+
+            <div class="code">
+                &lt;!-- Español --&gt;<br>
+                &lt;html lang="es"&gt;<br>
+                <br>
+                &lt;!-- Inglés --&gt;<br>
+                &lt;html lang="en"&gt;<br>
+                <br>
+                &lt;!-- Árabe (derecha a izquierda) --&gt;<br>
+                &lt;html lang="ar" dir="rtl"&gt;
+            </div>
+
+            <div class="benefit-box">
+                <strong>💡 Importancia:</strong> El atributo lang ayuda a los lectores de pantalla, herramientas de traducción y motores de búsqueda.
+            </div>
+        </div>
+
+        <!-- Slide 4: El Elemento <head> - Parte 1 -->
+        <div class="slide">
+            <h2>El Elemento &lt;head&gt;</h2>
+            <p>Contiene metadatos, enlaces a recursos y configuración. <strong>No se muestra visualmente</strong> en la página:</p>
+
+            <div class="demo-container">
+                <div class="structure-demo">
+                    <div class="html-section head-section">
+                        <div class="section-label">&lt;head&gt;</div>
+                        <div class="section-content">
+                            • Metadatos<br>
+                            • Título de la página<br>
+                            • Enlaces a CSS<br>
+                            • Enlaces a JavaScript<br>
+                            • Información SEO
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Elementos comunes en el &lt;head&gt;:</strong></p>
+            <ul>
+                <li><span class="highlight">&lt;title&gt;</span> - Título en la pestaña del navegador</li>
+                <li><span class="highlight">&lt;meta&gt;</span> - Metadatos (charset, viewport, descripción)</li>
+                <li><span class="highlight">&lt;link&gt;</span> - Recursos externos (CSS, fuentes, iconos)</li>
+                <li><span class="highlight">&lt;script&gt;</span> - JavaScript</li>
+                <li><span class="highlight">&lt;style&gt;</span> - CSS interno</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Meta Tags Esenciales -->
+        <div class="slide">
+            <h2>Meta Tags Esenciales</h2>
+            <p>Las etiquetas meta proporcionan información sobre el documento:</p>
+
+            <div class="code">
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;!-- Codificación de caracteres (SIEMPRE primero) --&gt;<br>
+                &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- Responsive design --&gt;<br>
+                &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- SEO --&gt;<br>
+                &nbsp;&nbsp;&lt;meta name="description" content="Descripción de la página"&gt;<br>
+                &nbsp;&nbsp;&lt;meta name="keywords" content="html, estructura, tutorial"&gt;<br>
+                &nbsp;&nbsp;&lt;meta name="author" content="Tu Nombre"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- Título (REQUERIDO) --&gt;<br>
+                &nbsp;&nbsp;&lt;title&gt;Mi Sitio Web&lt;/title&gt;<br>
+                &lt;/head&gt;
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> charset debe ser la primera etiqueta dentro del &lt;head&gt; para evitar problemas de codificación.
+            </div>
+        </div>
+
+        <!-- Slide 6: Importando CSS -->
+        <div class="slide">
+            <h2>Importando Estilos CSS</h2>
+            <p>Existen tres formas de incluir CSS en tu documento:</p>
+
+            <div class="code">
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;!-- 1. CSS Externo (RECOMENDADO) --&gt;<br>
+                &nbsp;&nbsp;&lt;link rel="stylesheet" href="css/styles.css"&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- 2. CSS Interno --&gt;<br>
+                &nbsp;&nbsp;&lt;style&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;body { background: white; }<br>
+                &nbsp;&nbsp;&lt;/style&gt;<br>
+                &lt;/head&gt;<br>
+                <br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;!-- 3. CSS Inline (evitar cuando sea posible) --&gt;<br>
+                &nbsp;&nbsp;&lt;div style="color: red;"&gt;Texto&lt;/div&gt;<br>
+                &lt;/body&gt;
+            </div>
+
+            <p><strong>Otros recursos comunes:</strong></p>
+            <div class="code">
+                &lt;!-- Fuentes de Google --&gt;<br>
+                &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;<br>
+                &lt;link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet"&gt;<br>
+                <br>
+                &lt;!-- Favicon --&gt;<br>
+                &lt;link rel="icon" type="image/png" href="favicon.png"&gt;
+            </div>
+        </div>
+
+        <!-- Slide 7: Scripts en el Head -->
+        <div class="slide">
+            <h2>JavaScript en el &lt;head&gt;</h2>
+            <p>Los scripts pueden ir en el &lt;head&gt;, pero requieren atributos especiales:</p>
+
+            <div class="code">
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;!-- ❌ Bloquea el renderizado --&gt;<br>
+                &nbsp;&nbsp;&lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- ✅ Descarga en paralelo, ejecuta cuando termine --&gt;<br>
+                &nbsp;&nbsp;&lt;script src="script.js" async&gt;&lt;/script&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- ✅ Descarga en paralelo, ejecuta al final --&gt;<br>
+                &nbsp;&nbsp;&lt;script src="script.js" defer&gt;&lt;/script&gt;<br>
+                &lt;/head&gt;
+            </div>
+
+            <p><strong>Diferencias clave:</strong></p>
+            <ul>
+                <li><span class="property">Sin atributos:</span> Bloquea el renderizado hasta que cargue y ejecute</li>
+                <li><span class="property">async:</span> Ejecuta en cuanto carga (no garantiza orden)</li>
+                <li><span class="property">defer:</span> Ejecuta después del HTML (mantiene orden)</li>
+            </ul>
+
+            <div class="benefit-box">
+                <strong>💡 Recomendación:</strong> Usa defer para scripts que dependen del DOM. Usa async para scripts independientes (analytics).
+            </div>
+        </div>
+
+        <!-- Slide 8: El Elemento <body> -->
+        <div class="slide">
+            <h2>El Elemento &lt;body&gt;</h2>
+            <p>Contiene todo el contenido visible de la página:</p>
+
+            <div class="demo-container">
+                <div class="structure-demo">
+                    <div class="html-section body-section">
+                        <div class="section-label">&lt;body&gt;</div>
+                        <div class="section-content">
+                            • Texto y contenido<br>
+                            • Imágenes y multimedia<br>
+                            • Formularios<br>
+                            • Navegación<br>
+                            • Todo lo que el usuario ve
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;header&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Mi Sitio Web&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;nav&gt;...&lt;/nav&gt;<br>
+                &nbsp;&nbsp;&lt;/header&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;main&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;article&gt;...&lt;/article&gt;<br>
+                &nbsp;&nbsp;&lt;/main&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;footer&gt;...&lt;/footer&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;!-- Scripts al final del body --&gt;<br>
+                &nbsp;&nbsp;&lt;script src="app.js"&gt;&lt;/script&gt;<br>
+                &lt;/body&gt;
+            </div>
+        </div>
+
+        <!-- Slide 9: Ubicación de Scripts -->
+        <div class="slide">
+            <h2>¿Dónde Colocar los Scripts?</h2>
+
+            <div class="comparison">
+                <div class="bad-example">
+                    <strong>❌ En el &lt;head&gt; sin defer/async:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        &lt;head&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="app.js"&gt;&lt;/script&gt;<br>
+                        &lt;/head&gt;
+                    </div>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Bloquea el renderizado</p>
+                </div>
+
+                <div class="good-example">
+                    <strong>✅ Al final del &lt;body&gt;:</strong>
+                    <div class="code" style="margin-top: 10px;">
+                        &lt;body&gt;<br>
+                        &nbsp;&nbsp;&lt;!-- contenido --&gt;<br>
+                        &nbsp;&nbsp;&lt;script src="app.js"&gt;&lt;/script&gt;<br>
+                        &lt;/body&gt;
+                    </div>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Carga más rápida</p>
+                </div>
+            </div>
+
+            <div class="good-example">
+                <strong>✅ En el &lt;head&gt; con defer:</strong>
+                <div class="code" style="margin-top: 10px;">
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;script src="app.js" defer&gt;&lt;/script&gt;<br>
+                    &lt;/head&gt;
+                </div>
+                <p style="font-size: 0.9em; margin-top: 10px;">Mejor opción moderna - descarga en paralelo</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Rutas de Archivos -->
+        <div class="slide">
+            <h2>Rutas y Paths</h2>
+            <p>Las rutas pueden ser <strong>relativas</strong> o <strong>absolutas</strong>:</p>
+
+            <div class="code">
+                &lt;!-- Rutas RELATIVAS (relativas al archivo actual) --&gt;<br>
+                &lt;link href="style.css" rel="stylesheet"&gt;  &lt;!-- Mismo directorio --&gt;<br>
+                &lt;link href="css/style.css" rel="stylesheet"&gt;  &lt;!-- Subdirectorio --&gt;<br>
+                &lt;link href="../style.css" rel="stylesheet"&gt;  &lt;!-- Directorio padre --&gt;<br>
+                <br>
+                &lt;!-- Rutas ABSOLUTAS --&gt;<br>
+                &lt;link href="/css/style.css" rel="stylesheet"&gt;  &lt;!-- Desde la raíz del sitio --&gt;<br>
+                &lt;link href="https://ejemplo.com/style.css" rel="stylesheet"&gt;  &lt;!-- URL completa --&gt;
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Estructura de proyecto típica:</strong></p>
+                <div class="folder-structure">
+                    proyecto/<br>
+                    ├── index.html<br>
+                    ├── css/<br>
+                    │&nbsp;&nbsp;&nbsp;└── style.css<br>
+                    ├── js/<br>
+                    │&nbsp;&nbsp;&nbsp;└── app.js<br>
+                    └── images/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;└── logo.png
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Restricciones y Buenas Prácticas -->
+        <div class="slide">
+            <h2>Restricciones Importantes</h2>
+
+            <div class="warning">
+                <strong>⚠️ Restricciones de Importación:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Los navegadores bloquean archivos de dominios externos sin CORS</li>
+                    <li>Los scripts locales requieren un servidor (no funcionan con file://)</li>
+                    <li>El orden de carga de scripts importa si hay dependencias</li>
+                </ul>
+            </div>
+
+            <div class="benefit-box">
+                <strong>✅ Buenas Prácticas:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Minifica CSS y JS para producción</li>
+                    <li>Usa rutas relativas para portabilidad</li>
+                    <li>Agrupa recursos por tipo (css/, js/, images/)</li>
+                    <li>Incluye charset y viewport en todas las páginas</li>
+                    <li>Carga scripts al final o usa defer/async</li>
+                    <li>Optimiza el orden: CSS en head, JS al final</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina la Estructura HTML!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Todo documento HTML necesita <span class="highlight">&lt;!DOCTYPE html&gt;</span></li>
+                <li><span class="property">&lt;html lang="es"&gt;</span> es el elemento raíz - siempre incluye el atributo lang</li>
+                <li><span class="property">&lt;head&gt;</span> contiene metadatos, CSS y configuración (no visible)</li>
+                <li><span class="property">&lt;body&gt;</span> contiene todo el contenido visible</li>
+                <li>Siempre incluye <span class="highlight">charset</span> y <span class="highlight">viewport</span> meta tags</li>
+                <li>CSS va en el <span class="property">&lt;head&gt;</span> (archivos externos preferidos)</li>
+                <li>JavaScript al final del <span class="property">&lt;body&gt;</span> o en head con <span class="highlight">defer</span></li>
+                <li>Usa rutas relativas para archivos del proyecto</li>
+                <li>Organiza recursos en carpetas (css/, js/, images/)</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Una estructura correcta es la base de todo sitio web exitoso!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

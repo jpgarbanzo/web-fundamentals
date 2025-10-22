@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Index - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+            position: relative;
+        }
+
+        .stack-demo {
+            position: relative;
+            height: 200px;
+            background: #e0e7ff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .box {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .box1 { background: #ef4444; top: 20px; left: 20px; }
+        .box2 { background: #3b82f6; top: 50px; left: 60px; }
+        .box3 { background: #10b981; top: 80px; left: 100px; }
+
+        .z1 { z-index: 1; }
+        .z2 { z-index: 2; }
+        .z3 { z-index: 3; }
+        .z10 { z-index: 10; }
+        .z-neg { z-index: -1; }
+
+        .context-demo {
+            position: relative;
+            height: 250px;
+            background: #e0e7ff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .parent {
+            position: relative;
+            background: rgba(59, 130, 246, 0.3);
+            border: 2px dashed #3b82f6;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .parent1 {
+            position: absolute;
+            z-index: 1;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            height: 150px;
+        }
+
+        .parent2 {
+            position: absolute;
+            z-index: 2;
+            top: 80px;
+            left: 150px;
+            width: 250px;
+            height: 150px;
+        }
+
+        .child {
+            position: relative;
+            background: #ef4444;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .modal-demo {
+            position: relative;
+            height: 200px;
+            background: #e0e7ff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .page-content {
+            padding: 20px;
+            background: white;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Introducción a Z-Index</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Dominando el orden de apilamiento en CSS</p>
+            <p style="margin-top: 60px;">La propiedad <strong>z-index</strong> controla el orden de apilamiento de elementos posicionados en la página web.</p>
+            <p>Entender z-index es crucial para crear interfaces con capas superpuestas, modales, tooltips, dropdowns y efectos visuales complejos.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Z-Index? -->
+        <div class="slide">
+            <h2>¿Qué es Z-Index?</h2>
+            <p>Z-index es una propiedad CSS que controla el orden de apilamiento de elementos en el eje Z (profundidad).</p>
+
+            <div class="code">
+                .elemento {<br>
+                &nbsp;&nbsp;position: relative; /* o absolute, fixed, sticky */<br>
+                &nbsp;&nbsp;z-index: 10;<br>
+                }
+            </div>
+
+            <p><strong>Puntos importantes:</strong></p>
+            <ul>
+                <li><span class="property">Solo funciona con elementos posicionados</span> (position distinto de static)</li>
+                <li>Los valores pueden ser <span class="highlight">positivos, negativos o 0</span></li>
+                <li>Mayor z-index = elemento más arriba en la pila</li>
+                <li>Menor z-index = elemento más abajo en la pila</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> z-index NO funciona en elementos con position: static (valor por defecto).
+            </div>
+        </div>
+
+        <!-- Slide 3: Ejemplo Básico -->
+        <div class="slide">
+            <h2>Ejemplo Básico de Apilamiento</h2>
+            <p>Sin z-index, los elementos se apilan según el orden en el HTML (el último arriba):</p>
+
+            <div class="demo-container">
+                <p><strong>Sin z-index (orden natural):</strong></p>
+                <div class="stack-demo">
+                    <div class="box box1">Box 1</div>
+                    <div class="box box2">Box 2</div>
+                    <div class="box box3">Box 3</div>
+                </div>
+            </div>
+
+            <div class="code">
+                &lt;!-- Box 3 está encima porque aparece último --&gt;<br>
+                &lt;div class="box1"&gt;Box 1&lt;/div&gt;<br>
+                &lt;div class="box2"&gt;Box 2&lt;/div&gt;<br>
+                &lt;div class="box3"&gt;Box 3&lt;/div&gt;
+            </div>
+
+            <p>Box 3 está encima porque es el último elemento en el HTML.</p>
+        </div>
+
+        <!-- Slide 4: Controlando el Apilamiento -->
+        <div class="slide">
+            <h2>Controlando con Z-Index</h2>
+            <p>Podemos cambiar el orden con z-index:</p>
+
+            <div class="demo-container">
+                <p><strong>Con z-index (Box 1 encima):</strong></p>
+                <div class="stack-demo">
+                    <div class="box box1 z3">Box 1<br>(z-index: 3)</div>
+                    <div class="box box2 z2">Box 2<br>(z-index: 2)</div>
+                    <div class="box box3 z1">Box 3<br>(z-index: 1)</div>
+                </div>
+            </div>
+
+            <div class="code">
+                .box1 { z-index: 3; }<br>
+                .box2 { z-index: 2; }<br>
+                .box3 { z-index: 1; }
+            </div>
+
+            <p>Ahora Box 1 está encima porque tiene el z-index más alto.</p>
+        </div>
+
+        <!-- Slide 5: Valores Negativos -->
+        <div class="slide">
+            <h2>Z-Index Negativo</h2>
+            <p>Los valores negativos colocan elementos detrás del contenido normal:</p>
+
+            <div class="code">
+                .elemento {<br>
+                &nbsp;&nbsp;position: relative;<br>
+                &nbsp;&nbsp;z-index: -1; /* Detrás del contenido */<br>
+                }
+            </div>
+
+            <p><strong>Usos comunes:</strong></p>
+            <ul>
+                <li>Fondos decorativos detrás del contenido</li>
+                <li>Efectos de sombra personalizados</li>
+                <li>Elementos que no deben interferir con la interacción</li>
+            </ul>
+
+            <div class="warning">
+                <strong>⚠️ Cuidado:</strong> Elementos con z-index negativo pueden quedar detrás del fondo del padre si este tiene un stacking context.
+            </div>
+        </div>
+
+        <!-- Slide 6: Stacking Context -->
+        <div class="slide">
+            <h2>Contexto de Apilamiento</h2>
+            <p>Un <strong>stacking context</strong> es un grupo tridimensional de elementos HTML.</p>
+
+            <p><strong>Se crea un nuevo stacking context cuando un elemento tiene:</strong></p>
+            <ul>
+                <li>position: absolute/relative/fixed/sticky + z-index distinto de auto</li>
+                <li>opacity menor que 1</li>
+                <li>transform, filter, perspective (cualquier valor)</li>
+                <li>position: fixed o sticky (siempre)</li>
+                <li>elementos flex/grid con z-index distinto de auto</li>
+            </ul>
+
+            <div class="code">
+                /* Crea un nuevo stacking context */<br>
+                .contenedor {<br>
+                &nbsp;&nbsp;position: relative;<br>
+                &nbsp;&nbsp;z-index: 1;<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 7: Problema del Stacking Context -->
+        <div class="slide">
+            <h2>El "Problema" del Stacking Context</h2>
+            <p>Los hijos NO pueden escapar del stacking context de su padre:</p>
+
+            <div class="demo-container">
+                <div class="context-demo">
+                    <div class="parent parent1">
+                        Parent 1 (z-index: 1)
+                        <div class="child" style="z-index: 9999;">Child<br>(z-index: 9999)</div>
+                    </div>
+                    <div class="parent parent2">
+                        Parent 2 (z-index: 2)
+                    </div>
+                </div>
+            </div>
+
+            <div class="code">
+                /* El hijo con z-index: 9999 NO puede superar<br>
+                &nbsp;&nbsp; al Parent 2 porque está limitado por Parent 1 */<br>
+            </div>
+
+            <p>Aunque el hijo tenga z-index: 9999, queda detrás de Parent 2.</p>
+        </div>
+
+        <!-- Slide 8: Valores Comunes -->
+        <div class="slide">
+            <h2>Valores Z-Index Comunes</h2>
+            <p>Convención de valores para organizar capas:</p>
+
+            <div class="code">
+                /* Organización por capas */<br>
+                z-index: -1;      /* Decoración de fondo */<br>
+                z-index: 1;       /* Contenido ligeramente elevado */<br>
+                z-index: 10;      /* Elementos flotantes (tooltips) */<br>
+                z-index: 100;     /* Dropdowns, menús */<br>
+                z-index: 1000;    /* Modales, overlays */<br>
+                z-index: 10000;   /* Notificaciones importantes */
+            </div>
+
+            <p><strong>Mejores prácticas:</strong></p>
+            <ul>
+                <li>Usa múltiplos de 10 para dejar espacio entre capas</li>
+                <li>Define constantes o variables CSS para z-index</li>
+                <li>Documenta la jerarquía de capas en tu proyecto</li>
+                <li>Evita valores arbitrariamente grandes (999999)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Modales y Overlays:</strong> z-index alto (1000+) para cubrir todo</li>
+                <li><strong>Navegación fija:</strong> z-index medio (100) para estar sobre contenido</li>
+                <li><strong>Dropdowns y Menús:</strong> z-index medio-alto (100-500)</li>
+                <li><strong>Tooltips:</strong> z-index alto para estar sobre todo excepto modales</li>
+                <li><strong>Fondos decorativos:</strong> z-index negativo (-1)</li>
+                <li><strong>Notificaciones toast:</strong> z-index muy alto (10000+)</li>
+            </ul>
+
+            <div class="demo-container">
+                <div class="modal-demo">
+                    <div class="page-content">Contenido de la página</div>
+                    <div class="modal-overlay">
+                        <div class="modal">Modal (z-index alto)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina Z-Index!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Z-index solo funciona con <span class="property">elementos posicionados</span></li>
+                <li>Mayor valor = más arriba en la pila</li>
+                <li>El <span class="property">stacking context</span> limita el alcance del z-index</li>
+                <li>Los hijos no pueden escapar del contexto de su padre</li>
+                <li>Usa valores organizados (múltiplos de 10, 100, etc.)</li>
+                <li>Propiedades como <span class="property">opacity</span> y <span class="property">transform</span> crean nuevos contextos</li>
+                <li>Documenta tu jerarquía de z-index para evitar conflictos</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Entiende el stacking context y controlarás el orden visual!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

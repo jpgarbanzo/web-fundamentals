@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .flex-demo {
+            display: flex;
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 120px;
+        }
+
+        .flex-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .justify-start { justify-content: flex-start; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-content: flex-end; }
+        .justify-between { justify-content: space-between; }
+        .justify-around { justify-content: space-around; }
+
+        .align-start { align-items: flex-start; }
+        .align-center { align-items: center; }
+        .align-end { align-items: flex-end; }
+        .align-stretch { align-items: stretch; }
+
+        .flex-row { flex-direction: row; }
+        .flex-column { flex-direction: column; }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Introducción a Flexbox</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Una guía completa para dominar el diseño flexible en CSS</p>
+            <p style="margin-top: 60px;">Flexbox (Flexible Box Layout) es un módulo de CSS que permite crear diseños flexibles y responsivos de manera eficiente.</p>
+            <p>Con Flexbox, puedes organizar, alinear y distribuir elementos dentro de un contenedor, incluso cuando su tamaño es desconocido o dinámico.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Flexbox? -->
+        <div class="slide">
+            <h2>¿Qué es Flexbox?</h2>
+            <p>Flexbox es un sistema de diseño unidimensional que trabaja en una sola dirección a la vez: horizontal (fila) o vertical (columna).</p>
+            
+            <div class="code">
+                .contenedor {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                }
+            </div>
+
+            <p><strong>Conceptos clave:</strong></p>
+            <ul>
+                <li><span class="property">Flex Container:</span> El elemento padre que contiene los flex items</li>
+                <li><span class="property">Flex Items:</span> Los elementos hijos directos del contenedor</li>
+                <li><span class="property">Main Axis:</span> Eje principal de distribución</li>
+                <li><span class="property">Cross Axis:</span> Eje perpendicular al principal</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Display Flex -->
+        <div class="slide">
+            <h2>Activando Flexbox</h2>
+            <p>Para convertir un elemento en flex container, usa <span class="highlight">display: flex</span></p>
+            
+            <div class="code">
+                .contenedor {<br>
+                &nbsp;&nbsp;display: flex;<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Ejemplo:</strong></p>
+                <div class="flex-demo">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+
+            <p>Los elementos hijos ahora son <strong>flex items</strong> y se distribuyen horizontalmente por defecto.</p>
+        </div>
+
+        <!-- Slide 4: Flex Direction -->
+        <div class="slide">
+            <h2>Flex-Direction</h2>
+            <p>Define la dirección del eje principal:</p>
+            
+            <div class="code">
+                flex-direction: row | row-reverse | column | column-reverse;
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Row (fila - por defecto):</strong></p>
+                <div class="flex-demo flex-row">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Column (columna):</strong></p>
+                <div class="flex-demo flex-column">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Justify Content -->
+        <div class="slide">
+            <h2>Justify-Content</h2>
+            <p>Alinea los elementos a lo largo del eje principal:</p>
+            
+            <div class="demo-container">
+                <p><strong>flex-start:</strong></p>
+                <div class="flex-demo justify-start">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>center:</strong></p>
+                <div class="flex-demo justify-center">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>space-between:</strong></p>
+                <div class="flex-demo justify-between">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Align Items -->
+        <div class="slide">
+            <h2>Align-Items</h2>
+            <p>Alinea los elementos a lo largo del eje transversal:</p>
+            
+            <div class="demo-container">
+                <p><strong>center:</strong></p>
+                <div class="flex-demo align-center" style="min-height: 150px;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item" style="padding: 30px;">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>flex-start:</strong></p>
+                <div class="flex-demo align-start" style="min-height: 150px;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item" style="padding: 30px;">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Flex Wrap -->
+        <div class="slide">
+            <h2>Flex-Wrap</h2>
+            <p>Controla si los elementos deben ajustarse en múltiples líneas:</p>
+            
+            <div class="code">
+                flex-wrap: nowrap | wrap | wrap-reverse;
+            </div>
+
+            <div class="demo-container">
+                <p><strong>wrap:</strong></p>
+                <div class="flex-demo" style="flex-wrap: wrap;">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                    <div class="flex-item">5</div>
+                    <div class="flex-item">6</div>
+                    <div class="flex-item">7</div>
+                    <div class="flex-item">8</div>
+                </div>
+            </div>
+
+            <p>Los elementos se ajustan automáticamente a nuevas líneas cuando no hay espacio suficiente.</p>
+        </div>
+
+        <!-- Slide 8: Propiedades de los Items -->
+        <div class="slide">
+            <h2>Propiedades de los Flex Items</h2>
+            
+            <p><strong>Flex-grow:</strong> Define cuánto puede crecer un elemento</p>
+            <div class="code">
+                .item { flex-grow: 1; }
+            </div>
+
+            <p><strong>Flex-shrink:</strong> Define cuánto puede encogerse un elemento</p>
+            <div class="code">
+                .item { flex-shrink: 1; }
+            </div>
+
+            <p><strong>Flex-basis:</strong> Define el tamaño base del elemento</p>
+            <div class="code">
+                .item { flex-basis: 200px; }
+            </div>
+
+            <p><strong>Atajo (flex):</strong></p>
+            <div class="code">
+                .item { flex: 1 1 200px; /* grow shrink basis */ }
+            </div>
+        </div>
+
+        <!-- Slide 9: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            
+            <ul>
+                <li><strong>Centrado perfecto:</strong> Usa <span class="property">justify-content: center</span> y <span class="property">align-items: center</span></li>
+                <li><strong>Barras de navegación:</strong> Distribución horizontal con <span class="property">space-between</span></li>
+                <li><strong>Cards responsivas:</strong> Usa <span class="property">flex-wrap: wrap</span> con <span class="property">flex-basis</span></li>
+                <li><strong>Layouts de aplicaciones:</strong> Combina <span class="property">flex-direction: column</span> con <span class="property">flex-grow</span></li>
+                <li><strong>Galerías de imágenes:</strong> Control preciso del espacio y alineación</li>
+            </ul>
+
+            <p style="margin-top: 40px;">Flexbox es ideal para componentes individuales y diseños unidimensionales.</p>
+        </div>
+
+        <!-- Slide 10: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina Flexbox!</h2>
+            
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            
+            <ul style="margin-top: 30px;">
+                <li>Flexbox trabaja en una dimensión: fila o columna</li>
+                <li>Usa <span class="property">justify-content</span> para el eje principal</li>
+                <li>Usa <span class="property">align-items</span> para el eje transversal</li>
+                <li><span class="property">flex-wrap</span> permite diseños de múltiples líneas</li>
+                <li>Las propiedades de items (<span class="property">flex-grow</span>, <span class="property">flex-shrink</span>) controlan el comportamiento individual</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Practica y experimenta con Flexbox en tus proyectos!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>
