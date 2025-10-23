@@ -7,6 +7,7 @@ Interactive slideshow presentations for learning web development fundamentals. A
 ### CSS Fundamentals
 
 - **[css-properties.html](css-properties.html)** - Common CSS Properties
+
   - Essential CSS properties every developer should know
   - Color and background properties
   - Typography: font-family, font-size, font-weight, line-height
@@ -30,6 +31,7 @@ Interactive slideshow presentations for learning web development fundamentals. A
 ### CSS Layout & Positioning
 
 - **[flexbox.html](flexbox.html)** - CSS Flexbox
+
   - Introduction to flexible box layout
   - Flex container and items concepts
   - Properties: `justify-content`, `align-items`, `flex-direction`, `flex-wrap`
@@ -38,6 +40,7 @@ Interactive slideshow presentations for learning web development fundamentals. A
   - 10 slides with interactive demos
 
 - **[grid.html](grid.html)** - CSS Grid
+
   - Two-dimensional grid layout system
   - Grid template columns and rows
   - Gap spacing and grid areas
@@ -78,6 +81,7 @@ Interactive slideshow presentations for learning web development fundamentals. A
 ### HTML Structure
 
 - **[html-structure.html](html-structure.html)** - HTML Document Structure
+
   - Anatomy of an HTML document: `<html>`, `<head>`, `<body>`
   - Essential meta tags: charset, viewport, SEO tags
   - Importing CSS: external, internal, and inline styles
@@ -97,6 +101,7 @@ Interactive slideshow presentations for learning web development fundamentals. A
 ## Features
 
 Each lesson includes:
+
 - ✅ **Interactive slideshow** with keyboard navigation (arrow keys)
 - ✅ **Live code examples** with syntax highlighting
 - ✅ **Visual demonstrations** of concepts
@@ -123,6 +128,7 @@ To maintain consistency when adding new lessons:
 4. Test with the checklist in the guidelines
 
 Or use the Claude Code slash command:
+
 ```
 /new-lesson
 ```
@@ -152,16 +158,19 @@ web-fundamentals/
 ## Design Specifications
 
 ### Color Palette
+
 - Primary gradient: `#667eea` → `#764ba2`
 - Demo backgrounds: `#e0e7ff`
 - Code blocks: `#f5f5f5`
 
 ### Typography
+
 - Font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 - Headings: Purple tones (#667eea, #764ba2)
 - Body text: #333
 
 ### Layout
+
 - Max width: 900px
 - Slide padding: 60px
 - Min height: 600px
@@ -170,6 +179,7 @@ web-fundamentals/
 ## Browser Compatibility
 
 These lessons work in all modern browsers:
+
 - Chrome/Edge (latest)
 - Firefox (latest)
 - Safari (latest)
@@ -178,6 +188,7 @@ These lessons work in all modern browsers:
 ## Contributing
 
 When adding new lessons:
+
 1. Maintain the established design and structure
 2. Ensure all content is in Spanish
 3. Include interactive demos when possible
@@ -187,6 +198,7 @@ When adding new lessons:
 ## Future Lesson Ideas
 
 Potential topics for future lessons:
+
 - CSS Position (static, relative, absolute, fixed, sticky)
 - CSS Variables (Custom Properties)
 - CSS Transitions & Animations
@@ -202,3 +214,5 @@ Potential topics for future lessons:
 ## License
 
 Educational resource for learning web development fundamentals.
+
+Copyright 2025 Tecnológico de Costa Rica
