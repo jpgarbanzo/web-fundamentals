@@ -1,0 +1,120 @@
+# Web Fundamentals Project Instructions
+
+This project contains interactive slideshow lessons for web development fundamentals.
+
+## Project Overview
+
+Interactive HTML lessons with embedded CSS/JS. Each lesson:
+- **Language:** All content in Spanish
+- **Format:** Self-contained HTML file with slideshow navigation
+- **Slides:** 10-12 slides per lesson
+- **Theme:** Purple gradient (#667eea → #764ba2)
+- **Navigation:** Arrow keys + Previous/Next buttons
+
+## Key Standards
+
+### Design Consistency
+- Purple color palette: `#667eea` (main), `#764ba2` (dark), `#e0e7ff` (light bg)
+- Typography: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+- Max width: 900px, Slide padding: 60px, Min height: 600px
+- Border radius: 20px (container), 10px (elements), 5px (small items)
+
+### Content Structure (Every Lesson)
+1. **Slide 1:** Title with emoji (🎯) + introduction (2-3 paragraphs)
+2. **Slide 2:** "¿Qué es [Topic]?" - Definition + key concepts list
+3. **Slides 3-9:** Core concepts (one per slide with code + demos)
+4. **Slide 9 or 10:** "Casos de Uso Comunes" (5-7 use cases)
+5. **Last Slide:** "🎉 ¡Domina [Topic]!" - Key points (5-9 bullets) + motivational message
+
+### Code Examples
+- Use `.code` class with `<br>` for line breaks
+- Use `&nbsp;&nbsp;` for indentation (2 spaces)
+- Always include examples for properties/concepts shown
+
+### Spanish Language
+- Use formal "tú" form (not "usted")
+- Technical terms can stay in English when commonly used (flexbox, grid, Git)
+- Common phrases: "¿Qué es...?", "Conceptos clave", "Casos de Uso Comunes", "¡Domina [Topic]!"
+
+## Creating New Lessons
+
+**ALWAYS:**
+1. Read `.claude/lesson-template.html` as starting point
+2. Follow structure from existing lessons (reference any of the 9 current lessons)
+3. Replace all `[TOPIC]` placeholders
+4. Use consistent CSS classes (`.code`, `.demo-container`, `.property`, `.highlight`)
+5. Include interactive demos where possible
+6. Test navigation (keyboard arrows should work)
+
+**After creating a lesson:**
+1. Update `README.md` - Add to appropriate section
+2. Update `.claude/README.md` - Add to existing lessons list
+3. Update project structure in README.md
+4. Commit with descriptive message using the established format
+
+## File Organization
+
+```
+web-fundamentals/
+├── [lesson-name].html     # Lesson files at root
+├── README.md              # Main documentation
+├── CLAUDE                 # This file (auto-loaded)
+└── .claude/
+    ├── lesson-guidelines.md   # Detailed guidelines (reference when needed)
+    ├── lesson-template.html   # Template for new lessons
+    └── commands/
+        └── new-lesson.md      # /new-lesson slash command
+```
+
+## CSS Classes Reference
+
+Standard classes to use in lessons:
+- `.code` - Code blocks (dark bg with border)
+- `.demo-container` - Container for demos (border with padding)
+- `.highlight` - Inline code (yellow bg)
+- `.property` - Property names (purple, bold)
+- `.benefit-box` - Info boxes (blue border)
+- `.warning` - Warning boxes (orange border)
+- `.good-example` / `.bad-example` - Comparison boxes
+
+## Git Workflow
+
+When making changes:
+```bash
+git add .
+git commit -m "Descriptive message
+
+Details about changes...
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+git push
+```
+
+## Existing Lessons (9 total)
+
+- css-properties.html - Common CSS Properties
+- css-selectors.html - CSS Selectors
+- flexbox.html - CSS Flexbox
+- grid.html - CSS Grid
+- z-index.html - Z-Index & Stacking Context
+- responsive-web.html - Responsive Web Design
+- git-fundamentals.html - Git Version Control
+- html-structure.html - HTML Document Structure
+- semantic-html.html - Semantic HTML Tags
+
+## Quick Reference
+
+**For detailed guidelines:** Read `.claude/lesson-guidelines.md`
+**For template:** Copy `.claude/lesson-template.html`
+**For slash commands:** Use `/new-lesson`
+
+## Important Notes
+
+- NEVER use emojis unless user explicitly requests
+- ALWAYS maintain Spanish language throughout lessons
+- ALWAYS include total slide count in controls (update if adding/removing slides)
+- ALWAYS test that first/last button states work correctly
+- Keep lessons self-contained (no external dependencies)
+- Prioritize educational clarity over complexity
