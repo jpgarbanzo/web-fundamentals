@@ -24,7 +24,11 @@ Interactive HTML lessons with embedded CSS/JS. Each lesson:
 2. **Slide 2:** "¿Qué es [Topic]?" - Definition + key concepts list
 3. **Slides 3-9:** Core concepts (one per slide with code + demos)
 4. **Slide 9 or 10:** "Casos de Uso Comunes" (5-7 use cases)
-5. **Last Slide:** "🎉 ¡Domina [Topic]!" - Key points (5-9 bullets) + motivational message
+5. **Slide 11:** "✅ Pon a Prueba tus Conocimientos" - 3-5 multiple choice questions with "Mostrar Respuesta" buttons
+6. **Slide 12:** "💪 Ejercicios Prácticos" - 2 practical exercises with clear objectives and challenges
+7. **Last Slide:** "🎉 ¡Domina [Topic]!" - Key points (5-9 bullets) + motivational message
+
+**Total slides:** 13-14 per lesson
 
 ### Code Examples
 - Use `.code` class with `<br>` for line breaks
@@ -66,6 +70,28 @@ web-fundamentals/
         └── new-lesson.md      # /new-lesson slash command
 ```
 
+## Quiz and Exercises Format
+
+### Quiz Slide (Slide 11)
+- **Title:** "✅ Pon a Prueba tus Conocimientos"
+- **Questions:** 3-5 multiple choice questions
+- Each question should have:
+  - Clear question text
+  - 3-4 answer options in a `.quiz-options` div
+  - A "Mostrar Respuesta" button that reveals the correct answer
+  - Hidden answer explanation (shown when button clicked)
+- Use JavaScript to toggle answer visibility
+- Style with `.quiz-question`, `.quiz-option`, `.quiz-answer` classes
+
+### Exercises Slide (Slide 12)
+- **Title:** "💪 Ejercicios Prácticos"
+- **Format:** 2 practical exercises
+- Each exercise should include:
+  - **Objetivo:** Clear goal/what to build
+  - **Requisitos:** 3-5 specific requirements
+  - **Desafío Extra:** Optional advanced challenge
+- Use `.exercise-box` class with numbered exercises
+
 ## CSS Classes Reference
 
 Standard classes to use in lessons:
@@ -76,6 +102,10 @@ Standard classes to use in lessons:
 - `.benefit-box` - Info boxes (blue border)
 - `.warning` - Warning boxes (orange border)
 - `.good-example` / `.bad-example` - Comparison boxes
+- `.quiz-question` - Quiz question container
+- `.quiz-option` - Individual answer option
+- `.quiz-answer` - Hidden answer (revealed on click)
+- `.exercise-box` - Exercise container
 
 ## Git Workflow
 

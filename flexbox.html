@@ -175,6 +175,73 @@
             padding: 2px 6px;
             border-radius: 3px;
         }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -370,7 +437,7 @@
         <!-- Slide 9: Casos de Uso -->
         <div class="slide">
             <h2>Casos de Uso Comunes</h2>
-            
+
             <ul>
                 <li><strong>Centrado perfecto:</strong> Usa <span class="property">justify-content: center</span> y <span class="property">align-items: center</span></li>
                 <li><strong>Barras de navegación:</strong> Distribución horizontal con <span class="property">space-between</span></li>
@@ -382,7 +449,101 @@
             <p style="margin-top: 40px;">Flexbox es ideal para componentes individuales y diseños unidimensionales.</p>
         </div>
 
-        <!-- Slide 10: Conclusión -->
+        <!-- Slide 10: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de Flexbox:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia principal entre Flexbox y CSS Grid?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Flexbox es para layouts 2D, Grid para 1D</div>
+                    <div class="quiz-option">B) Flexbox es para layouts 1D (fila o columna), Grid para 2D (filas y columnas simultáneas)</div>
+                    <div class="quiz-option">C) Son exactamente iguales</div>
+                    <div class="quiz-option">D) Flexbox solo funciona horizontalmente</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> Flexbox trabaja en una dimensión a la vez (fila o columna), mientras que Grid trabaja en dos dimensiones simultáneamente (filas y columnas al mismo tiempo).
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. Si quieres centrar un elemento vertical y horizontalmente en un contenedor, ¿qué propiedades necesitas?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) display: flex; justify-content: center; align-items: center;</div>
+                    <div class="quiz-option">B) display: flex; margin: auto;</div>
+                    <div class="quiz-option">C) display: flex; text-align: center;</div>
+                    <div class="quiz-option">D) display: block; vertical-align: middle;</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: A)</strong> justify-content controla la alineación en el eje principal y align-items en el eje transversal. Juntos logran el centrado perfecto vertical y horizontal.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Qué hace la propiedad flex-wrap: wrap?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Cambia la dirección del flex a vertical</div>
+                    <div class="quiz-option">B) Permite que los items se ajusten en múltiples líneas cuando no hay espacio</div>
+                    <div class="quiz-option">C) Hace que todos los items tengan el mismo tamaño</div>
+                    <div class="quiz-option">D) Invierte el orden de los elementos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> flex-wrap: wrap permite que los flex items se envuelvan en nuevas líneas cuando el espacio del contenedor no es suficiente, creando diseños multi-línea.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Cuál es el valor por defecto de flex-direction?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) column</div>
+                    <div class="quiz-option">B) row-reverse</div>
+                    <div class="quiz-option">C) row</div>
+                    <div class="quiz-option">D) column-reverse</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: C)</strong> Por defecto, flex-direction es row, lo que significa que los elementos se organizan horizontalmente de izquierda a derecha.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Barra de Navegación Responsiva</h3>
+                <p><strong>Objetivo:</strong> Crear una barra de navegación horizontal con logo a la izquierda y menú a la derecha</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Usa display: flex en el contenedor principal</li>
+                    <li>El logo debe estar a la izquierda y el menú a la derecha (justify-content: space-between)</li>
+                    <li>Los items del menú deben estar centrados verticalmente (align-items: center)</li>
+                    <li>En móvil, usa flex-direction: column para apilar los elementos</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Agrega un efecto hover a los links del menú usando transiciones</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Galería de Cards Flexibles</h3>
+                <p><strong>Objetivo:</strong> Crear una galería de 6 cards que se adapten automáticamente al tamaño de pantalla</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Usa flex-wrap: wrap para permitir saltos de línea</li>
+                    <li>Cada card debe tener flex-basis: 300px con flex-grow: 1</li>
+                    <li>Agrega gap: 20px entre las cards</li>
+                    <li>Las cards deben centrar su contenido interno usando Flexbox</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Usa flex-shrink para evitar que las cards se encojan demasiado en pantallas pequeñas</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
         <div class="slide">
             <h2>🎉 ¡Domina Flexbox!</h2>
             
@@ -402,7 +563,7 @@
         <!-- Controles -->
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
-            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
             <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>

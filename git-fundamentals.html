@@ -262,6 +262,73 @@
             text-align: center;
             margin: 20px 0;
         }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -589,7 +656,107 @@
             </div>
         </div>
 
-        <!-- Slide 12: Conclusión -->
+        <!-- Slide 12: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de Git:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre git pull y git fetch?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia, son el mismo comando</div>
+                    <div class="quiz-option">B) git pull descarga y fusiona automáticamente, git fetch solo descarga</div>
+                    <div class="quiz-option">C) git fetch es más rápido que git pull</div>
+                    <div class="quiz-option">D) git pull solo funciona en la rama main</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> git pull = git fetch + git merge. Pull descarga cambios del remoto y los fusiona automáticamente. Fetch solo descarga sin fusionar, permitiéndote revisar los cambios primero.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué hace el comando git add?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Agrega archivos permanentemente al repositorio</div>
+                    <div class="quiz-option">B) Prepara cambios en el staging area para el próximo commit</div>
+                    <div class="quiz-option">C) Crea un nuevo archivo en el proyecto</div>
+                    <div class="quiz-option">D) Agrega un nuevo colaborador al repositorio</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> git add prepara (stage) los cambios para el próximo commit. Los cambios van al staging area, donde puedes revisarlos antes de hacer commit permanente.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuándo deberías usar branches (ramas)?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Solo cuando trabajas en equipo</div>
+                    <div class="quiz-option">B) Nunca, complican el workflow</div>
+                    <div class="quiz-option">C) Para desarrollar features nuevas sin afectar el código principal</div>
+                    <div class="quiz-option">D) Solo para proyectos grandes</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: C)</strong> Las branches permiten trabajar en features, fixes o experimentos de forma aislada sin afectar la rama principal (main). Cuando la feature está lista, se fusiona con merge.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Qué es un commit en Git?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Una copia de seguridad del proyecto</div>
+                    <div class="quiz-option">B) Un snapshot (instantánea) de cambios guardados en el historial</div>
+                    <div class="quiz-option">C) Un mensaje para otros desarrolladores</div>
+                    <div class="quiz-option">D) Una rama temporal</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> Un commit es un snapshot (instantánea) permanente de los cambios en el historial de Git. Cada commit tiene un mensaje descriptivo y un hash único identificador.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Práctica de Workflow Git Completo</h3>
+                <p><strong>Objetivo:</strong> Practicar el workflow básico de Git en un proyecto de prueba</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un nuevo directorio y ejecuta git init</li>
+                    <li>Crea un archivo index.html con contenido básico</li>
+                    <li>Usa git status para ver archivos sin rastrear</li>
+                    <li>Usa git add index.html para agregarlo al staging</li>
+                    <li>Haz un commit con mensaje descriptivo</li>
+                    <li>Modifica el archivo y haz otro commit</li>
+                    <li>Usa git log para ver el historial</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Configura un repositorio remoto en GitHub y haz push de tus commits</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Crear y Fusionar una Feature Branch</h3>
+                <p><strong>Objetivo:</strong> Practicar el trabajo con ramas para desarrollar features</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Desde main, crea una rama llamada feature-navbar con git checkout -b</li>
+                    <li>Crea un archivo navbar.html en la nueva rama</li>
+                    <li>Haz add y commit de los cambios en feature-navbar</li>
+                    <li>Vuelve a la rama main con git checkout main</li>
+                    <li>Fusiona la feature branch con git merge feature-navbar</li>
+                    <li>Verifica que navbar.html ahora existe en main</li>
+                    <li>Elimina la feature branch con git branch -d feature-navbar</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Crea dos branches simultáneas con diferentes features y fusiόnalas ambas a main</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Conclusión -->
         <div class="slide">
             <h2>🎉 ¡Domina Git!</h2>
 
@@ -613,7 +780,7 @@
         <!-- Controles -->
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
-            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
             <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>

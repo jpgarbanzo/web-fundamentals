@@ -197,6 +197,73 @@
         .gap-demo {
             gap: 20px;
         }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -413,7 +480,101 @@
             <p style="margin-top: 40px;">Grid es ideal para layouts de página completa y diseños bidimensionales complejos.</p>
         </div>
 
-        <!-- Slide 10: Conclusión -->
+        <!-- Slide 10: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de CSS Grid:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Qué significa la unidad "fr" en CSS Grid?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Fracción de píxeles</div>
+                    <div class="quiz-option">B) Fracción del espacio disponible en el grid</div>
+                    <div class="quiz-option">C) Frame rate</div>
+                    <div class="quiz-option">D) Fixed ratio</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> "fr" significa "fraction" y representa una fracción del espacio disponible en el contenedor grid. 1fr 2fr significa que la segunda columna tendrá el doble de ancho que la primera.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Cuál es la diferencia entre grid-template-columns: repeat(3, 1fr) y grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia, hacen lo mismo</div>
+                    <div class="quiz-option">B) La primera crea exactamente 3 columnas, la segunda ajusta automáticamente según el espacio</div>
+                    <div class="quiz-option">C) auto-fit no funciona en Grid</div>
+                    <div class="quiz-option">D) repeat(3, 1fr) es más rápido</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> repeat(3, 1fr) crea exactamente 3 columnas fijas, mientras que auto-fit con minmax crea tantas columnas como quepan en el espacio disponible (mínimo 200px cada una), haciendo el diseño responsivo sin media queries.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Para qué sirve grid-template-areas?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Para crear animaciones en el grid</div>
+                    <div class="quiz-option">B) Para nombrar áreas del grid y asignarlas visualmente a elementos</div>
+                    <div class="quiz-option">C) Para calcular el área total del grid</div>
+                    <div class="quiz-option">D) Para definir el padding de cada celda</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> grid-template-areas permite crear un mapa visual del layout asignando nombres a áreas rectangulares del grid, haciendo el código más legible y semántico (ej: "header header" / "sidebar main").
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Qué hace grid-column: span 2?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Hace que el elemento ocupe 2 filas</div>
+                    <div class="quiz-option">B) Hace que el elemento ocupe 2 columnas</div>
+                    <div class="quiz-option">C) Crea 2 copias del elemento</div>
+                    <div class="quiz-option">D) Agrega 2px de espacio alrededor</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> grid-column: span 2 hace que un elemento grid se extienda a través de 2 columnas. Para expandir filas se usa grid-row: span 2.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Layout de Blog con Grid Areas</h3>
+                <p><strong>Objetivo:</strong> Crear un layout de blog completo usando grid-template-areas</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un grid con header (ancho completo), sidebar (1/4), main (3/4) y footer (ancho completo)</li>
+                    <li>Usa grid-template-areas para definir la estructura visualmente</li>
+                    <li>Agrega gap: 20px entre las secciones</li>
+                    <li>Asigna cada sección a su área con grid-area</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Reorganiza el layout en móvil (sidebar debajo de main) usando media queries</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Galería Responsiva Automática</h3>
+                <p><strong>Objetivo:</strong> Crear una galería de imágenes que se ajuste automáticamente sin media queries</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Usa grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))</li>
+                    <li>Crea al menos 8 cards de imágenes</li>
+                    <li>Haz que la primera card ocupe 2 columnas (grid-column: span 2)</li>
+                    <li>Agrega gap: 15px entre las cards</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Usa object-fit: cover en las imágenes para que mantengan proporción sin deformarse</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
         <div class="slide">
             <h2>🎉 ¡Domina CSS Grid!</h2>
 
@@ -440,7 +601,7 @@
         <!-- Controles -->
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
-            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">10</span></span>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
             <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>

@@ -221,6 +221,73 @@
             margin: 15px 0;
             border-radius: 5px;
         }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -472,7 +539,107 @@
             </div>
         </div>
 
-        <!-- Slide 12: Conclusión -->
+        <!-- Slide 12: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de HTML Semántico:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre &lt;article&gt; y &lt;section&gt;?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia, son sinónimos</div>
+                    <div class="quiz-option">B) &lt;article&gt; es contenido independiente, &lt;section&gt; agrupa contenido relacionado temáticamente</div>
+                    <div class="quiz-option">C) &lt;section&gt; es más moderno que &lt;article&gt;</div>
+                    <div class="quiz-option">D) &lt;article&gt; solo es para blogs</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> &lt;article&gt; es para contenido independiente que tiene sentido por sí solo (posts, noticias). &lt;section&gt; agrupa contenido relacionado temáticamente y es parte de algo más grande.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Por qué usar HTML semántico en lugar de divs?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Solo por estética del código</div>
+                    <div class="quiz-option">B) Mejora accesibilidad, SEO y mantenibilidad del código</div>
+                    <div class="quiz-option">C) Los divs están deprecados</div>
+                    <div class="quiz-option">D) Es obligatorio por ley</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> HTML semántico mejora la accesibilidad (lectores de pantalla), SEO (motores de búsqueda entienden la estructura) y hace el código más legible y mantenible para desarrolladores.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuál es la diferencia entre &lt;strong&gt; y &lt;b&gt;?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) &lt;strong&gt; tiene significado semántico (importancia), &lt;b&gt; es solo visual</div>
+                    <div class="quiz-option">B) No hay diferencia, son exactamente iguales</div>
+                    <div class="quiz-option">C) &lt;b&gt; es más moderno que &lt;strong&gt;</div>
+                    <div class="quiz-option">D) &lt;strong&gt; solo funciona en HTML5</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: A)</strong> &lt;strong&gt; indica que el texto es importante (significado semántico) y los lectores de pantalla lo enfatizan. &lt;b&gt; solo hace el texto negrita visualmente sin significado.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Por qué es importante el elemento &lt;label&gt; en formularios?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Solo para estética</div>
+                    <div class="quiz-option">B) Mejora accesibilidad y permite hacer clic en el label para seleccionar el input</div>
+                    <div class="quiz-option">C) Es opcional y no afecta la funcionalidad</div>
+                    <div class="quiz-option">D) Solo funciona con inputs de texto</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> &lt;label&gt; asociado con un input mejora la accesibilidad (lectores de pantalla leen la etiqueta) y permite hacer clic en el label para activar el input, mejorando la experiencia de usuario.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Convertir "Div Soup" a HTML Semántico</h3>
+                <p><strong>Objetivo:</strong> Transformar una página hecha solo con divs a HTML semántico</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Toma una página existente con múltiples divs (o crea una)</li>
+                    <li>Reemplaza &lt;div class="header"&gt; con &lt;header&gt;</li>
+                    <li>Reemplaza &lt;div class="nav"&gt; con &lt;nav&gt;</li>
+                    <li>Reemplaza &lt;div class="content"&gt; con &lt;main&gt;</li>
+                    <li>Identifica secciones y usa &lt;section&gt; y &lt;article&gt; apropiadamente</li>
+                    <li>Reemplaza &lt;div class="footer"&gt; con &lt;footer&gt;</li>
+                    <li>Usa &lt;figure&gt; y &lt;figcaption&gt; para imágenes con descripciones</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Valida la accesibilidad con herramientas como WAVE o Lighthouse</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Construir Layout de Blog Accesible</h3>
+                <p><strong>Objetivo:</strong> Crear la estructura de un blog usando HTML semántico completo</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Usa &lt;header&gt; con logo y &lt;nav&gt; para navegación principal</li>
+                    <li>En &lt;main&gt;, crea 3 posts usando &lt;article&gt;</li>
+                    <li>Cada artículo debe tener: &lt;header&gt; con &lt;h2&gt; y &lt;time&gt;, contenido en &lt;section&gt;s</li>
+                    <li>Agrega un &lt;aside&gt; con "posts relacionados"</li>
+                    <li>Usa &lt;footer&gt; con información de copyright</li>
+                    <li>Todos los formularios deben usar &lt;label&gt; asociados</li>
+                    <li>Usa &lt;strong&gt; y &lt;em&gt; para énfasis semántico (no &lt;b&gt; o &lt;i&gt;)</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Agrega atributos ARIA solo donde sea absolutamente necesario</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Conclusión -->
         <div class="slide">
             <h2>🎉 ¡Domina HTML Semántico!</h2>
 
@@ -494,7 +661,7 @@
         <!-- Controles -->
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
-            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
             <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>
