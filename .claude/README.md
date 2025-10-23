@@ -51,6 +51,8 @@ A ready-to-use HTML template with all required structure and styling. This file 
 ## Existing Lessons
 
 Current lesson files that follow these guidelines:
+- `css-properties.html` - Common CSS Properties (12 slides)
+- `css-selectors.html` - CSS Selectors (12 slides)
 - `flexbox.html` - CSS Flexbox (10 slides)
 - `grid.html` - CSS Grid (10 slides)
 - `z-index.html` - Z-Index and Stacking Context (10 slides)

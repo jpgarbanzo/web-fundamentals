@@ -4,6 +4,29 @@ Interactive slideshow presentations for learning web development fundamentals. A
 
 ## Available Lessons
 
+### CSS Fundamentals
+
+- **[css-properties.html](css-properties.html)** - Common CSS Properties
+  - Essential CSS properties every developer should know
+  - Color and background properties
+  - Typography: font-family, font-size, font-weight, line-height
+  - Box model: margin, padding, border, width, height
+  - Display, position, and layout properties
+  - Visual effects: opacity, transform, box-shadow
+  - Shorthand properties for cleaner code
+  - 12 slides with live examples and demos
+
+- **[css-selectors.html](css-selectors.html)** - CSS Selectors
+  - Complete guide to all CSS selector types
+  - Basic selectors: element, class, ID
+  - Attribute selectors with patterns
+  - Combinators: descendant, child, adjacent, sibling
+  - Pseudo-classes: :hover, :focus, :nth-child, :not
+  - Pseudo-elements: ::before, ::after, ::first-letter
+  - Selector specificity and best practices
+  - Modern selectors: :is(), :where(), :has()
+  - 12 slides with selector examples and specificity table
+
 ### CSS Layout & Positioning
 
 - **[flexbox.html](flexbox.html)** - CSS Flexbox
@@ -108,6 +131,8 @@ Or use the Claude Code slash command:
 
 ```
 web-fundamentals/
+├── css-properties.html    # Common CSS Properties lesson
+├── css-selectors.html     # CSS Selectors lesson
 ├── flexbox.html           # CSS Flexbox lesson
 ├── grid.html              # CSS Grid lesson
 ├── z-index.html           # Z-Index lesson

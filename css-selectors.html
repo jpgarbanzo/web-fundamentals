@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selectores CSS - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .selector-demo {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .demo-box {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+
+        .demo-box.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .benefit-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .specificity-box {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Selectores CSS</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Selecciona elementos con precisión</p>
+            <p style="margin-top: 60px;">Los <strong>selectores CSS</strong> son patrones que indican qué elementos HTML deben recibir estilos específicos. Dominar los selectores te permite aplicar estilos de manera precisa y eficiente.</p>
+            <p>Desde selectores básicos hasta combinadores avanzados y pseudo-clases, esta lección cubre todas las formas de seleccionar elementos.</p>
+        </div>
+
+        <!-- Slide 2: Tipos de Selectores -->
+        <div class="slide">
+            <h2>Tipos de Selectores</h2>
+            <p>CSS ofrece múltiples formas de seleccionar elementos:</p>
+
+            <div class="benefit-box">
+                <strong>🎯 Básicos:</strong> Elemento, Clase, ID
+            </div>
+
+            <div class="benefit-box">
+                <strong>📋 Atributos:</strong> Selección por atributos HTML
+            </div>
+
+            <div class="benefit-box">
+                <strong>🔗 Combinadores:</strong> Relaciones entre elementos
+            </div>
+
+            <div class="benefit-box">
+                <strong>✨ Pseudo-clases:</strong> Estados especiales (:hover, :nth-child)
+            </div>
+
+            <div class="benefit-box">
+                <strong>🎨 Pseudo-elementos:</strong> Partes específicas (::before, ::after)
+            </div>
+
+            <p style="margin-top: 20px;">Cada tipo tiene su propósito y nivel de especificidad.</p>
+        </div>
+
+        <!-- Slide 3: Selectores Básicos -->
+        <div class="slide">
+            <h2>Selectores Básicos</h2>
+
+            <div class="code">
+                /* Selector Universal - Todos los elementos */<br>
+                * {<br>
+                &nbsp;&nbsp;margin: 0;<br>
+                }<br>
+                <br>
+                /* Selector de Elemento - Por etiqueta HTML */<br>
+                p {<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }<br>
+                <br>
+                /* Selector de Clase - Reutilizable */<br>
+                .mi-clase {<br>
+                &nbsp;&nbsp;background: yellow;<br>
+                }<br>
+                <br>
+                /* Selector de ID - Único por página */<br>
+                #mi-id {<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <div class="selector-demo">
+                    <div class="demo-box">Elemento &lt;div&gt;</div>
+                    <div class="demo-box selected">Clase .selected</div>
+                    <div class="demo-box">ID #unico</div>
+                </div>
+            </div>
+
+            <p><strong>Recomendación:</strong> Prefiere clases sobre IDs para estilos.</p>
+        </div>
+
+        <!-- Slide 4: Selectores de Atributo -->
+        <div class="slide">
+            <h2>Selectores de Atributo</h2>
+            <p>Seleccionan elementos según sus atributos HTML:</p>
+
+            <div class="code">
+                /* Tiene el atributo */<br>
+                [disabled] { opacity: 0.5; }<br>
+                <br>
+                /* Atributo con valor exacto */<br>
+                [type="text"] { border: 1px solid blue; }<br>
+                <br>
+                /* Atributo que contiene */<br>
+                [class*="btn"] { padding: 10px; }<br>
+                <br>
+                /* Atributo que comienza con */<br>
+                [href^="https"] { color: green; }<br>
+                <br>
+                /* Atributo que termina con */<br>
+                [src$=".jpg"] { border: 2px solid red; }<br>
+                <br>
+                /* Atributo que contiene palabra */<br>
+                [class~="active"] { font-weight: bold; }
+            </div>
+
+            <ul>
+                <li><span class="highlight">[attr]</span> - Tiene el atributo</li>
+                <li><span class="highlight">[attr="value"]</span> - Valor exacto</li>
+                <li><span class="highlight">[attr*="value"]</span> - Contiene</li>
+                <li><span class="highlight">[attr^="value"]</span> - Comienza con</li>
+                <li><span class="highlight">[attr$="value"]</span> - Termina con</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Combinadores -->
+        <div class="slide">
+            <h2>Combinadores</h2>
+            <p>Seleccionan elementos según su relación con otros:</p>
+
+            <div class="code">
+                /* Descendiente (espacio) - Cualquier nivel */<br>
+                div p { color: blue; }<br>
+                <br>
+                /* Hijo directo (>) - Solo primer nivel */<br>
+                ul > li { list-style: none; }<br>
+                <br>
+                /* Hermano adyacente (+) - Inmediatamente después */<br>
+                h2 + p { font-weight: bold; }<br>
+                <br>
+                /* Hermanos generales (~) - Todos después */<br>
+                h2 ~ p { color: gray; }
+            </div>
+
+            <div class="demo-container">
+                <div class="selector-demo">
+                    <div style="background: white; padding: 15px; border-radius: 5px;">
+                        <strong>Padre &lt;div&gt;</strong>
+                        <p style="margin: 10px 0; padding: 10px; background: #667eea; color: white; border-radius: 5px;">Hijo directo &lt;p&gt;</p>
+                        <div style="padding: 10px; background: #e0e7ff; border-radius: 5px; margin-top: 10px;">
+                            <p style="margin: 5px 0; padding: 8px; background: #f59e0b; color: white; border-radius: 5px;">Descendiente &lt;p&gt;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p><strong>Espacio:</strong> cualquier descendiente | <strong>&gt;:</strong> solo hijos directos</p>
+        </div>
+
+        <!-- Slide 6: Pseudo-clases - Estados -->
+        <div class="slide">
+            <h2>Pseudo-clases de Estado</h2>
+            <p>Seleccionan elementos en estados específicos:</p>
+
+            <div class="code">
+                /* Estados de interacción */<br>
+                a:hover { color: red; }<br>
+                a:active { color: blue; }<br>
+                a:visited { color: purple; }<br>
+                <br>
+                /* Estados de formulario */<br>
+                input:focus { border: 2px solid blue; }<br>
+                input:disabled { opacity: 0.5; }<br>
+                input:checked { background: green; }<br>
+                input:valid { border-color: green; }<br>
+                input:invalid { border-color: red; }<br>
+                <br>
+                /* Otros estados */<br>
+                :target { background: yellow; }<br>
+                :empty { display: none; }
+            </div>
+
+            <ul>
+                <li><span class="highlight">:hover</span> - Mouse sobre el elemento</li>
+                <li><span class="highlight">:focus</span> - Elemento enfocado (inputs)</li>
+                <li><span class="highlight">:active</span> - Elemento activo (clic)</li>
+                <li><span class="highlight">:disabled</span> - Input deshabilitado</li>
+                <li><span class="highlight">:checked</span> - Checkbox/radio marcado</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Pseudo-clases - Posición -->
+        <div class="slide">
+            <h2>Pseudo-clases de Posición</h2>
+            <p>Seleccionan elementos según su posición:</p>
+
+            <div class="code">
+                /* Posición específica */<br>
+                li:first-child { font-weight: bold; }<br>
+                li:last-child { border-bottom: none; }<br>
+                li:nth-child(3) { color: red; }<br>
+                <br>
+                /* Patrones */<br>
+                li:nth-child(odd) { background: #f0f0f0; }  /* Impares */<br>
+                li:nth-child(even) { background: white; }   /* Pares */<br>
+                li:nth-child(3n) { color: blue; }           /* Cada 3 */<br>
+                li:nth-child(3n+1) { color: green; }        /* 1, 4, 7... */<br>
+                <br>
+                /* Por tipo */<br>
+                p:first-of-type { margin-top: 0; }<br>
+                p:last-of-type { margin-bottom: 0; }<br>
+                <br>
+                /* Único */<br>
+                p:only-child { text-align: center; }
+            </div>
+
+            <div class="benefit-box">
+                <strong>💡 Diferencia:</strong> :nth-child cuenta todos los hijos, :nth-of-type solo del mismo tipo.
+            </div>
+        </div>
+
+        <!-- Slide 8: Pseudo-elementos -->
+        <div class="slide">
+            <h2>Pseudo-elementos</h2>
+            <p>Seleccionan partes específicas de elementos (nota: doble ::):</p>
+
+            <div class="code">
+                /* Contenido generado */<br>
+                .elemento::before {<br>
+                &nbsp;&nbsp;content: "→ ";<br>
+                &nbsp;&nbsp;color: blue;<br>
+                }<br>
+                <br>
+                .elemento::after {<br>
+                &nbsp;&nbsp;content: " ✓";<br>
+                &nbsp;&nbsp;color: green;<br>
+                }<br>
+                <br>
+                /* Primera letra/línea */<br>
+                p::first-letter {<br>
+                &nbsp;&nbsp;font-size: 2em;<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }<br>
+                <br>
+                p::first-line {<br>
+                &nbsp;&nbsp;font-weight: bold;<br>
+                }<br>
+                <br>
+                /* Texto seleccionado */<br>
+                ::selection {<br>
+                &nbsp;&nbsp;background: yellow;<br>
+                &nbsp;&nbsp;color: black;<br>
+                }
+            </div>
+
+            <p><strong>Pseudo-elementos comunes:</strong></p>
+            <ul>
+                <li><span class="highlight">::before</span> - Antes del contenido</li>
+                <li><span class="highlight">::after</span> - Después del contenido</li>
+                <li><span class="highlight">::first-letter</span> - Primera letra</li>
+                <li><span class="highlight">::first-line</span> - Primera línea</li>
+                <li><span class="highlight">::selection</span> - Texto seleccionado</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Agrupación y Múltiples Selectores -->
+        <div class="slide">
+            <h2>Agrupación de Selectores</h2>
+            <p>Aplica los mismos estilos a múltiples selectores:</p>
+
+            <div class="code">
+                /* Agrupación con coma */<br>
+                h1, h2, h3 {<br>
+                &nbsp;&nbsp;font-family: Arial, sans-serif;<br>
+                &nbsp;&nbsp;color: #333;<br>
+                }<br>
+                <br>
+                /* Múltiples clases (AND) */<br>
+                .btn.primary {<br>
+                &nbsp;&nbsp;background: blue;<br>
+                &nbsp;&nbsp;color: white;<br>
+                }<br>
+                <br>
+                /* Clase + pseudo-clase */<br>
+                .link:hover {<br>
+                &nbsp;&nbsp;text-decoration: underline;<br>
+                }<br>
+                <br>
+                /* Combinación compleja */<br>
+                nav > ul > li:first-child a:hover {<br>
+                &nbsp;&nbsp;color: red;<br>
+                }
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Nota:</strong> .btn.primary (sin espacio) = elemento con AMBAS clases. .btn .primary (con espacio) = .primary dentro de .btn.
+            </div>
+        </div>
+
+        <!-- Slide 10: Especificidad -->
+        <div class="slide">
+            <h2>Especificidad de Selectores</h2>
+            <p>Cuando múltiples reglas afectan un elemento, gana la más específica:</p>
+
+            <div class="specificity-box">
+                <table>
+                    <tr>
+                        <th>Selector</th>
+                        <th>Especificidad</th>
+                        <th>Puntos</th>
+                    </tr>
+                    <tr>
+                        <td>Inline style</td>
+                        <td>1,0,0,0</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <td>#id</td>
+                        <td>0,1,0,0</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>.class, [attr], :pseudo-class</td>
+                        <td>0,0,1,0</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>elemento, ::pseudo-element</td>
+                        <td>0,0,0,1</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="code">
+                p { color: black; }                /* 1 punto */<br>
+                .texto { color: blue; }            /* 10 puntos */<br>
+                #titulo { color: red; }            /* 100 puntos */<br>
+                div p.texto { color: green; }      /* 12 puntos */<br>
+                #titulo.destacado { color: purple; } /* 110 puntos */
+            </div>
+
+            <div class="benefit-box">
+                <strong>💡 Regla:</strong> Suma los valores. Mayor especificidad gana. Si empatan, gana el último definido.
+            </div>
+        </div>
+
+        <!-- Slide 11: Selectores Modernos -->
+        <div class="slide">
+            <h2>Selectores CSS Modernos</h2>
+            <p>Selectores nuevos y útiles:</p>
+
+            <div class="code">
+                /* :not() - Negación */<br>
+                p:not(.especial) { color: gray; }<br>
+                <br>
+                /* :is() - Simplifica agrupación */<br>
+                :is(h1, h2, h3) { margin-top: 0; }<br>
+                <br>
+                /* :where() - Especificidad 0 */<br>
+                :where(h1, h2, h3) { margin-bottom: 1rem; }<br>
+                <br>
+                /* :has() - Selector padre (nuevo) */<br>
+                div:has(> img) { padding: 20px; }<br>
+                <br>
+                /* :nth-last-child() - Desde el final */<br>
+                li:nth-last-child(2) { font-weight: bold; }
+            </div>
+
+            <ul>
+                <li><span class="highlight">:not()</span> - Excluye elementos</li>
+                <li><span class="highlight">:is()</span> - Lista de selectores (especificidad del más alto)</li>
+                <li><span class="highlight">:where()</span> - Como :is() pero especificidad 0</li>
+                <li><span class="highlight">:has()</span> - Selecciona padre según sus hijos</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina los Selectores CSS!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li><span class="property">elemento</span>, <span class="property">.clase</span>, <span class="property">#id</span> - Selectores básicos</li>
+                <li><span class="highlight">[attr]</span> - Selección por atributos HTML</li>
+                <li>Combinadores: <span class="highlight">espacio</span> (descendiente), <span class="highlight">&gt;</span> (hijo), <span class="highlight">+</span> (adyacente), <span class="highlight">~</span> (hermanos)</li>
+                <li>Pseudo-clases de estado: <span class="highlight">:hover</span>, <span class="highlight">:focus</span>, <span class="highlight">:active</span></li>
+                <li>Pseudo-clases de posición: <span class="highlight">:nth-child()</span>, <span class="highlight">:first-child</span>, <span class="highlight">:last-child</span></li>
+                <li>Pseudo-elementos: <span class="highlight">::before</span>, <span class="highlight">::after</span>, <span class="highlight">::first-letter</span></li>
+                <li>La <strong>especificidad</strong> determina qué estilos se aplican</li>
+                <li>Usa <span class="highlight">:not()</span>, <span class="highlight">:is()</span>, <span class="highlight">:has()</span> para selectores avanzados</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Los selectores precisos hacen el CSS más mantenible!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>
