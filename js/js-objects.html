@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetos y JSON en JavaScript - Presentación Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .slideshow-container {
+            max-width: 900px; width: 100%; background: white;
+            border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .slide { display: none; padding: 60px; min-height: 600px; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        h2 { color: #764ba2; font-size: 2em; margin-bottom: 30px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #333; margin-bottom: 20px; }
+        .code {
+            background: #f5f5f5; border-left: 4px solid #667eea;
+            padding: 15px; margin: 20px 0;
+            font-family: 'Courier New', monospace; border-radius: 5px;
+        }
+        .demo-container {
+            border: 2px solid #667eea; padding: 20px; margin: 20px 0;
+            border-radius: 10px; background: #f9f9f9;
+        }
+        .controls {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 60px; background: #f5f5f5;
+        }
+        button {
+            background: #667eea; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .slide-counter { font-size: 1.2em; color: #667eea; font-weight: bold; }
+        ul { margin-left: 30px; margin-bottom: 20px; }
+        li { font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 10px; }
+        .property { color: #764ba2; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .quiz-question {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #667eea;
+        }
+        .quiz-options { margin: 15px 0; }
+        .quiz-option {
+            background: white; padding: 12px; margin: 8px 0;
+            border-radius: 5px; border: 2px solid #ddd;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #667eea; background: #f9f9f9; }
+        .quiz-answer {
+            background: #d4edda; border-left: 4px solid #28a745;
+            padding: 15px; margin-top: 10px; border-radius: 5px; display: none;
+        }
+        .quiz-answer.show { display: block; }
+        .show-answer-btn {
+            background: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+        }
+        .show-answer-btn:hover { background: #764ba2; }
+        .exercise-box {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #10b981;
+        }
+        .exercise-box h3 { color: #10b981; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide active">
+            <h1>🎯 Objetos en JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Estructuras de datos clave-valor poderosas</p>
+            <p style="margin-top: 60px;">Los objetos son colecciones de propiedades (pares clave-valor) que representan entidades del mundo real.</p>
+            <p>JavaScript es un lenguaje basado en objetos - casi todo es un objeto.</p>
+        </div>
+
+        <div class="slide">
+            <h2>¿Qué son los Objetos?</h2>
+            <p>Los objetos son <strong>colecciones de pares clave-valor</strong>:</p>
+            <div class="code">
+                // Notación literal de objetos<br>
+                const persona = {<br>
+                &nbsp;&nbsp;nombre: "Juan",<br>
+                &nbsp;&nbsp;edad: 30,<br>
+                &nbsp;&nbsp;ciudad: "Madrid",<br>
+                &nbsp;&nbsp;activo: true<br>
+                };<br>
+                <br>
+                // Objeto vacío<br>
+                const vacio = {};<br>
+                <br>
+                // Objetos anidados<br>
+                const usuario = {<br>
+                &nbsp;&nbsp;nombre: "Ana",<br>
+                &nbsp;&nbsp;direccion: {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;calle: "Principal",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;numero: 123<br>
+                &nbsp;&nbsp;}<br>
+                };
+            </div>
+            <p><strong>Características:</strong></p>
+            <ul>
+                <li><span class="property">Claves:</span> Siempre strings (o símbolos)</li>
+                <li><span class="property">Valores:</span> Cualquier tipo de dato</li>
+                <li><span class="property">Dinámicos:</span> Agregar/eliminar propiedades en cualquier momento</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>Acceso a Propiedades</h2>
+            <p>Dos formas de acceder a propiedades:</p>
+            <div class="code">
+                const persona = {<br>
+                &nbsp;&nbsp;nombre: "María",<br>
+                &nbsp;&nbsp;edad: 25,<br>
+                &nbsp;&nbsp;"nombre completo": "María García"<br>
+                };<br>
+                <br>
+                // DOT NOTATION (notación de punto)<br>
+                console.log(persona.nombre); // "María"<br>
+                console.log(persona.edad); // 25<br>
+                <br>
+                // BRACKET NOTATION (notación de corchetes)<br>
+                console.log(persona["nombre"]); // "María"<br>
+                console.log(persona["nombre completo"]); // "María García"<br>
+                <br>
+                // Bracket con variables<br>
+                const prop = "edad";<br>
+                console.log(persona[prop]); // 25
+            </div>
+            <div class="demo-container">
+                <p><strong>Usa bracket notation cuando:</strong> la clave tiene espacios, caracteres especiales, o es una variable</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Agregar, Modificar y Eliminar</h2>
+            <div class="code">
+                const usuario = {<br>
+                &nbsp;&nbsp;nombre: "Carlos",<br>
+                &nbsp;&nbsp;edad: 28<br>
+                };<br>
+                <br>
+                // AGREGAR propiedades<br>
+                usuario.email = "carlos@example.com";<br>
+                usuario["telefono"] = "555-1234";<br>
+                <br>
+                // MODIFICAR propiedades<br>
+                usuario.edad = 29;<br>
+                usuario["nombre"] = "Carlos López";<br>
+                <br>
+                // ELIMINAR propiedades<br>
+                delete usuario.telefono;<br>
+                <br>
+                // Verificar si existe propiedad<br>
+                console.log("email" in usuario); // true<br>
+                console.log(usuario.hasOwnProperty("edad")); // true
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Métodos en Objetos</h2>
+            <p>Las funciones dentro de objetos se llaman métodos:</p>
+            <div class="code">
+                const persona = {<br>
+                &nbsp;&nbsp;nombre: "Ana",<br>
+                &nbsp;&nbsp;edad: 30,<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// Método tradicional<br>
+                &nbsp;&nbsp;saludar: function() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return "Hola, soy " + this.nombre;<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// Método abreviado (ES6)<br>
+                &nbsp;&nbsp;cumplirAnios() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;this.edad++;<br>
+                &nbsp;&nbsp;}<br>
+                };<br>
+                <br>
+                console.log(persona.saludar()); // "Hola, soy Ana"<br>
+                persona.cumplirAnios();<br>
+                console.log(persona.edad); // 31
+            </div>
+            <div class="demo-container">
+                <p><strong>this:</strong> Referencia al objeto actual (contexto de ejecución)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Object.keys(), values(), entries()</h2>
+            <p>Métodos útiles para trabajar con objetos:</p>
+            <div class="code">
+                const producto = {<br>
+                &nbsp;&nbsp;nombre: "Laptop",<br>
+                &nbsp;&nbsp;precio: 999,<br>
+                &nbsp;&nbsp;stock: 5<br>
+                };<br>
+                <br>
+                // KEYS - Devuelve array de claves<br>
+                const claves = Object.keys(producto);<br>
+                // ["nombre", "precio", "stock"]<br>
+                <br>
+                // VALUES - Devuelve array de valores<br>
+                const valores = Object.values(producto);<br>
+                // ["Laptop", 999, 5]<br>
+                <br>
+                // ENTRIES - Devuelve array de pares [clave, valor]<br>
+                const pares = Object.entries(producto);<br>
+                // [["nombre", "Laptop"], ["precio", 999], ["stock", 5]]<br>
+                <br>
+                // Iterar sobre propiedades<br>
+                for (const [clave, valor] of Object.entries(producto)) {<br>
+                &nbsp;&nbsp;console.log(`${clave}: ${valor}`);<br>
+                }
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Desestructuración de Objetos</h2>
+            <p>Extrae propiedades fácilmente (ES6):</p>
+            <div class="code">
+                const usuario = {<br>
+                &nbsp;&nbsp;nombre: "Pedro",<br>
+                &nbsp;&nbsp;edad: 35,<br>
+                &nbsp;&nbsp;ciudad: "Barcelona"<br>
+                };<br>
+                <br>
+                // Desestructuración básica<br>
+                const { nombre, edad } = usuario;<br>
+                console.log(nombre); // "Pedro"<br>
+                <br>
+                // Renombrar variables<br>
+                const { nombre: nombreUsuario } = usuario;<br>
+                console.log(nombreUsuario); // "Pedro"<br>
+                <br>
+                // Valores por defecto<br>
+                const { pais = "España" } = usuario;<br>
+                console.log(pais); // "España"<br>
+                <br>
+                // Desestructuración anidada<br>
+                const user = { info: { email: "test@test.com" } };<br>
+                const { info: { email } } = user;<br>
+                console.log(email); // "test@test.com"
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Spread Operator con Objetos</h2>
+            <p>Copia y combina objetos fácilmente:</p>
+            <div class="code">
+                const base = {<br>
+                &nbsp;&nbsp;nombre: "Juan",<br>
+                &nbsp;&nbsp;edad: 25<br>
+                };<br>
+                <br>
+                // COPIAR objeto<br>
+                const copia = { ...base };<br>
+                <br>
+                // AGREGAR propiedades<br>
+                const completo = {<br>
+                &nbsp;&nbsp;...base,<br>
+                &nbsp;&nbsp;ciudad: "Madrid",<br>
+                &nbsp;&nbsp;activo: true<br>
+                };<br>
+                <br>
+                // COMBINAR objetos<br>
+                const obj1 = { a: 1, b: 2 };<br>
+                const obj2 = { c: 3, d: 4 };<br>
+                const combinado = { ...obj1, ...obj2 };<br>
+                // { a: 1, b: 2, c: 3, d: 4 }<br>
+                <br>
+                // SOBRESCRIBIR propiedades<br>
+                const actualizado = { ...base, edad: 26 };
+            </div>
+            <div class="demo-container">
+                <p><strong>Nota:</strong> Spread hace copia superficial (shallow copy)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>¿Qué es JSON?</h2>
+            <p><strong>JSON (JavaScript Object Notation)</strong> es un formato de intercambio de datos:</p>
+            <div class="code">
+                // Objeto JavaScript<br>
+                const obj = {<br>
+                &nbsp;&nbsp;nombre: "Ana",<br>
+                &nbsp;&nbsp;edad: 30,<br>
+                &nbsp;&nbsp;activo: true<br>
+                };<br>
+                <br>
+                // JSON (string de texto)<br>
+                const json = '{"nombre":"Ana","edad":30,"activo":true}';<br>
+            </div>
+            <p><strong>Características de JSON:</strong></p>
+            <ul>
+                <li>Es un <span class="property">string de texto</span>, no un objeto JavaScript</li>
+                <li>Las claves <span class="property">siempre van entre comillas dobles</span></li>
+                <li>Solo permite: strings, números, booleanos, arrays, objetos, null</li>
+                <li>NO permite: funciones, undefined, Date, RegExp</li>
+                <li>Formato estándar para APIs y almacenamiento</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>JSON.stringify() y JSON.parse()</h2>
+            <div class="code">
+                const usuario = {<br>
+                &nbsp;&nbsp;nombre: "Carlos",<br>
+                &nbsp;&nbsp;edad: 28,<br>
+                &nbsp;&nbsp;hobbies: ["leer", "nadar"]<br>
+                };<br>
+                <br>
+                // STRINGIFY - Objeto a JSON string<br>
+                const jsonString = JSON.stringify(usuario);<br>
+                console.log(jsonString);<br>
+                // '{"nombre":"Carlos","edad":28,"hobbies":["leer","nadar"]}'<br>
+                console.log(typeof jsonString); // "string"<br>
+                <br>
+                // PARSE - JSON string a objeto<br>
+                const jsonData = '{"nombre":"Ana","edad":25}';<br>
+                const objeto = JSON.parse(jsonData);<br>
+                console.log(objeto.nombre); // "Ana"<br>
+                console.log(typeof objeto); // "object"<br>
+                <br>
+                // Stringify con formato (indentación)<br>
+                const pretty = JSON.stringify(usuario, null, 2);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            <ul>
+                <li><strong>Representar entidades:</strong> Usuarios, productos, configuraciones</li>
+                <li><strong>APIs REST:</strong> Enviar y recibir datos en formato JSON</li>
+                <li><strong>LocalStorage:</strong> Guardar objetos como strings (JSON.stringify)</li>
+                <li><strong>Configuraciones:</strong> Archivos de config (package.json, .eslintrc)</li>
+                <li><strong>Agrupación de datos:</strong> Datos relacionados en una estructura</li>
+                <li><strong>Respuestas de servidor:</strong> fetch devuelve JSON de APIs</li>
+                <li><strong>Desestructuración:</strong> Extraer props de objetos en parámetros</li>
+            </ul>
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo real: fetch API<br>
+                fetch('/api/users/1')<br>
+                &nbsp;&nbsp;.then(res => res.json()) // Parse JSON<br>
+                &nbsp;&nbsp;.then(user => console.log(user.nombre));<br>
+                <br>
+                // LocalStorage<br>
+                const data = { tema: "oscuro" };<br>
+                localStorage.setItem("config", JSON.stringify(data));<br>
+                const config = JSON.parse(localStorage.getItem("config"));
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuándo debes usar bracket notation en lugar de dot notation?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Siempre, es más seguro</div>
+                    <div class="quiz-option">B) Cuando la clave tiene espacios o es una variable</div>
+                    <div class="quiz-option">C) Solo con arrays</div>
+                    <div class="quiz-option">D) Nunca, dot notation es suficiente</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> Usa bracket notation cuando la clave tiene espacios, caracteres especiales, o cuando necesitas acceder usando una variable (obj[variable]).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué hace la desestructuración const {nombre, edad} = usuario?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Crea un nuevo objeto</div>
+                    <div class="quiz-option">B) Extrae nombre y edad como variables</div>
+                    <div class="quiz-option">C) Elimina propiedades del objeto</div>
+                    <div class="quiz-option">D) Combina dos objetos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> La desestructuración extrae propiedades del objeto y las asigna a variables con el mismo nombre.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. ¿Qué hace el spread operator {...obj, nueva: valor}?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Modifica obj agregando la nueva propiedad</div>
+                    <div class="quiz-option">B) Crea nuevo objeto con las propiedades de obj más nueva</div>
+                    <div class="quiz-option">C) Elimina todas las propiedades excepto nueva</div>
+                    <div class="quiz-option">D) No funciona con objetos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> El spread operator crea un NUEVO objeto copiando todas las propiedades de obj y agregando la nueva propiedad. No modifica obj original.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. ¿Cuál es la diferencia entre JSON.stringify y JSON.parse?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Son lo mismo</div>
+                    <div class="quiz-option">B) stringify convierte objeto a string, parse convierte string a objeto</div>
+                    <div class="quiz-option">C) stringify es para arrays, parse para objetos</div>
+                    <div class="quiz-option">D) parse es más rápido</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> JSON.stringify() convierte un objeto JavaScript a string JSON. JSON.parse() convierte un string JSON a objeto JavaScript.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. ¿Cuándo usarías JSON?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Para guardar objetos en localStorage</div>
+                    <div class="quiz-option">B) Para enviar datos a una API</div>
+                    <div class="quiz-option">C) Para recibir datos de un servidor</div>
+                    <div class="quiz-option">D) Todas las anteriores</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: D)</strong> JSON es el formato estándar para intercambio de datos: APIs, localStorage, archivos de configuración, etc.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Crear y Manipular Objetos</h3>
+                <p><strong>Objetivo:</strong> Practicar creación y métodos de objetos</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un objeto 'usuario' con nombre, email, edad</li>
+                    <li>Agrega un método saludar() que retorne "Hola, soy [nombre]"</li>
+                    <li>Agrega un método esMayorDeEdad() que retorne true si edad >= 18</li>
+                    <li>Agrega una nueva propiedad 'pais' usando dot notation</li>
+                    <li>Usa Object.keys() para obtener todas las propiedades</li>
+                    <li>Usa desestructuración para extraer nombre y email</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Crea una copia del objeto con spread y modifica la edad sin afectar el original</p>
+            </div>
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Trabajar con JSON</h3>
+                <p><strong>Objetivo:</strong> Dominar conversión JSON</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un objeto 'producto' con nombre, precio, stock, categorias (array)</li>
+                    <li>Convierte el objeto a JSON string con JSON.stringify()</li>
+                    <li>Imprime el JSON string en la consola</li>
+                    <li>Parsea el JSON string de vuelta a objeto con JSON.parse()</li>
+                    <li>Modifica el precio del objeto parseado</li>
+                    <li>Usa desestructuración para extraer nombre y precio</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Simula guardar en localStorage y luego recuperar el objeto</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎉 ¡Domina los Objetos y JSON!</h2>
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            <ul style="margin-top: 30px;">
+                <li>Objetos son colecciones de pares clave-valor</li>
+                <li>Dot notation vs bracket notation según el caso</li>
+                <li>this referencia al objeto en métodos</li>
+                <li>Object.keys(), values(), entries() para iterar</li>
+                <li>Desestructuración simplifica extraer propiedades</li>
+                <li>Spread operator copia y combina objetos</li>
+                <li>JSON es formato de texto para intercambio de datos</li>
+                <li>stringify convierte a JSON, parse convierte a objeto</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Los objetos son el corazón de JavaScript!</strong></p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            if (n >= totalSlides) { currentSlide = totalSlides - 1; }
+            else if (n < 0) { currentSlide = 0; }
+            else { currentSlide = n; }
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        showSlide(0);
+    </script>
+</body>
+</html>

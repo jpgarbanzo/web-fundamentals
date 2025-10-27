@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a JavaScript - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Introducción a JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">El lenguaje de programación que da vida a la web</p>
+            <p style="margin-top: 60px;">JavaScript es el lenguaje de programación más usado en el mundo, presente en prácticamente todos los sitios web modernos.</p>
+            <p>Permite crear experiencias interactivas, dinámicas y atractivas para los usuarios.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es JavaScript? -->
+        <div class="slide">
+            <h2>¿Qué es JavaScript?</h2>
+            <p>JavaScript es un lenguaje de programación <strong>interpretado</strong>, <strong>dinámico</strong> y <strong>orientado a objetos</strong> que permite agregar interactividad a las páginas web.</p>
+
+            <p><strong>Características principales:</strong></p>
+            <ul>
+                <li><span class="property">Lenguaje de Alto Nivel:</span> Fácil de leer y escribir para humanos</li>
+                <li><span class="property">Interpretado:</span> Se ejecuta directamente sin compilación previa</li>
+                <li><span class="property">Dinámicamente Tipado:</span> Las variables no tienen tipo fijo</li>
+                <li><span class="property">Basado en Prototipos:</span> Sistema de herencia flexible</li>
+                <li><span class="property">Funciones de Primera Clase:</span> Las funciones son valores</li>
+                <li><span class="property">Event-Driven:</span> Responde a eventos del usuario</li>
+            </ul>
+
+            <p style="margin-top: 30px;">JavaScript se ejecuta en el navegador (front-end) y también en el servidor (Node.js).</p>
+        </div>
+
+        <!-- Slide 3: Historia -->
+        <div class="slide">
+            <h2>Historia de JavaScript</h2>
+            <p><strong>1995:</strong> Brendan Eich creó JavaScript en solo 10 días mientras trabajaba en Netscape Navigator.</p>
+
+            <ul style="margin-top: 30px;">
+                <li><strong>1995:</strong> Creación inicial con el nombre "Mocha", luego "LiveScript"</li>
+                <li><strong>1996:</strong> Renombrado a "JavaScript" por marketing (Java era popular)</li>
+                <li><strong>1997:</strong> Estandarizado como ECMAScript (ES1)</li>
+                <li><strong>2009:</strong> ES5 - La versión más compatible</li>
+                <li><strong>2015:</strong> ES6/ES2015 - Revolución moderna (let, const, arrow functions, clases)</li>
+                <li><strong>2016-2024:</strong> Actualizaciones anuales (ES2016, ES2017... ES2024)</li>
+            </ul>
+
+            <p style="margin-top: 30px;">Hoy JavaScript es el único lenguaje de programación que funciona nativamente en todos los navegadores.</p>
+        </div>
+
+        <!-- Slide 4: JavaScript en el navegador -->
+        <div class="slide">
+            <h2>JavaScript en el Navegador</h2>
+            <p>Cada navegador tiene un <strong>motor de JavaScript</strong> que interpreta y ejecuta el código:</p>
+
+            <ul style="margin-top: 30px;">
+                <li><span class="property">V8:</span> Google Chrome, Edge, Opera, Node.js</li>
+                <li><span class="property">SpiderMonkey:</span> Mozilla Firefox</li>
+                <li><span class="property">JavaScriptCore:</span> Safari</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>Proceso de ejecución:</strong></p>
+            <ul>
+                <li>1. El navegador descarga el archivo HTML</li>
+                <li>2. Encuentra la etiqueta <span class="highlight">&lt;script&gt;</span></li>
+                <li>3. Descarga el código JavaScript</li>
+                <li>4. El motor lo parsea y compila a código de máquina</li>
+                <li>5. Ejecuta el código línea por línea</li>
+                <li>6. Puede modificar el HTML/CSS en tiempo real</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: ¿Qué es el DOM? -->
+        <div class="slide">
+            <h2>¿Qué es el DOM?</h2>
+            <p>El <span class="property">DOM</span> (Document Object Model) es una representación en forma de árbol del documento HTML.</p>
+
+            <div class="code">
+                &lt;html&gt;<br>
+                &nbsp;&nbsp;&lt;head&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Mi Página&lt;/title&gt;<br>
+                &nbsp;&nbsp;&lt;/head&gt;<br>
+                &nbsp;&nbsp;&lt;body&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hola Mundo&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Contenido&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+
+            <p><strong>El DOM permite a JavaScript:</strong></p>
+            <ul>
+                <li>Acceder y leer elementos HTML</li>
+                <li>Modificar contenido y atributos</li>
+                <li>Agregar o eliminar elementos</li>
+                <li>Cambiar estilos CSS</li>
+                <li>Responder a eventos del usuario (clicks, teclas, etc.)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Inline JavaScript -->
+        <div class="slide">
+            <h2>Forma 1: JavaScript Inline</h2>
+            <p>Código JavaScript directamente en atributos HTML:</p>
+
+            <div class="code">
+                &lt;button onclick="alert('¡Hola Mundo!')"&gt;<br>
+                &nbsp;&nbsp;Haz Click<br>
+                &lt;/button&gt;<br>
+                <br>
+                &lt;a href="#" onclick="console.log('Click'); return false;"&gt;<br>
+                &nbsp;&nbsp;Enlace<br>
+                &lt;/a&gt;
+            </div>
+
+            <p><strong>Ventajas:</strong></p>
+            <ul>
+                <li>Rápido para pruebas simples</li>
+                <li>No requiere archivo separado</li>
+            </ul>
+
+            <p><strong>Desventajas:</strong></p>
+            <ul>
+                <li>❌ Código difícil de mantener</li>
+                <li>❌ Mezcla HTML con lógica</li>
+                <li>❌ No se puede reutilizar</li>
+                <li>❌ Problemas de seguridad</li>
+            </ul>
+
+            <p style="margin-top: 20px;"><strong>Recomendación:</strong> Evitar en producción, usar solo para demos rápidas.</p>
+        </div>
+
+        <!-- Slide 7: Script Interno -->
+        <div class="slide">
+            <h2>Forma 2: &lt;script&gt; Interno</h2>
+            <p>Código JavaScript dentro de la etiqueta <span class="highlight">&lt;script&gt;</span> en el HTML:</p>
+
+            <div class="code">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html&gt;<br>
+                &lt;head&gt;<br>
+                &nbsp;&nbsp;&lt;title&gt;Mi Página&lt;/title&gt;<br>
+                &lt;/head&gt;<br>
+                &lt;body&gt;<br>
+                &nbsp;&nbsp;&lt;h1 id="titulo"&gt;Hola&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&lt;button id="btn"&gt;Click&lt;/button&gt;<br>
+                <br>
+                &nbsp;&nbsp;&lt;script&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;const btn = document.getElementById('btn');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;btn.addEventListener('click', function() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert('¡Hola!');<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                &nbsp;&nbsp;&lt;/script&gt;<br>
+                &lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+
+            <p><strong>Ventajas:</strong> Todo en un archivo, útil para scripts pequeños</p>
+            <p><strong>Desventajas:</strong> No se puede reutilizar entre páginas, archivo HTML grande</p>
+        </div>
+
+        <!-- Slide 8: Script Externo -->
+        <div class="slide">
+            <h2>Forma 3: &lt;script src&gt; Externo</h2>
+            <p>JavaScript en archivo separado (recomendado para producción):</p>
+
+            <div class="code">
+                &lt;!-- En el HTML --&gt;<br>
+                &lt;script src="script.js"&gt;&lt;/script&gt;<br>
+                <br>
+                &lt;!-- Con defer (recomendado) --&gt;<br>
+                &lt;script src="script.js" defer&gt;&lt;/script&gt;<br>
+                <br>
+                &lt;!-- Con async --&gt;<br>
+                &lt;script src="script.js" async&gt;&lt;/script&gt;
+            </div>
+
+            <p><strong>Diferencias importantes:</strong></p>
+            <ul>
+                <li><span class="property">Sin atributos:</span> Bloquea el parseo del HTML hasta cargar y ejecutar</li>
+                <li><span class="property">defer:</span> Descarga en paralelo, ejecuta después de parsear HTML (orden garantizado)</li>
+                <li><span class="property">async:</span> Descarga y ejecuta apenas esté listo (sin orden garantizado)</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>Recomendación:</strong> Usar <span class="highlight">defer</span> para scripts que interactúan con el DOM.</p>
+        </div>
+
+        <!-- Slide 9: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Validación de formularios:</strong> Verificar datos antes de enviar al servidor</li>
+                <li><strong>Interactividad:</strong> Menús desplegables, acordeones, tabs</li>
+                <li><strong>Manipulación del DOM:</strong> Crear, modificar, eliminar elementos dinámicamente</li>
+                <li><strong>Animaciones:</strong> Efectos visuales, transiciones, scroll effects</li>
+                <li><strong>AJAX/Fetch:</strong> Cargar datos sin recargar la página</li>
+                <li><strong>Single Page Applications (SPA):</strong> React, Vue, Angular</li>
+                <li><strong>APIs del navegador:</strong> Geolocalización, notificaciones, almacenamiento local</li>
+                <li><strong>Juegos en el navegador:</strong> Canvas, WebGL</li>
+            </ul>
+
+            <p style="margin-top: 40px;">JavaScript es fundamental para cualquier desarrollo web moderno.</p>
+        </div>
+
+        <!-- Slide 10: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de JavaScript:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Qué significa que JavaScript es un lenguaje "interpretado"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Se ejecuta directamente sin compilación previa</div>
+                    <div class="quiz-option">B) Necesita ser traducido a otro lenguaje primero</div>
+                    <div class="quiz-option">C) Solo funciona con un intérprete humano</div>
+                    <div class="quiz-option">D) Es más lento que otros lenguajes</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: A)</strong> JavaScript es interpretado porque el navegador ejecuta el código directamente línea por línea, sin necesidad de compilarlo a código de máquina previamente (aunque los motores modernos sí hacen JIT compilation internamente).
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué es el DOM?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Document Object Model - representación en árbol del HTML</div>
+                    <div class="quiz-option">B) Data Object Manager - gestor de bases de datos</div>
+                    <div class="quiz-option">C) Dynamic Online Method - método de conexión</div>
+                    <div class="quiz-option">D) Document Operation Module - módulo de operaciones</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: A)</strong> DOM es Document Object Model, una representación en forma de árbol del documento HTML que permite a JavaScript acceder y manipular los elementos de la página.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuál es la diferencia principal entre defer y async?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) defer garantiza orden de ejecución, async no</div>
+                    <div class="quiz-option">B) async es más rápido que defer</div>
+                    <div class="quiz-option">C) defer solo funciona en Chrome</div>
+                    <div class="quiz-option">D) No hay diferencia, son sinónimos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: A)</strong> defer descarga el script en paralelo pero garantiza que se ejecutará después de parsear el HTML y en orden. async descarga y ejecuta apenas esté listo, sin garantizar orden.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿En qué año se creó JavaScript?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) 1985</div>
+                    <div class="quiz-option">B) 1995</div>
+                    <div class="quiz-option">C) 2005</div>
+                    <div class="quiz-option">D) 2015</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> JavaScript fue creado en 1995 por Brendan Eich en Netscape, originalmente en solo 10 días.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>5. ¿Cuál es el motor de JavaScript de Google Chrome?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) SpiderMonkey</div>
+                    <div class="quiz-option">B) JavaScriptCore</div>
+                    <div class="quiz-option">C) V8</div>
+                    <div class="quiz-option">D) Chakra</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: C)</strong> V8 es el motor de JavaScript desarrollado por Google para Chrome, Edge, Opera y también es usado por Node.js.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Tu Primera Página con JavaScript</h3>
+                <p><strong>Objetivo:</strong> Crear una página HTML con JavaScript que muestre un mensaje al usuario</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un archivo HTML con estructura básica</li>
+                    <li>Agrega un botón con id="saludar"</li>
+                    <li>Agrega un &lt;script defer&gt; que apunte a un archivo externo script.js</li>
+                    <li>En script.js, selecciona el botón y agrega un event listener de click</li>
+                    <li>Cuando se haga click, muestra un alert con "¡Hola desde JavaScript!"</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> En lugar de alert, modifica el contenido de un &lt;h1&gt; usando textContent</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Explorar el DOM</h3>
+                <p><strong>Objetivo:</strong> Familiarizarse con la consola del navegador y el DOM</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Abre cualquier sitio web (ej: google.com)</li>
+                    <li>Abre DevTools (F12 o Cmd+Opt+I en Mac)</li>
+                    <li>En la consola, escribe: document.querySelector('body')</li>
+                    <li>Observa el objeto que devuelve</li>
+                    <li>Prueba: document.body.style.backgroundColor = 'lightblue'</li>
+                    <li>Experimenta cambiando colores y otros estilos</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Usa document.querySelectorAll para seleccionar todos los enlaces y cambiarles el color</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Bienvenido al Mundo JavaScript!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>JavaScript es el lenguaje de la web, interpretado y dinámico</li>
+                <li>El DOM es la representación en árbol del HTML</li>
+                <li>Hay 3 formas de incrustar JS: inline, interno, externo</li>
+                <li>Usa <span class="property">defer</span> para scripts que interactúan con el DOM</li>
+                <li>Cada navegador tiene su motor JS (V8, SpiderMonkey, etc.)</li>
+                <li>JavaScript permite crear experiencias web interactivas</li>
+            </ul>
+
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Comienza tu viaje en JavaScript!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

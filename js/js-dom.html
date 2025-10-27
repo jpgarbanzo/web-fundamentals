@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulación del DOM - Presentación Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .slideshow-container {
+            max-width: 900px; width: 100%; background: white;
+            border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .slide { display: none; padding: 60px; min-height: 600px; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        h2 { color: #764ba2; font-size: 2em; margin-bottom: 30px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #333; margin-bottom: 20px; }
+        .code {
+            background: #f5f5f5; border-left: 4px solid #667eea;
+            padding: 15px; margin: 20px 0;
+            font-family: 'Courier New', monospace; border-radius: 5px;
+        }
+        .demo-container {
+            border: 2px solid #667eea; padding: 20px; margin: 20px 0;
+            border-radius: 10px; background: #f9f9f9;
+        }
+        .controls {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 60px; background: #f5f5f5;
+        }
+        button {
+            background: #667eea; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .slide-counter { font-size: 1.2em; color: #667eea; font-weight: bold; }
+        ul { margin-left: 30px; margin-bottom: 20px; }
+        li { font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 10px; }
+        .property { color: #764ba2; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .quiz-question {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #667eea;
+        }
+        .quiz-options { margin: 15px 0; }
+        .quiz-option {
+            background: white; padding: 12px; margin: 8px 0;
+            border-radius: 5px; border: 2px solid #ddd;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #667eea; background: #f9f9f9; }
+        .quiz-answer {
+            background: #d4edda; border-left: 4px solid #28a745;
+            padding: 15px; margin-top: 10px; border-radius: 5px; display: none;
+        }
+        .quiz-answer.show { display: block; }
+        .show-answer-btn {
+            background: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+        }
+        .show-answer-btn:hover { background: #764ba2; }
+        .exercise-box {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #10b981;
+        }
+        .exercise-box h3 { color: #10b981; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide active">
+            <h1>🎯 Manipulación del DOM</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Interactúa con la página web dinámicamente</p>
+            <p style="margin-top: 60px;">El DOM (Document Object Model) es la representación en árbol de un documento HTML.</p>
+            <p>JavaScript puede modificar el DOM para crear experiencias interactivas.</p>
+        </div>
+
+        <div class="slide">
+            <h2>¿Qué es el DOM?</h2>
+            <p>El <strong>DOM (Document Object Model)</strong> es una interfaz de programación:</p>
+            <div class="code">
+                &lt;!DOCTYPE html&gt;<br>
+                &lt;html&gt;<br>
+                &nbsp;&nbsp;&lt;head&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Mi Página&lt;/title&gt;<br>
+                &nbsp;&nbsp;&lt;/head&gt;<br>
+                &nbsp;&nbsp;&lt;body&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1 id="titulo"&gt;Hola Mundo&lt;/h1&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="texto"&gt;Párrafo&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;/body&gt;<br>
+                &lt;/html&gt;
+            </div>
+            <p><strong>Se representa como árbol:</strong></p>
+            <div class="demo-container">
+                <pre>
+document
+  └─ html
+      ├─ head
+      │   └─ title
+      └─ body
+          ├─ h1 (id="titulo")
+          └─ p (class="texto")
+                </pre>
+            </div>
+            <ul>
+                <li><span class="property">Cada elemento HTML</span> es un nodo del árbol</li>
+                <li><span class="property">JavaScript</span> puede leer y modificar estos nodos</li>
+                <li><span class="property">Cambios en el DOM</span> se reflejan inmediatamente en la página</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>Selección de Elementos</h2>
+            <p>Métodos para seleccionar elementos individuales:</p>
+            <div class="code">
+                // getElementById - Selecciona por ID<br>
+                const titulo = document.getElementById('titulo');<br>
+                console.log(titulo); // &lt;h1 id="titulo"&gt;...&lt;/h1&gt;<br>
+                <br>
+                // querySelector - Primer elemento que coincide con selector CSS<br>
+                const primerParrafo = document.querySelector('p');<br>
+                const elemento = document.querySelector('.clase');<br>
+                const elementoId = document.querySelector('#miId');<br>
+                <br>
+                // Selectores más específicos<br>
+                const nav = document.querySelector('nav.principal');<br>
+                const boton = document.querySelector('button[type="submit"]');<br>
+                const primerLi = document.querySelector('ul &gt; li:first-child');
+            </div>
+            <div class="demo-container">
+                <p><strong>Diferencia:</strong> getElementById es más rápido pero solo funciona con IDs. querySelector es más flexible (acepta cualquier selector CSS).</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Selección Múltiple</h2>
+            <p>Métodos que devuelven colecciones de elementos:</p>
+            <div class="code">
+                // getElementsByClassName - Todos con la clase<br>
+                const textos = document.getElementsByClassName('texto');<br>
+                // Retorna HTMLCollection (array-like)<br>
+                <br>
+                // getElementsByTagName - Todos con el tag<br>
+                const parrafos = document.getElementsByTagName('p');<br>
+                <br>
+                // querySelectorAll - Todos que coinciden con selector CSS<br>
+                const botones = document.querySelectorAll('button');<br>
+                const items = document.querySelectorAll('.lista &gt; li');<br>
+                // Retorna NodeList (array-like)<br>
+                <br>
+                // Iterar sobre elementos<br>
+                const elementos = document.querySelectorAll('.item');<br>
+                elementos.forEach(elem => {<br>
+                &nbsp;&nbsp;console.log(elem.textContent);<br>
+                });<br>
+                <br>
+                // Convertir a array<br>
+                const array = Array.from(elementos);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Manipulación de Contenido</h2>
+            <p>Modificar el contenido de elementos:</p>
+            <div class="code">
+                const elemento = document.getElementById('demo');<br>
+                <br>
+                // innerHTML - Lee/modifica HTML interno<br>
+                elemento.innerHTML = '&lt;strong&gt;Negrita&lt;/strong&gt;';<br>
+                console.log(elemento.innerHTML); // "&lt;strong&gt;Negrita&lt;/strong&gt;"<br>
+                <br>
+                // textContent - Lee/modifica solo texto (sin HTML)<br>
+                elemento.textContent = '&lt;strong&gt;Texto&lt;/strong&gt;';<br>
+                // Se muestra literalmente: "&lt;strong&gt;Texto&lt;/strong&gt;"<br>
+                console.log(elemento.textContent); // Incluye espacios ocultos<br>
+                <br>
+                // innerText - Similar a textContent pero respeta estilos<br>
+                elemento.innerText = 'Texto visible';<br>
+                console.log(elemento.innerText); // Solo texto visible<br>
+                <br>
+                // Agregar al contenido existente<br>
+                elemento.innerHTML += '&lt;p&gt;Nuevo párrafo&lt;/p&gt;';
+            </div>
+            <div class="demo-container">
+                <p><strong>innerHTML:</strong> Puede insertar HTML (⚠️ riesgo XSS)<br>
+                <strong>textContent:</strong> Más seguro, más rápido, solo texto<br>
+                <strong>innerText:</strong> Considera estilos CSS (display: none)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Manipulación de Atributos</h2>
+            <div class="code">
+                const link = document.querySelector('a');<br>
+                <br>
+                // getAttribute - Obtener valor de atributo<br>
+                const href = link.getAttribute('href');<br>
+                console.log(href); // "https://example.com"<br>
+                <br>
+                // setAttribute - Establecer/modificar atributo<br>
+                link.setAttribute('href', 'https://google.com');<br>
+                link.setAttribute('target', '_blank');<br>
+                <br>
+                // removeAttribute - Eliminar atributo<br>
+                link.removeAttribute('target');<br>
+                <br>
+                // Acceso directo a propiedades comunes<br>
+                const img = document.querySelector('img');<br>
+                img.src = 'nueva-imagen.jpg';<br>
+                img.alt = 'Descripción';<br>
+                <br>
+                const input = document.querySelector('input');<br>
+                input.value = 'Nuevo valor';<br>
+                input.disabled = true;
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Manipulación de Clases</h2>
+            <p>Modificar clases CSS de elementos dinámicamente:</p>
+            <div class="code">
+                const elemento = document.getElementById('caja');<br>
+                <br>
+                // classList.add - Agregar clase<br>
+                elemento.classList.add('activo');<br>
+                elemento.classList.add('highlight', 'grande'); // Múltiples<br>
+                <br>
+                // classList.remove - Eliminar clase<br>
+                elemento.classList.remove('oculto');<br>
+                <br>
+                // classList.toggle - Alternar clase (agregar/quitar)<br>
+                elemento.classList.toggle('activo');<br>
+                // Si existe la quita, si no existe la agrega<br>
+                <br>
+                // classList.contains - Verificar si tiene clase<br>
+                if (elemento.classList.contains('activo')) {<br>
+                &nbsp;&nbsp;console.log('Está activo');<br>
+                }<br>
+                <br>
+                // classList.replace - Reemplazar clase<br>
+                elemento.classList.replace('viejo', 'nuevo');
+            </div>
+            <div class="demo-container">
+                <p><strong>Preferir classList</strong> sobre modificar className directamente (classList preserva otras clases)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Crear Elementos</h2>
+            <p>Crear nuevos elementos y agregarlos al DOM:</p>
+            <div class="code">
+                // createElement - Crear elemento<br>
+                const nuevoDiv = document.createElement('div');<br>
+                nuevoDiv.textContent = 'Nuevo contenido';<br>
+                nuevoDiv.classList.add('caja');<br>
+                <br>
+                // appendChild - Agregar al final<br>
+                const contenedor = document.getElementById('contenedor');<br>
+                contenedor.appendChild(nuevoDiv);<br>
+                <br>
+                // append - Agregar múltiples (strings o nodos)<br>
+                contenedor.append(<br>
+                &nbsp;&nbsp;'Texto directo',<br>
+                &nbsp;&nbsp;document.createElement('span'),<br>
+                &nbsp;&nbsp;'Más texto'<br>
+                );<br>
+                <br>
+                // insertBefore - Insertar antes de elemento<br>
+                const referencia = document.querySelector('.ref');<br>
+                contenedor.insertBefore(nuevoDiv, referencia);<br>
+                <br>
+                // Crear elemento completo<br>
+                const li = document.createElement('li');<br>
+                li.innerHTML = '&lt;strong&gt;Item&lt;/strong&gt;';<br>
+                document.querySelector('ul').appendChild(li);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Eliminar Elementos</h2>
+            <div class="code">
+                const elemento = document.getElementById('eliminar');<br>
+                <br>
+                // remove - Eliminar el elemento (moderno)<br>
+                elemento.remove();<br>
+                <br>
+                // removeChild - Eliminar hijo desde padre (legacy)<br>
+                const padre = document.getElementById('padre');<br>
+                const hijo = document.querySelector('.hijo');<br>
+                padre.removeChild(hijo);<br>
+                <br>
+                // Eliminar todos los hijos<br>
+                const contenedor = document.getElementById('contenedor');<br>
+                contenedor.innerHTML = ''; // Método rápido<br>
+                <br>
+                // O con while loop<br>
+                while (contenedor.firstChild) {<br>
+                &nbsp;&nbsp;contenedor.removeChild(contenedor.firstChild);<br>
+                }<br>
+                <br>
+                // Reemplazar elemento<br>
+                const nuevo = document.createElement('p');<br>
+                nuevo.textContent = 'Reemplazo';<br>
+                const viejo = document.getElementById('viejo');<br>
+                viejo.replaceWith(nuevo);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Manejo de Eventos</h2>
+            <p>Responder a acciones del usuario:</p>
+            <div class="code">
+                const boton = document.getElementById('miBoton');<br>
+                <br>
+                // addEventListener - Agregar event listener<br>
+                boton.addEventListener('click', function() {<br>
+                &nbsp;&nbsp;console.log('¡Click!');<br>
+                });<br>
+                <br>
+                // Con arrow function<br>
+                boton.addEventListener('click', () => {<br>
+                &nbsp;&nbsp;alert('Botón clickeado');<br>
+                });<br>
+                <br>
+                // Con función nombrada (se puede remover)<br>
+                function manejarClick() {<br>
+                &nbsp;&nbsp;console.log('Click manejado');<br>
+                }<br>
+                boton.addEventListener('click', manejarClick);<br>
+                <br>
+                // removeEventListener - Remover listener<br>
+                boton.removeEventListener('click', manejarClick);<br>
+                <br>
+                // Múltiples eventos en el mismo elemento<br>
+                boton.addEventListener('mouseover', () => {...});<br>
+                boton.addEventListener('mouseout', () => {...});
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Eventos Comunes</h2>
+            <div class="code">
+                // CLICK - Clic del mouse<br>
+                btn.addEventListener('click', () => {...});<br>
+                <br>
+                // SUBMIT - Envío de formulario<br>
+                form.addEventListener('submit', (e) => {<br>
+                &nbsp;&nbsp;e.preventDefault(); // Prevenir recarga<br>
+                });<br>
+                <br>
+                // KEYDOWN/KEYUP - Teclas presionadas<br>
+                input.addEventListener('keydown', (e) => {<br>
+                &nbsp;&nbsp;console.log(e.key); // Tecla presionada<br>
+                });<br>
+                <br>
+                // MOUSEOVER/MOUSEOUT - Mouse sobre elemento<br>
+                div.addEventListener('mouseover', () => {...});<br>
+                <br>
+                // CHANGE - Cambio en input/select<br>
+                select.addEventListener('change', (e) => {<br>
+                &nbsp;&nbsp;console.log(e.target.value);<br>
+                });<br>
+                <br>
+                // LOAD - Cuando página/imagen carga<br>
+                window.addEventListener('load', () => {...});<br>
+                <br>
+                // DOMContentLoaded - Cuando DOM está listo<br>
+                document.addEventListener('DOMContentLoaded', () => {...});
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>El Objeto event</h2>
+            <p>El objeto event contiene información sobre el evento:</p>
+            <div class="code">
+                boton.addEventListener('click', function(event) {<br>
+                &nbsp;&nbsp;// preventDefault - Prevenir acción por defecto<br>
+                &nbsp;&nbsp;event.preventDefault();<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// stopPropagation - Detener propagación (bubbling)<br>
+                &nbsp;&nbsp;event.stopPropagation();<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// target - Elemento que disparó el evento<br>
+                &nbsp;&nbsp;console.log(event.target); // Elemento clickeado<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// type - Tipo de evento<br>
+                &nbsp;&nbsp;console.log(event.type); // "click"<br>
+                });<br>
+                <br>
+                // Ejemplo: formulario<br>
+                form.addEventListener('submit', (e) => {<br>
+                &nbsp;&nbsp;e.preventDefault(); // No recargar página<br>
+                &nbsp;&nbsp;const datos = new FormData(e.target);<br>
+                &nbsp;&nbsp;// Procesar datos...<br>
+                });<br>
+                <br>
+                // Ejemplo: teclas<br>
+                input.addEventListener('keydown', (e) => {<br>
+                &nbsp;&nbsp;if (e.key === 'Enter') { ... }<br>
+                });
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            <ul>
+                <li><strong>Botones interactivos:</strong> Mostrar/ocultar elementos, toggle clases</li>
+                <li><strong>Formularios:</strong> Validación, envío AJAX, actualización en tiempo real</li>
+                <li><strong>Listas dinámicas:</strong> Todo lists, agregar/eliminar items</li>
+                <li><strong>Modales:</strong> Abrir/cerrar ventanas emergentes</li>
+                <li><strong>Tabs:</strong> Cambiar contenido al hacer clic en pestañas</li>
+                <li><strong>Carruseles:</strong> Navegación entre imágenes</li>
+                <li><strong>Búsqueda en vivo:</strong> Filtrar resultados mientras se escribe</li>
+                <li><strong>Scroll infinito:</strong> Cargar más contenido al hacer scroll</li>
+            </ul>
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo: Toggle dark mode<br>
+                const btn = document.getElementById('toggleDark');<br>
+                btn.addEventListener('click', () => {<br>
+                &nbsp;&nbsp;document.body.classList.toggle('dark-mode');<br>
+                });
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre querySelector y getElementById?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia</div>
+                    <div class="quiz-option">B) querySelector acepta cualquier selector CSS, getElementById solo IDs</div>
+                    <div class="quiz-option">C) getElementById es más lento</div>
+                    <div class="quiz-option">D) querySelector solo funciona con clases</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> querySelector acepta cualquier selector CSS (#id, .clase, tags). getElementById solo acepta IDs y es más rápido.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. ¿Cuál es la diferencia entre innerHTML y textContent?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) innerHTML interpreta HTML, textContent solo texto plano</div>
+                    <div class="quiz-option">B) textContent es más lento</div>
+                    <div class="quiz-option">C) Son idénticos</div>
+                    <div class="quiz-option">D) innerHTML solo funciona con divs</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: A)</strong> innerHTML interpreta y renderiza HTML. textContent solo inserta texto plano (más seguro contra XSS).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. ¿Qué hace addEventListener?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Agrega un elemento al DOM</div>
+                    <div class="quiz-option">B) Escucha eventos y ejecuta función cuando ocurren</div>
+                    <div class="quiz-option">C) Modifica clases CSS</div>
+                    <div class="quiz-option">D) Crea nuevos elementos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> addEventListener registra una función que se ejecuta cuando ocurre un evento específico (click, submit, keydown, etc).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. ¿Para qué sirve event.preventDefault()?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Elimina el elemento</div>
+                    <div class="quiz-option">B) Previene la acción por defecto del evento</div>
+                    <div class="quiz-option">C) Detiene todos los eventos</div>
+                    <div class="quiz-option">D) Previene clicks múltiples</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> preventDefault() previene la acción por defecto (ej: evitar que form recargue página, que link navegue, etc).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. ¿Qué método usarías para agregar/quitar una clase CSS alternadamente?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) classList.add()</div>
+                    <div class="quiz-option">B) classList.remove()</div>
+                    <div class="quiz-option">C) classList.toggle()</div>
+                    <div class="quiz-option">D) classList.switch()</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: C)</strong> classList.toggle() agrega la clase si no existe, la remueve si existe. Perfecto para estados on/off.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Todo List Interactiva</h3>
+                <p><strong>Objetivo:</strong> Crear lista de tareas dinámica</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un input y un botón "Agregar"</li>
+                    <li>Al hacer click, crea nuevo &lt;li&gt; con el texto del input</li>
+                    <li>Agrega el &lt;li&gt; a un &lt;ul&gt; existente</li>
+                    <li>Cada &lt;li&gt; debe tener un botón "Eliminar" que lo remueva</li>
+                    <li>Limpia el input después de agregar</li>
+                    <li>Prevenir agregar items vacíos</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Al hacer click en un item, toggle clase "completado" con línea tachada</p>
+            </div>
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Validación de Formulario</h3>
+                <p><strong>Objetivo:</strong> Validar formulario antes de enviar</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea formulario con inputs: nombre, email, contraseña</li>
+                    <li>Escucha evento 'submit' del formulario</li>
+                    <li>Usa preventDefault() para evitar recarga</li>
+                    <li>Valida que nombre no esté vacío</li>
+                    <li>Valida que email contenga '@'</li>
+                    <li>Valida que contraseña tenga mínimo 6 caracteres</li>
+                    <li>Muestra mensajes de error usando textContent</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Agrega/remueve clase 'error' en inputs inválidos</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎉 ¡Domina la Manipulación del DOM!</h2>
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            <ul style="margin-top: 30px;">
+                <li>DOM es la representación en árbol de HTML</li>
+                <li>querySelector es flexible, getElementById es más rápido</li>
+                <li>innerHTML interpreta HTML, textContent solo texto</li>
+                <li>classList.toggle() para alternar clases</li>
+                <li>createElement + appendChild para agregar elementos</li>
+                <li>addEventListener para responder a eventos</li>
+                <li>event.preventDefault() previene acción por defecto</li>
+                <li>event.target identifica el elemento que disparó evento</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡El DOM es la puerta a páginas interactivas!</strong></p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">16</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            if (n >= totalSlides) { currentSlide = totalSlides - 1; }
+            else if (n < 0) { currentSlide = 0; }
+            else { currentSlide = n; }
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        showSlide(0);
+    </script>
+</body>
+</html>

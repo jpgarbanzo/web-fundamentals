@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arreglos en JavaScript - Presentación Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .slideshow-container {
+            max-width: 900px; width: 100%; background: white;
+            border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .slide { display: none; padding: 60px; min-height: 600px; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        h2 { color: #764ba2; font-size: 2em; margin-bottom: 30px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #333; margin-bottom: 20px; }
+        .code {
+            background: #f5f5f5; border-left: 4px solid #667eea;
+            padding: 15px; margin: 20px 0;
+            font-family: 'Courier New', monospace; border-radius: 5px;
+        }
+        .demo-container {
+            border: 2px solid #667eea; padding: 20px; margin: 20px 0;
+            border-radius: 10px; background: #f9f9f9;
+        }
+        .controls {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 60px; background: #f5f5f5;
+        }
+        button {
+            background: #667eea; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .slide-counter { font-size: 1.2em; color: #667eea; font-weight: bold; }
+        ul { margin-left: 30px; margin-bottom: 20px; }
+        li { font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 10px; }
+        .property { color: #764ba2; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .quiz-question {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #667eea;
+        }
+        .quiz-options { margin: 15px 0; }
+        .quiz-option {
+            background: white; padding: 12px; margin: 8px 0;
+            border-radius: 5px; border: 2px solid #ddd;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #667eea; background: #f9f9f9; }
+        .quiz-answer {
+            background: #d4edda; border-left: 4px solid #28a745;
+            padding: 15px; margin-top: 10px; border-radius: 5px; display: none;
+        }
+        .quiz-answer.show { display: block; }
+        .show-answer-btn {
+            background: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+        }
+        .show-answer-btn:hover { background: #764ba2; }
+        .exercise-box {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #10b981;
+        }
+        .exercise-box h3 { color: #10b981; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide active">
+            <h1>🎯 Arreglos en JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Almacena y manipula colecciones de datos</p>
+            <p style="margin-top: 60px;">Los arreglos (arrays) son estructuras que almacenan múltiples valores en una sola variable.</p>
+            <p>JavaScript tiene métodos poderosos para trabajar con arrays de forma eficiente.</p>
+        </div>
+
+        <div class="slide">
+            <h2>¿Qué son los Arreglos?</h2>
+            <p>Los arrays son <strong>listas ordenadas</strong> que pueden contener cualquier tipo de datos:</p>
+            <div class="code">
+                // Crear arrays<br>
+                const frutas = ["manzana", "pera", "uva"];<br>
+                const numeros = [1, 2, 3, 4, 5];<br>
+                const mixto = ["texto", 42, true, null];<br>
+                const vacio = [];<br>
+                <br>
+                // Arrays anidados<br>
+                const matriz = [[1, 2], [3, 4], [5, 6]];
+            </div>
+            <p><strong>Características:</strong></p>
+            <ul>
+                <li><span class="property">Ordenados:</span> Cada elemento tiene un índice (empieza en 0)</li>
+                <li><span class="property">Dinámicos:</span> Pueden crecer o reducirse</li>
+                <li><span class="property">Heterogéneos:</span> Pueden contener diferentes tipos</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>Acceso a Elementos</h2>
+            <p>Accede a elementos por su índice (inicia en 0):</p>
+            <div class="code">
+                const frutas = ["manzana", "pera", "uva", "kiwi"];<br>
+                <br>
+                console.log(frutas[0]); // "manzana"<br>
+                console.log(frutas[2]); // "uva"<br>
+                console.log(frutas[frutas.length - 1]); // "kiwi" (último)<br>
+                <br>
+                // Modificar elementos<br>
+                frutas[1] = "plátano";<br>
+                console.log(frutas); // ["manzana", "plátano", "uva", "kiwi"]<br>
+                <br>
+                // Propiedad length<br>
+                console.log(frutas.length); // 4
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Métodos de Modificación</h2>
+            <p>Agregar y remover elementos:</p>
+            <div class="code">
+                const arr = [1, 2, 3];<br>
+                <br>
+                // PUSH - Agregar al final<br>
+                arr.push(4); // [1, 2, 3, 4]<br>
+                <br>
+                // POP - Remover del final<br>
+                const ultimo = arr.pop(); // 4, arr = [1, 2, 3]<br>
+                <br>
+                // UNSHIFT - Agregar al inicio<br>
+                arr.unshift(0); // [0, 1, 2, 3]<br>
+                <br>
+                // SHIFT - Remover del inicio<br>
+                const primero = arr.shift(); // 0, arr = [1, 2, 3]
+            </div>
+            <div class="demo-container">
+                <p><strong>Recordar:</strong> push/pop (final), unshift/shift (inicio)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>map, filter, reduce</h2>
+            <p>Los métodos más poderosos de arrays:</p>
+            <div class="code">
+                const nums = [1, 2, 3, 4, 5];<br>
+                <br>
+                // MAP - Transforma cada elemento<br>
+                const dobles = nums.map(n => n * 2);<br>
+                // [2, 4, 6, 8, 10]<br>
+                <br>
+                // FILTER - Filtra elementos<br>
+                const pares = nums.filter(n => n % 2 === 0);<br>
+                // [2, 4]<br>
+                <br>
+                // REDUCE - Reduce a un valor<br>
+                const suma = nums.reduce((acc, n) => acc + n, 0);<br>
+                // 15
+            </div>
+            <p><strong>Nota:</strong> Estos métodos NO modifican el array original, devuelven uno nuevo.</p>
+        </div>
+
+        <div class="slide">
+            <h2>Métodos de Búsqueda</h2>
+            <div class="code">
+                const frutas = ["manzana", "pera", "uva", "pera"];<br>
+                <br>
+                // FIND - Primer elemento que cumple<br>
+                const largo = frutas.find(f => f.length > 4);<br>
+                // "manzana"<br>
+                <br>
+                // FINDINDEX - Índice del primer match<br>
+                const idx = frutas.findIndex(f => f === "uva");<br>
+                // 2<br>
+                <br>
+                // INCLUDES - ¿Contiene el valor?<br>
+                frutas.includes("pera"); // true<br>
+                <br>
+                // INDEXOF - Primera posición del valor<br>
+                frutas.indexOf("pera"); // 1
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Otros Métodos Útiles</h2>
+            <div class="code">
+                const arr = [1, 2, 3, 4, 5];<br>
+                <br>
+                // SLICE - Copia una porción (no modifica)<br>
+                const parte = arr.slice(1, 4); // [2, 3, 4]<br>
+                <br>
+                // SPLICE - Modifica el array<br>
+                arr.splice(2, 1); // Elimina 1 desde índice 2<br>
+                // arr = [1, 2, 4, 5]<br>
+                <br>
+                // CONCAT - Combina arrays<br>
+                const arr2 = [6, 7];<br>
+                const combined = arr.concat(arr2);<br>
+                <br>
+                // JOIN - Convierte a string<br>
+                const str = arr.join(", "); // "1, 2, 4, 5"
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>forEach y sort</h2>
+            <div class="code">
+                // FOREACH - Ejecuta función en cada elemento<br>
+                const nums = [1, 2, 3];<br>
+                nums.forEach(n => console.log(n * 2));<br>
+                <br>
+                // SORT - Ordena el array (modifica original)<br>
+                const letras = ["c", "a", "b"];<br>
+                letras.sort(); // ["a", "b", "c"]<br>
+                <br>
+                // Sort con números (necesita función)<br>
+                const numeros = [10, 5, 40, 25];<br>
+                numeros.sort((a, b) => a - b);<br>
+                // [5, 10, 25, 40]<br>
+                <br>
+                // Ordenar objetos<br>
+                const personas = [{edad: 30}, {edad: 20}];<br>
+                personas.sort((a, b) => a.edad - b.edad);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Desestructuración</h2>
+            <p>Extrae valores de arrays fácilmente (ES6):</p>
+            <div class="code">
+                const colores = ["rojo", "verde", "azul"];<br>
+                <br>
+                // Desestructuración básica<br>
+                const [primero, segundo, tercero] = colores;<br>
+                console.log(primero); // "rojo"<br>
+                <br>
+                // Saltar elementos<br>
+                const [, , ultimo] = colores;<br>
+                console.log(ultimo); // "azul"<br>
+                <br>
+                // Rest operator<br>
+                const nums = [1, 2, 3, 4, 5];<br>
+                const [a, b, ...resto] = nums;<br>
+                console.log(resto); // [3, 4, 5]
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            <ul>
+                <li><strong>Listas de elementos:</strong> Productos, usuarios, posts</li>
+                <li><strong>map:</strong> Transformar datos de API, generar JSX en React</li>
+                <li><strong>filter:</strong> Búsquedas, filtros de productos, remover nulos</li>
+                <li><strong>reduce:</strong> Totales, promedios, combinar objetos</li>
+                <li><strong>forEach:</strong> Efectos secundarios, logging, DOM manipulation</li>
+                <li><strong>find:</strong> Buscar usuario por ID, primer elemento que cumple</li>
+                <li><strong>sort:</strong> Ordenar tablas, rankings, alfabéticamente</li>
+            </ul>
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo real: carrito de compras<br>
+                const total = carrito<br>
+                &nbsp;&nbsp;.map(item => item.precio * item.cantidad)<br>
+                &nbsp;&nbsp;.reduce((sum, subtotal) => sum + subtotal, 0);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre map y forEach?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia</div>
+                    <div class="quiz-option">B) map devuelve un nuevo array, forEach no devuelve nada</div>
+                    <div class="quiz-option">C) forEach es más rápido</div>
+                    <div class="quiz-option">D) map solo funciona con números</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> map transforma cada elemento y devuelve un nuevo array. forEach solo ejecuta código en cada elemento sin retornar nada.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué hace arr.slice(1, 3)?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Elimina elementos del índice 1 al 3</div>
+                    <div class="quiz-option">B) Devuelve copia desde índice 1 hasta 3 (sin incluir 3)</div>
+                    <div class="quiz-option">C) Divide el array en 3 partes</div>
+                    <div class="quiz-option">D) Modifica el array original</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> slice devuelve una copia superficial desde el índice de inicio hasta (sin incluir) el índice final. NO modifica el array original.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuál método modificaría el array original?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) map</div>
+                    <div class="quiz-option">B) filter</div>
+                    <div class="quiz-option">C) push</div>
+                    <div class="quiz-option">D) slice</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: C)</strong> push modifica el array original agregando elementos al final. map, filter y slice devuelven nuevos arrays.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. ¿Para qué sirve reduce?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Eliminar elementos duplicados</div>
+                    <div class="quiz-option">B) Reducir a un solo valor (suma, promedio, etc.)</div>
+                    <div class="quiz-option">C) Reducir el tamaño del array</div>
+                    <div class="quiz-option">D) Es lo mismo que filter</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> reduce procesa cada elemento y acumula un resultado, útil para sumas, promedios, combinar objetos, etc.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. ¿En qué índice empieza un array?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) 1</div>
+                    <div class="quiz-option">B) 0</div>
+                    <div class="quiz-option">C) -1</div>
+                    <div class="quiz-option">D) Depende del array</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: B)</strong> Los arrays en JavaScript (y la mayoría de lenguajes) empiezan en índice 0.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Manipulación Básica</h3>
+                <p><strong>Objetivo:</strong> Practicar métodos básicos de arrays</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un array con 5 números</li>
+                    <li>Agrega un número al inicio con unshift</li>
+                    <li>Agrega un número al final con push</li>
+                    <li>Elimina el primer elemento con shift</li>
+                    <li>Usa slice para copiar elementos del índice 2 al 4</li>
+                    <li>Imprime length en cada paso</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Usa splice para insertar un número en la posición 3</p>
+            </div>
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Transformación con map y filter</h3>
+                <p><strong>Objetivo:</strong> Dominar métodos de transformación</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea un array de números del 1 al 10</li>
+                    <li>Usa map para elevar cada número al cuadrado</li>
+                    <li>Usa filter para obtener solo los números pares</li>
+                    <li>Usa reduce para sumar todos los números</li>
+                    <li>Encadena operaciones: nums.filter(...).map(...).reduce(...)</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Crea un array de objetos {nombre, edad} y ordénalos por edad</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎉 ¡Domina los Arreglos!</h2>
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            <ul style="margin-top: 30px;">
+                <li>Los arrays empiezan en índice 0</li>
+                <li>push/pop (final), unshift/shift (inicio)</li>
+                <li>map, filter, reduce son los más poderosos</li>
+                <li>map devuelve nuevo array, forEach no</li>
+                <li>slice no modifica, splice sí modifica</li>
+                <li>sort necesita función comparadora para números</li>
+                <li>La desestructuración simplifica extraer valores</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Los arrays son fundamentales en JavaScript!</strong></p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            if (n >= totalSlides) { currentSlide = totalSlides - 1; }
+            else if (n < 0) { currentSlide = 0; }
+            else { currentSlide = n; }
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        showSlide(0);
+    </script>
+</body>
+</html>

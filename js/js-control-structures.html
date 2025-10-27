@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructuras de Control - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Estructuras de Control en JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Controla el flujo de ejecución de tu código</p>
+            <p style="margin-top: 60px;">Las estructuras de control permiten tomar decisiones y repetir acciones en tus programas.</p>
+            <p>Son fundamentales para crear lógica compleja y aplicaciones dinámicas.</p>
+        </div>
+
+        <!-- Slide 2: if, else if, else -->
+        <div class="slide">
+            <h2>if, else if, else</h2>
+            <p>Ejecuta código basado en condiciones:</p>
+
+            <div class="code">
+                let edad = 20;<br>
+                <br>
+                if (edad < 13) {<br>
+                &nbsp;&nbsp;console.log("Niño");<br>
+                } else if (edad < 18) {<br>
+                &nbsp;&nbsp;console.log("Adolescente");<br>
+                } else if (edad < 65) {<br>
+                &nbsp;&nbsp;console.log("Adulto");<br>
+                } else {<br>
+                &nbsp;&nbsp;console.log("Senior");<br>
+                }<br>
+                <br>
+                // if simple sin else<br>
+                if (temperatura > 30) {<br>
+                &nbsp;&nbsp;console.log("Hace calor!");<br>
+                }
+            </div>
+
+            <p><strong>Estructura:</strong></p>
+            <ul>
+                <li><span class="property">if:</span> Condición principal (obligatorio)</li>
+                <li><span class="property">else if:</span> Condiciones adicionales (opcional, múltiples)</li>
+                <li><span class="property">else:</span> Caso por defecto (opcional)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: switch -->
+        <div class="slide">
+            <h2>switch Statement</h2>
+            <p>Alternativa a múltiples <span class="highlight">if-else</span> cuando comparas la misma variable:</p>
+
+            <div class="code">
+                let dia = "lunes";<br>
+                <br>
+                switch (dia) {<br>
+                &nbsp;&nbsp;case "lunes":<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log("Inicio de semana");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;case "miércoles":<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log("Mitad de semana");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;case "viernes":<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log("Casi fin de semana!");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;case "sábado":<br>
+                &nbsp;&nbsp;case "domingo":<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log("Fin de semana!");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;default:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log("Día regular");<br>
+                }
+            </div>
+
+            <p><strong>Importante:</strong> No olvides el <span class="highlight">break</span> o continuará ejecutando los siguientes cases (fall-through).</p>
+        </div>
+
+        <!-- Slide 4: for loop -->
+        <div class="slide">
+            <h2>for Loop</h2>
+            <p>Repite código un número específico de veces:</p>
+
+            <div class="code">
+                // Sintaxis: for (inicio; condición; incremento)<br>
+                for (let i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;console.log(`Iteración ${i}`);<br>
+                }<br>
+                // Imprime: 0, 1, 2, 3, 4<br>
+                <br>
+                // Recorrer un array<br>
+                const frutas = ["manzana", "pera", "uva"];<br>
+                for (let i = 0; i < frutas.length; i++) {<br>
+                &nbsp;&nbsp;console.log(frutas[i]);<br>
+                }<br>
+                <br>
+                // Loop hacia atrás<br>
+                for (let i = 10; i > 0; i--) {<br>
+                &nbsp;&nbsp;console.log(i);<br>
+                }<br>
+                console.log("¡Despegue!");
+            </div>
+
+            <p><strong>Partes del for:</strong> Inicialización, condición (mientras sea true), incremento/decremento.</p>
+        </div>
+
+        <!-- Slide 5: while y do-while -->
+        <div class="slide">
+            <h2>while y do-while Loops</h2>
+            <p>Repite mientras una condición sea verdadera:</p>
+
+            <div class="code">
+                // WHILE - verifica primero, ejecuta después<br>
+                let contador = 0;<br>
+                while (contador < 5) {<br>
+                &nbsp;&nbsp;console.log(contador);<br>
+                &nbsp;&nbsp;contador++;<br>
+                }<br>
+                <br>
+                // DO-WHILE - ejecuta primero, verifica después<br>
+                let numero = 0;<br>
+                do {<br>
+                &nbsp;&nbsp;console.log(numero);<br>
+                &nbsp;&nbsp;numero++;<br>
+                } while (numero < 5);<br>
+                <br>
+                // Ejemplo práctico<br>
+                let password = "";<br>
+                while (password !== "secreto") {<br>
+                &nbsp;&nbsp;password = prompt("Ingresa contraseña:");<br>
+                }
+            </div>
+
+            <p><strong>Diferencia clave:</strong> <span class="highlight">do-while</span> garantiza al menos una ejecución, <span class="highlight">while</span> podría no ejecutarse nunca.</p>
+        </div>
+
+        <!-- Slide 6: for...of y for...in -->
+        <div class="slide">
+            <h2>for...of y for...in</h2>
+            <p>Formas modernas de iterar colecciones:</p>
+
+            <div class="code">
+                // FOR...OF - Itera VALORES de arrays<br>
+                const colores = ["rojo", "verde", "azul"];<br>
+                for (const color of colores) {<br>
+                &nbsp;&nbsp;console.log(color);<br>
+                }<br>
+                // Imprime: rojo, verde, azul<br>
+                <br>
+                // FOR...IN - Itera KEYS de objetos<br>
+                const persona = {<br>
+                &nbsp;&nbsp;nombre: "Ana",<br>
+                &nbsp;&nbsp;edad: 30,<br>
+                &nbsp;&nbsp;ciudad: "Madrid"<br>
+                };<br>
+                for (const key in persona) {<br>
+                &nbsp;&nbsp;console.log(`${key}: ${persona[key]}`);<br>
+                }
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Cuándo usar cada uno:</strong></p>
+                <ul>
+                    <li><span class="property">for...of:</span> Arrays, strings, iterables (valores)</li>
+                    <li><span class="property">for...in:</span> Objetos (keys/propiedades)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: break y continue -->
+        <div class="slide">
+            <h2>break y continue</h2>
+            <p>Controla el flujo dentro de loops:</p>
+
+            <div class="code">
+                // BREAK - Sale completamente del loop<br>
+                for (let i = 0; i < 10; i++) {<br>
+                &nbsp;&nbsp;if (i === 5) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;break; // Sale del loop<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;console.log(i);<br>
+                }<br>
+                // Imprime: 0, 1, 2, 3, 4<br>
+                <br>
+                // CONTINUE - Salta a la siguiente iteración<br>
+                for (let i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;if (i === 2) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;continue; // Salta el 2<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;console.log(i);<br>
+                }<br>
+                // Imprime: 0, 1, 3, 4
+            </div>
+
+            <p><strong>Casos de uso:</strong></p>
+            <ul>
+                <li><span class="property">break:</span> Encontrar un elemento y salir</li>
+                <li><span class="property">continue:</span> Saltar elementos que no cumplen condición</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: try...catch...finally -->
+        <div class="slide">
+            <h2>try...catch...finally</h2>
+            <p>Manejo de errores para prevenir que tu app se rompa:</p>
+
+            <div class="code">
+                try {<br>
+                &nbsp;&nbsp;// Código que podría fallar<br>
+                &nbsp;&nbsp;const datos = JSON.parse(jsonString);<br>
+                &nbsp;&nbsp;console.log(datos);<br>
+                } catch (error) {<br>
+                &nbsp;&nbsp;// Maneja el error<br>
+                &nbsp;&nbsp;console.log("Error al parsear JSON");<br>
+                &nbsp;&nbsp;console.error(error.message);<br>
+                } finally {<br>
+                &nbsp;&nbsp;// Siempre se ejecuta (opcional)<br>
+                &nbsp;&nbsp;console.log("Proceso completado");<br>
+                }<br>
+                <br>
+                // Ejemplo práctico<br>
+                try {<br>
+                &nbsp;&nbsp;const resultado = dividir(10, 0);<br>
+                } catch (error) {<br>
+                &nbsp;&nbsp;mostrarMensajeError(error);<br>
+                }
+            </div>
+
+            <p><strong>Bloques:</strong> <span class="property">try</span> (intenta), <span class="property">catch</span> (captura errores), <span class="property">finally</span> (siempre ejecuta).</p>
+        </div>
+
+        <!-- Slide 9: throw -->
+        <div class="slide">
+            <h2>throw - Lanzar Errores</h2>
+            <p>Puedes lanzar tus propios errores:</p>
+
+            <div class="code">
+                function dividir(a, b) {<br>
+                &nbsp;&nbsp;if (b === 0) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;throw new Error("No se puede dividir entre 0");<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;return a / b;<br>
+                }<br>
+                <br>
+                try {<br>
+                &nbsp;&nbsp;const resultado = dividir(10, 0);<br>
+                } catch (error) {<br>
+                &nbsp;&nbsp;console.log(error.message);<br>
+                }<br>
+                <br>
+                // Validación de edad<br>
+                function validarEdad(edad) {<br>
+                &nbsp;&nbsp;if (edad < 0 || edad > 120) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;throw new Error("Edad inválida");<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;return true;<br>
+                }
+            </div>
+
+            <p><strong>Buena práctica:</strong> Usa throw para validaciones y errores personalizados con mensajes descriptivos.</p>
+        </div>
+
+        <!-- Slide 10: Casos de Uso -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>if-else:</strong> Validaciones de formularios, permisos, estados</li>
+                <li><strong>switch:</strong> Menús, estados de aplicación, días de semana</li>
+                <li><strong>for:</strong> Procesar arrays, generar elementos, contadores</li>
+                <li><strong>while:</strong> Esperar condiciones, juegos, input del usuario</li>
+                <li><strong>for...of:</strong> Iterar arrays modernos, strings, Sets, Maps</li>
+                <li><strong>for...in:</strong> Iterar propiedades de objetos</li>
+                <li><strong>try-catch:</strong> API calls, parseo de JSON, operaciones de archivo</li>
+                <li><strong>break/continue:</strong> Búsquedas, filtros, optimización</li>
+            </ul>
+
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo real: validación de formulario<br>
+                for (const campo of formulario) {<br>
+                &nbsp;&nbsp;if (campo.value === "") {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`${campo.name} es requerido`);<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <!-- Slide 11: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de estructuras de control:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre while y do-while?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia</div>
+                    <div class="quiz-option">B) do-while ejecuta al menos una vez, while podría no ejecutarse</div>
+                    <div class="quiz-option">C) while es más rápido</div>
+                    <div class="quiz-option">D) do-while no existe en JavaScript</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> do-while ejecuta el código primero y luego verifica la condición, garantizando al menos una ejecución. while verifica primero.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Para qué sirve break en un loop?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Pausa el loop temporalmente</div>
+                    <div class="quiz-option">B) Sale completamente del loop</div>
+                    <div class="quiz-option">C) Reinicia el loop desde el inicio</div>
+                    <div class="quiz-option">D) Incrementa el contador</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> break termina el loop inmediatamente y continúa con el código después del loop.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuándo deberías usar for...of vs for...in?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) for...of para arrays (valores), for...in para objetos (keys)</div>
+                    <div class="quiz-option">B) Son intercambiables</div>
+                    <div class="quiz-option">C) for...of es obsoleto</div>
+                    <div class="quiz-option">D) for...in es más rápido siempre</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: A)</strong> for...of itera valores de arrays/iterables. for...in itera keys/propiedades de objetos.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Qué hace el bloque finally en try-catch?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Solo se ejecuta si hay error</div>
+                    <div class="quiz-option">B) Solo se ejecuta si NO hay error</div>
+                    <div class="quiz-option">C) Se ejecuta siempre, haya o no error</div>
+                    <div class="quiz-option">D) Finaliza la aplicación</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: C)</strong> finally siempre se ejecuta, haya o no error. Es útil para limpieza de recursos.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>5. ¿Qué hace continue en un loop?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Sale del loop</div>
+                    <div class="quiz-option">B) Salta a la siguiente iteración</div>
+                    <div class="quiz-option">C) Pausa el loop</div>
+                    <div class="quiz-option">D) Reinicia desde el inicio</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: B)</strong> continue salta el resto del código en esa iteración y continúa con la siguiente.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: FizzBuzz</h3>
+                <p><strong>Objetivo:</strong> Clásico ejercicio de programación</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Usa un for loop de 1 a 100</li>
+                    <li>Si el número es divisible por 3, imprime "Fizz"</li>
+                    <li>Si es divisible por 5, imprime "Buzz"</li>
+                    <li>Si es divisible por 3 Y 5, imprime "FizzBuzz"</li>
+                    <li>Si no, imprime el número</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Conviértelo en una función que acepte el rango como parámetros</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Validador de Usuario</h3>
+                <p><strong>Objetivo:</strong> Crear un sistema de validación con try-catch</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea una función validarUsuario(nombre, edad, email)</li>
+                    <li>Usa throw si nombre está vacío o edad < 18</li>
+                    <li>Usa throw si email no contiene "@"</li>
+                    <li>Envuelve la llamada en try-catch</li>
+                    <li>Muestra mensajes de error apropiados</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Agrega validación para que el nombre tenga al menos 3 caracteres</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina las Estructuras de Control!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>if-else para decisiones, switch para múltiples casos</li>
+                <li>for para número fijo de iteraciones</li>
+                <li>while/do-while para condiciones dinámicas</li>
+                <li>for...of para arrays (valores), for...in para objetos (keys)</li>
+                <li>break sale del loop, continue salta a la siguiente iteración</li>
+                <li>try-catch para manejar errores sin romper la app</li>
+                <li>throw para crear errores personalizados</li>
+            </ul>
+
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡El control de flujo es esencial para cualquier programa!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>

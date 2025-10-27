@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones en JavaScript - Presentación Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .slideshow-container {
+            max-width: 900px; width: 100%; background: white;
+            border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .slide { display: none; padding: 60px; min-height: 600px; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        h2 { color: #764ba2; font-size: 2em; margin-bottom: 30px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #333; margin-bottom: 20px; }
+        .code {
+            background: #f5f5f5; border-left: 4px solid #667eea;
+            padding: 15px; margin: 20px 0;
+            font-family: 'Courier New', monospace; border-radius: 5px;
+        }
+        .demo-container {
+            border: 2px solid #667eea; padding: 20px; margin: 20px 0;
+            border-radius: 10px; background: #f9f9f9;
+        }
+        .controls {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 60px; background: #f5f5f5;
+        }
+        button {
+            background: #667eea; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .slide-counter { font-size: 1.2em; color: #667eea; font-weight: bold; }
+        ul { margin-left: 30px; margin-bottom: 20px; }
+        li { font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 10px; }
+        .property { color: #764ba2; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .quiz-question {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #667eea;
+        }
+        .quiz-options { margin: 15px 0; }
+        .quiz-option {
+            background: white; padding: 12px; margin: 8px 0;
+            border-radius: 5px; border: 2px solid #ddd;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #667eea; background: #f9f9f9; }
+        .quiz-answer {
+            background: #d4edda; border-left: 4px solid #28a745;
+            padding: 15px; margin-top: 10px; border-radius: 5px; display: none;
+        }
+        .quiz-answer.show { display: block; }
+        .show-answer-btn {
+            background: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+        }
+        .show-answer-btn:hover { background: #764ba2; }
+        .exercise-box {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #10b981;
+        }
+        .exercise-box h3 { color: #10b981; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide active">
+            <h1>🎯 Funciones en JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Bloques de código reutilizables</p>
+            <p style="margin-top: 60px;">Las funciones son bloques de código que realizan tareas específicas y pueden ser reutilizadas.</p>
+            <p>Son fundamentales para organizar código y aplicar el principio DRY (Don't Repeat Yourself).</p>
+        </div>
+
+        <div class="slide">
+            <h2>¿Qué son las Funciones?</h2>
+            <p>Las funciones son <strong>bloques de código</strong> que ejecutan una tarea específica:</p>
+            <div class="code">
+                // Declaración de función (function declaration)<br>
+                function saludar() {<br>
+                &nbsp;&nbsp;console.log("¡Hola!");<br>
+                }<br>
+                <br>
+                // Llamar/invocar la función<br>
+                saludar(); // "¡Hola!"<br>
+                <br>
+                // Función con nombre descriptivo<br>
+                function calcularAreaRectangulo() {<br>
+                &nbsp;&nbsp;const area = 10 * 5;<br>
+                &nbsp;&nbsp;console.log(area);<br>
+                }<br>
+                <br>
+                calcularAreaRectangulo(); // 50
+            </div>
+            <p><strong>Características:</strong></p>
+            <ul>
+                <li><span class="property">Reutilizables:</span> Escribe una vez, usa muchas veces</li>
+                <li><span class="property">Organizadas:</span> Separan lógica en bloques</li>
+                <li><span class="property">Nombradas:</span> Describen qué hacen</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>Parámetros y Argumentos</h2>
+            <p>Las funciones pueden recibir datos:</p>
+            <div class="code">
+                // Parámetros: variables en la definición<br>
+                function saludar(nombre) {<br>
+                &nbsp;&nbsp;console.log("Hola, " + nombre);<br>
+                }<br>
+                <br>
+                // Argumentos: valores al llamar<br>
+                saludar("Ana"); // "Hola, Ana"<br>
+                saludar("Carlos"); // "Hola, Carlos"<br>
+                <br>
+                // Múltiples parámetros<br>
+                function sumar(a, b) {<br>
+                &nbsp;&nbsp;console.log(a + b);<br>
+                }<br>
+                sumar(5, 3); // 8<br>
+                <br>
+                // Parámetros por defecto (ES6)<br>
+                function saludarPais(nombre, pais = "España") {<br>
+                &nbsp;&nbsp;console.log(`Hola ${nombre} de ${pais}`);<br>
+                }<br>
+                saludarPais("Juan"); // "Hola Juan de España"<br>
+                saludarPais("María", "México"); // "Hola María de México"
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Retorno de Valores</h2>
+            <p>Las funciones pueden devolver resultados con <span class="property">return</span>:</p>
+            <div class="code">
+                // Función que retorna un valor<br>
+                function multiplicar(a, b) {<br>
+                &nbsp;&nbsp;return a * b;<br>
+                }<br>
+                <br>
+                const resultado = multiplicar(4, 5);<br>
+                console.log(resultado); // 20<br>
+                <br>
+                // Return termina la ejecución<br>
+                function validarEdad(edad) {<br>
+                &nbsp;&nbsp;if (edad &lt; 18) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return "Menor de edad";<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;return "Mayor de edad";<br>
+                }<br>
+                <br>
+                // Sin return, devuelve undefined<br>
+                function sinReturn() {<br>
+                &nbsp;&nbsp;const x = 5;<br>
+                }<br>
+                console.log(sinReturn()); // undefined
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Function Expressions</h2>
+            <p>Funciones asignadas a variables:</p>
+            <div class="code">
+                // Function expression<br>
+                const saludar = function(nombre) {<br>
+                &nbsp;&nbsp;return `Hola, ${nombre}`;<br>
+                };<br>
+                <br>
+                console.log(saludar("Pedro")); // "Hola, Pedro"<br>
+                <br>
+                // Diferencia con function declaration:<br>
+                // Hoisting - declaration se eleva, expression no<br>
+                <br>
+                decl(); // ✅ Funciona<br>
+                function decl() { console.log("Hola"); }<br>
+                <br>
+                // expr(); // ❌ Error: Cannot access before initialization<br>
+                const expr = function() { console.log("Hola"); };<br>
+                expr(); // ✅ Ahora funciona
+            </div>
+            <div class="demo-container">
+                <p><strong>Hoisting:</strong> Las declaraciones de función se "elevan" al inicio del scope</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Arrow Functions</h2>
+            <p>Sintaxis moderna y concisa (ES6):</p>
+            <div class="code">
+                // Sintaxis tradicional<br>
+                const sumar = function(a, b) {<br>
+                &nbsp;&nbsp;return a + b;<br>
+                };<br>
+                <br>
+                // Arrow function<br>
+                const sumarArrow = (a, b) => {<br>
+                &nbsp;&nbsp;return a + b;<br>
+                };<br>
+                <br>
+                // Return implícito (una sola expresión)<br>
+                const multiplicar = (a, b) => a * b;<br>
+                console.log(multiplicar(3, 4)); // 12<br>
+                <br>
+                // Un solo parámetro (paréntesis opcionales)<br>
+                const cuadrado = x => x * x;<br>
+                console.log(cuadrado(5)); // 25<br>
+                <br>
+                // Sin parámetros<br>
+                const obtenerFecha = () => new Date();<br>
+                <br>
+                // Retornar objeto (usar paréntesis)<br>
+                const crearUsuario = nombre => ({ nombre, activo: true });
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Parámetros Rest</h2>
+            <p>Recolecta argumentos restantes en un array:</p>
+            <div class="code">
+                // Rest parameters (...args)<br>
+                function sumarTodos(...numeros) {<br>
+                &nbsp;&nbsp;let total = 0;<br>
+                &nbsp;&nbsp;for (const num of numeros) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;total += num;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;return total;<br>
+                }<br>
+                <br>
+                console.log(sumarTodos(1, 2, 3)); // 6<br>
+                console.log(sumarTodos(1, 2, 3, 4, 5)); // 15<br>
+                <br>
+                // Combinar con parámetros normales<br>
+                function presentar(nombre, edad, ...hobbies) {<br>
+                &nbsp;&nbsp;console.log(`${nombre}, ${edad} años`);<br>
+                &nbsp;&nbsp;console.log("Hobbies:", hobbies);<br>
+                }<br>
+                <br>
+                presentar("Ana", 25, "leer", "nadar", "correr");<br>
+                // "Ana, 25 años"<br>
+                // "Hobbies: ['leer', 'nadar', 'correr']"
+            </div>
+            <div class="demo-container">
+                <p><strong>Nota:</strong> Rest parameter debe ser el último parámetro</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Spread Operator en Funciones</h2>
+            <p>Expande un array en argumentos individuales:</p>
+            <div class="code">
+                function sumar(a, b, c) {<br>
+                &nbsp;&nbsp;return a + b + c;<br>
+                }<br>
+                <br>
+                const numeros = [1, 2, 3];<br>
+                <br>
+                // Sin spread (pasa el array completo)<br>
+                console.log(sumar(numeros)); // NaN<br>
+                <br>
+                // Con spread (expande el array)<br>
+                console.log(sumar(...numeros)); // 6<br>
+                // Equivalente a: sumar(1, 2, 3)<br>
+                <br>
+                // Útil con Math<br>
+                const nums = [5, 2, 8, 1, 9];<br>
+                console.log(Math.max(...nums)); // 9<br>
+                console.log(Math.min(...nums)); // 1<br>
+                <br>
+                // Combinar arrays<br>
+                const arr1 = [1, 2];<br>
+                const arr2 = [3, 4];<br>
+                console.log([...arr1, ...arr2]); // [1, 2, 3, 4]
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Scope: Variables Locales vs Globales</h2>
+            <div class="code">
+                // Variable global<br>
+                let globalVar = "Soy global";<br>
+                <br>
+                function miFuncion() {<br>
+                &nbsp;&nbsp;// Variable local (function scope)<br>
+                &nbsp;&nbsp;let localVar = "Soy local";<br>
+                &nbsp;&nbsp;console.log(globalVar); // ✅ Acceso a global<br>
+                &nbsp;&nbsp;console.log(localVar); // ✅ Acceso a local<br>
+                }<br>
+                <br>
+                miFuncion();<br>
+                console.log(globalVar); // ✅ "Soy global"<br>
+                // console.log(localVar); // ❌ Error: no definida<br>
+                <br>
+                // Block scope (let/const)<br>
+                if (true) {<br>
+                &nbsp;&nbsp;let blockVar = "Solo en este bloque";<br>
+                &nbsp;&nbsp;console.log(blockVar); // ✅<br>
+                }<br>
+                // console.log(blockVar); // ❌ Error<br>
+                <br>
+                // var tiene function scope (evitar)<br>
+                function testVar() {<br>
+                &nbsp;&nbsp;if (true) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;var x = 5;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;console.log(x); // ✅ 5 (var ignora block scope)<br>
+                }
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Closures</h2>
+            <p>Funciones que acceden a variables del scope externo:</p>
+            <div class="code">
+                // Closure básico<br>
+                function exterior() {<br>
+                &nbsp;&nbsp;const mensaje = "Hola";<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;function interior() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(mensaje); // Accede a variable externa<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return interior;<br>
+                }<br>
+                <br>
+                const fn = exterior();<br>
+                fn(); // "Hola" - ¡recuerda el scope!<br>
+                <br>
+                // Closure práctico: contador privado<br>
+                function crearContador() {<br>
+                &nbsp;&nbsp;let count = 0; // Variable privada<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;incrementar: () => ++count,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;decrementar: () => --count,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;obtener: () => count<br>
+                &nbsp;&nbsp;};<br>
+                }<br>
+                <br>
+                const contador = crearContador();<br>
+                contador.incrementar(); // 1<br>
+                contador.incrementar(); // 2<br>
+                console.log(contador.obtener()); // 2
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Funciones Anónimas y Callbacks</h2>
+            <p>Funciones sin nombre, usadas como argumentos:</p>
+            <div class="code">
+                // Función anónima como callback<br>
+                const numeros = [1, 2, 3, 4, 5];<br>
+                <br>
+                // map con función anónima<br>
+                const dobles = numeros.map(function(n) {<br>
+                &nbsp;&nbsp;return n * 2;<br>
+                });<br>
+                <br>
+                // Arrow function como callback<br>
+                const pares = numeros.filter(n => n % 2 === 0);<br>
+                <br>
+                // setTimeout con callback<br>
+                setTimeout(function() {<br>
+                &nbsp;&nbsp;console.log("Ejecutado después de 2s");<br>
+                }, 2000);<br>
+                <br>
+                // addEventListener con callback<br>
+                // button.addEventListener('click', function() {<br>
+                // &nbsp;&nbsp;console.log('Click!');<br>
+                // });
+            </div>
+            <div class="demo-container">
+                <p><strong>Callback:</strong> Función pasada como argumento a otra función</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Funciones Recursivas</h2>
+            <p>Funciones que se llaman a sí mismas:</p>
+            <div class="code">
+                // Factorial recursivo<br>
+                function factorial(n) {<br>
+                &nbsp;&nbsp;// Caso base: detiene la recursión<br>
+                &nbsp;&nbsp;if (n === 0 || n === 1) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;// Caso recursivo<br>
+                &nbsp;&nbsp;return n * factorial(n - 1);<br>
+                }<br>
+                <br>
+                console.log(factorial(5)); // 120<br>
+                // 5 * factorial(4)<br>
+                // 5 * 4 * factorial(3)<br>
+                // 5 * 4 * 3 * factorial(2)<br>
+                // 5 * 4 * 3 * 2 * factorial(1)<br>
+                // 5 * 4 * 3 * 2 * 1 = 120<br>
+                <br>
+                // Fibonacci recursivo<br>
+                function fibonacci(n) {<br>
+                &nbsp;&nbsp;if (n &lt;= 1) return n;<br>
+                &nbsp;&nbsp;return fibonacci(n - 1) + fibonacci(n - 2);<br>
+                }<br>
+                <br>
+                console.log(fibonacci(7)); // 13
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            <ul>
+                <li><strong>Event handlers:</strong> Funciones que responden a eventos (click, submit)</li>
+                <li><strong>Callbacks:</strong> map, filter, reduce, forEach, setTimeout, fetch</li>
+                <li><strong>Validaciones:</strong> Validar forms, emails, contraseñas</li>
+                <li><strong>Cálculos:</strong> Operaciones matemáticas reutilizables</li>
+                <li><strong>API calls:</strong> Funciones async para fetch de datos</li>
+                <li><strong>Utilidades:</strong> Formatear fechas, currency, strings</li>
+                <li><strong>Closures:</strong> Data privacy, factories, módulos</li>
+                <li><strong>Arrow functions:</strong> Callbacks cortos, método this en React</li>
+            </ul>
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo real: validación<br>
+                const validarEmail = email => {<br>
+                &nbsp;&nbsp;const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;<br>
+                &nbsp;&nbsp;return regex.test(email);<br>
+                };<br>
+                <br>
+                // Uso en formulario<br>
+                if (!validarEmail(input.value)) {<br>
+                &nbsp;&nbsp;mostrarError("Email inválido");<br>
+                }
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál es la diferencia entre function declaration y function expression?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) No hay diferencia</div>
+                    <div class="quiz-option">B) Declaration tiene hoisting, expression no</div>
+                    <div class="quiz-option">C) Expression es más rápida</div>
+                    <div class="quiz-option">D) Declaration no puede tener parámetros</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> Las function declarations se "elevan" (hoisting) y pueden ser llamadas antes de ser definidas. Las expressions no.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué permite hacer el return implícito en arrow functions?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Escribir funciones sin return cuando hay una sola expresión</div>
+                    <div class="quiz-option">B) No retornar nada automáticamente</div>
+                    <div class="quiz-option">C) Solo funciona con números</div>
+                    <div class="quiz-option">D) Es obligatorio usar llaves {}</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: A)</strong> Si la arrow function tiene una sola expresión sin {}, automáticamente retorna el resultado. Ejemplo: const doble = x => x * 2
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. ¿Cuál es la diferencia entre rest (...args) y spread (...array)?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Son exactamente lo mismo</div>
+                    <div class="quiz-option">B) Rest recolecta argumentos en array, spread expande array en argumentos</div>
+                    <div class="quiz-option">C) Rest es para objetos, spread para arrays</div>
+                    <div class="quiz-option">D) Spread solo funciona en funciones</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> Rest (...args) recolecta múltiples argumentos en un array. Spread (...array) expande un array en argumentos individuales.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. ¿Qué es el scope de una variable?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Su tipo de dato</div>
+                    <div class="quiz-option">B) Su valor inicial</div>
+                    <div class="quiz-option">C) Dónde puede ser accedida (alcance)</div>
+                    <div class="quiz-option">D) Su nombre</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: C)</strong> El scope determina dónde una variable puede ser accedida: global (en todo el código), function scope, o block scope.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. ¿Qué caracteriza a una función recursiva?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Tiene muchos parámetros</div>
+                    <div class="quiz-option">B) Se llama a sí misma</div>
+                    <div class="quiz-option">C) No retorna nada</div>
+                    <div class="quiz-option">D) Solo funciona con números</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: B)</strong> Una función recursiva se llama a sí misma. Debe tener un caso base para evitar bucles infinitos. Ejemplo: factorial, fibonacci.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Calculadora con Funciones</h3>
+                <p><strong>Objetivo:</strong> Practicar diferentes tipos de funciones</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea función sumar(a, b) que retorne la suma</li>
+                    <li>Crea función restar con arrow function</li>
+                    <li>Crea función multiplicar con parámetros por defecto (b = 1)</li>
+                    <li>Crea función dividir que valide división por cero</li>
+                    <li>Crea función calcularTodos(...nums) que use rest para sumar N números</li>
+                    <li>Prueba todas las funciones con console.log</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Crea una función calculadora(operacion, a, b) que llame a la función correcta según operación</p>
+            </div>
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Función Recursiva</h3>
+                <p><strong>Objetivo:</strong> Dominar recursión</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Crea función sumaRecursiva(n) que sume números del 1 al n</li>
+                    <li>Ejemplo: sumaRecursiva(5) debe retornar 15 (1+2+3+4+5)</li>
+                    <li>Usa caso base: if (n === 1) return 1</li>
+                    <li>Caso recursivo: return n + sumaRecursiva(n - 1)</li>
+                    <li>Prueba con diferentes valores</li>
+                    <li>Agrega console.log para ver cada llamada recursiva</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Crea función potencia(base, exponente) de forma recursiva</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎉 ¡Domina las Funciones!</h2>
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            <ul style="margin-top: 30px;">
+                <li>Funciones organizan código en bloques reutilizables</li>
+                <li>Declaration tiene hoisting, expression no</li>
+                <li>Arrow functions son más concisas y tienen return implícito</li>
+                <li>Rest (...args) recolecta, spread (...array) expande</li>
+                <li>Scope determina dónde se puede acceder a variables</li>
+                <li>Closures permiten acceso a variables del scope externo</li>
+                <li>Callbacks son funciones pasadas como argumentos</li>
+                <li>Recursión requiere caso base para evitar bucle infinito</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Las funciones son el alma de JavaScript!</strong></p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">16</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            if (n >= totalSlides) { currentSlide = totalSlides - 1; }
+            else if (n < 0) { currentSlide = 0; }
+            else { currentSlide = n; }
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        showSlide(0);
+    </script>
+</body>
+</html>

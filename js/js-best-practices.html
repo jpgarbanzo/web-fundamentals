@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buenas Prácticas en JavaScript - Presentación Interactiva</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .slideshow-container {
+            max-width: 900px; width: 100%; background: white;
+            border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .slide { display: none; padding: 60px; min-height: 600px; }
+        .slide.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 20px; }
+        h2 { color: #764ba2; font-size: 2em; margin-bottom: 30px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #333; margin-bottom: 20px; }
+        .code {
+            background: #f5f5f5; border-left: 4px solid #667eea;
+            padding: 15px; margin: 20px 0;
+            font-family: 'Courier New', monospace; border-radius: 5px;
+        }
+        .demo-container {
+            border: 2px solid #667eea; padding: 20px; margin: 20px 0;
+            border-radius: 10px; background: #f9f9f9;
+        }
+        .controls {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 60px; background: #f5f5f5;
+        }
+        button {
+            background: #667eea; color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .slide-counter { font-size: 1.2em; color: #667eea; font-weight: bold; }
+        ul { margin-left: 30px; margin-bottom: 20px; }
+        li { font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 10px; }
+        .property { color: #764ba2; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+        .quiz-question {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #667eea;
+        }
+        .quiz-options { margin: 15px 0; }
+        .quiz-option {
+            background: white; padding: 12px; margin: 8px 0;
+            border-radius: 5px; border: 2px solid #ddd;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #667eea; background: #f9f9f9; }
+        .quiz-answer {
+            background: #d4edda; border-left: 4px solid #28a745;
+            padding: 15px; margin-top: 10px; border-radius: 5px; display: none;
+        }
+        .quiz-answer.show { display: block; }
+        .show-answer-btn {
+            background: #667eea; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;
+        }
+        .show-answer-btn:hover { background: #764ba2; }
+        .exercise-box {
+            background: #f0f0f0; padding: 20px; margin: 20px 0;
+            border-radius: 10px; border-left: 4px solid #10b981;
+        }
+        .exercise-box h3 { color: #10b981; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide active">
+            <h1>🎯 Buenas Prácticas en JavaScript</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Escribe código limpio, mantenible y profesional</p>
+            <p style="margin-top: 60px;">Las buenas prácticas mejoran la calidad, legibilidad y mantenibilidad de tu código.</p>
+            <p>Son esenciales para trabajar en equipo y proyectos a largo plazo.</p>
+        </div>
+
+        <div class="slide">
+            <h2>Nomenclatura y Convenciones</h2>
+            <p>Nombres descriptivos y consistentes:</p>
+            <div class="code">
+                // ✅ BUENAS PRÁCTICAS<br>
+                <br>
+                // camelCase para variables y funciones<br>
+                const userName = "Juan";<br>
+                const totalPrice = 100;<br>
+                function calculateTotal() { ... }<br>
+                <br>
+                // PascalCase para clases y componentes<br>
+                class UserProfile { ... }<br>
+                class ProductManager { ... }<br>
+                <br>
+                // UPPER_CASE para constantes<br>
+                const MAX_USERS = 100;<br>
+                const API_URL = "https://api.example.com";<br>
+                const PI = 3.14159;<br>
+                <br>
+                // Nombres descriptivos<br>
+                const isActive = true; // boolean con 'is', 'has', 'can'<br>
+                const hasPermission = false;<br>
+                const canEdit = true;
+            </div>
+            <div class="demo-container">
+                <p><strong>❌ Evitar:</strong> nombres genéricos (data, info, temp), abreviaturas confusas (usrNm), nombres de una letra (excepto en loops)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Const por Defecto, Let Cuando Necesario</h2>
+            <p>Usar const mejora la inmutabilidad y previene errores:</p>
+            <div class="code">
+                // ✅ BUENAS PRÁCTICAS<br>
+                <br>
+                // const por defecto<br>
+                const nombre = "Ana";<br>
+                const edad = 25;<br>
+                const usuario = { id: 1, nombre: "Pedro" };<br>
+                <br>
+                // let solo cuando el valor cambia<br>
+                let contador = 0;<br>
+                contador++; // necesita reasignación<br>
+                <br>
+                let resultado;<br>
+                if (condicion) {<br>
+                &nbsp;&nbsp;resultado = "A";<br>
+                } else {<br>
+                &nbsp;&nbsp;resultado = "B";<br>
+                }<br>
+                <br>
+                // ❌ EVITAR var (tiene problemas de scope)<br>
+                var global = "malo"; // function scope, hoisting problemático
+            </div>
+            <div class="demo-container">
+                <p><strong>Nota:</strong> const no hace objetos/arrays inmutables, solo previene reasignación de la variable</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Usar === en Lugar de ==</h2>
+            <p>Igualdad estricta previene conversiones inesperadas:</p>
+            <div class="code">
+                // ❌ == (igualdad débil - type coercion)<br>
+                0 == false // true (convierte tipos)<br>
+                '' == false // true<br>
+                '5' == 5 // true<br>
+                null == undefined // true<br>
+                <br>
+                // ✅ === (igualdad estricta - sin conversión)<br>
+                0 === false // false<br>
+                '' === false // false<br>
+                '5' === 5 // false<br>
+                null === undefined // false<br>
+                <br>
+                // Ejemplos prácticos<br>
+                const edad = "18";<br>
+                if (edad === 18) { // false, correcto<br>
+                &nbsp;&nbsp;console.log("Mayor de edad");<br>
+                }<br>
+                <br>
+                // Mismo con desigualdad<br>
+                if (valor !== null) { ... } // ✅<br>
+                if (valor != null) { ... } // ❌
+            </div>
+            <div class="demo-container">
+                <p><strong>Regla:</strong> SIEMPRE usa === y !== (salvo casos específicos donde necesites type coercion)</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Evitar Variables Globales</h2>
+            <p>Minimizar scope global previene conflictos:</p>
+            <div class="code">
+                // ❌ MALO - Variables globales<br>
+                var count = 0;<br>
+                var config = { ... };<br>
+                <br>
+                function increment() {<br>
+                &nbsp;&nbsp;count++; // Modifica global<br>
+                }<br>
+                <br>
+                // ✅ BUENO - Usar módulos o IIFE<br>
+                <br>
+                // IIFE (Immediately Invoked Function Expression)<br>
+                (function() {<br>
+                &nbsp;&nbsp;const count = 0; // Privado al scope<br>
+                &nbsp;&nbsp;const config = { ... };<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;function increment() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+                &nbsp;&nbsp;}<br>
+                })();<br>
+                <br>
+                // O usar módulos ES6<br>
+                // archivo: counter.js<br>
+                const count = 0;<br>
+                export function increment() { ... }<br>
+                <br>
+                // archivo: app.js<br>
+                import { increment } from './counter.js';
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Comentarios Útiles y Documentación</h2>
+            <div class="code">
+                // ❌ MALO - Comentarios obvios o redundantes<br>
+                let x = 5; // asigna 5 a x<br>
+                i++; // incrementa i<br>
+                <br>
+                // ✅ BUENO - Explica el "por qué", no el "qué"<br>
+                <br>
+                // Usamos timeout para evitar rate limiting de la API<br>
+                setTimeout(fetchData, 1000);<br>
+                <br>
+                // Validación especial requerida por legacy system<br>
+                if (input.length &gt; 50) { ... }<br>
+                <br>
+                // JSDoc para funciones<br>
+                /**<br>
+                &nbsp;* Calcula el precio total con impuestos<br>
+                &nbsp;* @param {number} precio - Precio base del producto<br>
+                &nbsp;* @param {number} impuesto - Porcentaje de impuesto (0-100)<br>
+                &nbsp;* @returns {number} Precio total con impuestos<br>
+                &nbsp;*/<br>
+                function calcularPrecioTotal(precio, impuesto) {<br>
+                &nbsp;&nbsp;return precio * (1 + impuesto / 100);<br>
+                }<br>
+                <br>
+                // TODO: Implementar validación de email<br>
+                // FIXME: Bug en Safari con esta función
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Herramientas de Desarrollo: Console</h2>
+            <p>Métodos de console para debugging efectivo:</p>
+            <div class="code">
+                // console.log - Mensajes generales<br>
+                console.log("Usuario:", usuario);<br>
+                console.log("Valores:", a, b, c);<br>
+                <br>
+                // console.error - Errores<br>
+                console.error("Error al cargar datos");<br>
+                <br>
+                // console.warn - Advertencias<br>
+                console.warn("API deprecated, usar v2");<br>
+                <br>
+                // console.table - Tablas (arrays/objetos)<br>
+                const usuarios = [<br>
+                &nbsp;&nbsp;{ id: 1, nombre: "Ana" },<br>
+                &nbsp;&nbsp;{ id: 2, nombre: "Luis" }<br>
+                ];<br>
+                console.table(usuarios);<br>
+                <br>
+                // console.time/timeEnd - Medir rendimiento<br>
+                console.time("fetch");<br>
+                await fetchData();<br>
+                console.timeEnd("fetch"); // "fetch: 234ms"<br>
+                <br>
+                // console.group - Agrupar mensajes<br>
+                console.group("User Info");<br>
+                console.log("Name:", name);<br>
+                console.log("Age:", age);<br>
+                console.groupEnd();
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Chrome DevTools: Debugger</h2>
+            <p>Herramientas para inspeccionar y debuggear código:</p>
+            <div class="code">
+                // Pausar ejecución con debugger<br>
+                function procesarDatos(data) {<br>
+                &nbsp;&nbsp;debugger; // Pausa aquí cuando DevTools está abierto<br>
+                &nbsp;&nbsp;const resultado = data.map(x => x * 2);<br>
+                &nbsp;&nbsp;return resultado;<br>
+                }
+            </div>
+            <p><strong>Características del Debugger:</strong></p>
+            <ul>
+                <li><span class="property">Breakpoints:</span> Click en número de línea para pausar</li>
+                <li><span class="property">Step Over (F10):</span> Ejecutar línea actual</li>
+                <li><span class="property">Step Into (F11):</span> Entrar en función</li>
+                <li><span class="property">Step Out (Shift+F11):</span> Salir de función</li>
+                <li><span class="property">Watch:</span> Observar valores de variables en tiempo real</li>
+                <li><span class="property">Call Stack:</span> Ver cadena de llamadas de funciones</li>
+                <li><span class="property">Scope:</span> Ver variables en scope local/global</li>
+            </ul>
+            <div class="demo-container">
+                <p><strong>Tip:</strong> Usa conditional breakpoints (click derecho) para pausar solo cuando condición sea verdadera</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>DevTools: Network y Performance</h2>
+            <p><strong>Network Tab:</strong></p>
+            <ul>
+                <li>Ver todas las peticiones HTTP (fetch, APIs, recursos)</li>
+                <li>Inspeccionar headers, payload, response</li>
+                <li>Medir tiempos de carga (waterfall chart)</li>
+                <li>Filtrar por tipo: XHR, JS, CSS, Img, Media</li>
+                <li>Throttling: Simular conexiones lentas (3G, 4G)</li>
+            </ul>
+            <p style="margin-top: 30px;"><strong>Performance Tab:</strong></p>
+            <ul>
+                <li>Grabar y analizar rendimiento de la página</li>
+                <li>Identificar funciones lentas (flame chart)</li>
+                <li>Ver FPS (frames per second) en animaciones</li>
+                <li>Detectar memory leaks y uso excesivo de CPU</li>
+                <li>Optimizar repaints y reflows del DOM</li>
+            </ul>
+            <div class="code" style="margin-top: 20px;">
+                // Medir performance con JavaScript<br>
+                const start = performance.now();<br>
+                // ... código a medir ...<br>
+                const end = performance.now();<br>
+                console.log(`Tiempo: ${end - start}ms`);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Frameworks Modernos: React</h2>
+            <p><strong>React:</strong> Biblioteca para construir interfaces de usuario</p>
+            <div class="code">
+                // Componente funcional con hooks<br>
+                import { useState } from 'react';<br>
+                <br>
+                function Counter() {<br>
+                &nbsp;&nbsp;const [count, setCount] = useState(0);<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return (<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Contador: {count}&lt;/p&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={() => setCount(count + 1)}&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Incrementar<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                &nbsp;&nbsp;);<br>
+                }
+            </div>
+            <p><strong>Características:</strong></p>
+            <ul>
+                <li><span class="property">Component-based:</span> UI dividida en componentes reutilizables</li>
+                <li><span class="property">Virtual DOM:</span> Actualizaciones eficientes</li>
+                <li><span class="property">JSX:</span> HTML en JavaScript</li>
+                <li><span class="property">Hooks:</span> useState, useEffect, useContext</li>
+                <li><span class="property">Unidirectional data flow:</span> Datos fluyen de arriba a abajo</li>
+            </ul>
+            <p><strong>Cuándo usar:</strong> SPAs, apps complejas, gran comunidad</p>
+        </div>
+
+        <div class="slide">
+            <h2>Frameworks: Angular y Vue</h2>
+            <p><strong>Angular:</strong> Framework completo de Google</p>
+            <div class="code">
+                // Componente TypeScript<br>
+                @Component({<br>
+                &nbsp;&nbsp;selector: 'app-counter',<br>
+                &nbsp;&nbsp;template: `<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Contador: {{count}}&lt;/p&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;button (click)="increment()"&gt;+&lt;/button&gt;<br>
+                &nbsp;&nbsp;`<br>
+                })<br>
+                export class CounterComponent {<br>
+                &nbsp;&nbsp;count = 0;<br>
+                &nbsp;&nbsp;increment() { this.count++; }<br>
+                }
+            </div>
+            <ul>
+                <li>TypeScript por defecto, inyección de dependencias</li>
+                <li>CLI poderoso, estructura opinionada</li>
+                <li><strong>Cuándo usar:</strong> Proyectos enterprise grandes</li>
+            </ul>
+            <p style="margin-top: 30px;"><strong>Vue:</strong> Framework progresivo</p>
+            <div class="code">
+                &lt;template&gt;<br>
+                &nbsp;&nbsp;&lt;p&gt;Contador: {{ count }}&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;button @click="count++"&gt;+&lt;/button&gt;<br>
+                &lt;/template&gt;<br>
+                &lt;script setup&gt;<br>
+                import { ref } from 'vue';<br>
+                const count = ref(0);<br>
+                &lt;/script&gt;
+            </div>
+            <ul>
+                <li>Sintaxis intuitiva, curva de aprendizaje suave</li>
+                <li><strong>Cuándo usar:</strong> Proyectos pequeños a medianos</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>NPM y Gestión de Paquetes</h2>
+            <p><strong>NPM (Node Package Manager)</strong> gestiona dependencias:</p>
+            <div class="code">
+                // Inicializar proyecto<br>
+                npm init -y<br>
+                <br>
+                // Instalar paquetes<br>
+                npm install react<br>
+                npm install -D eslint // dev dependency<br>
+                <br>
+                // package.json<br>
+                {<br>
+                &nbsp;&nbsp;"name": "mi-proyecto",<br>
+                &nbsp;&nbsp;"version": "1.0.0",<br>
+                &nbsp;&nbsp;"dependencies": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"react": "^18.2.0"<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;"devDependencies": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"eslint": "^8.0.0"<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;"scripts": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"start": "node index.js",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"test": "jest"<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p><strong>Comandos útiles:</strong></p>
+            <ul>
+                <li><span class="property">npm install:</span> Instala todas las dependencias</li>
+                <li><span class="property">npm run start:</span> Ejecuta script definido</li>
+                <li><span class="property">npm update:</span> Actualiza paquetes</li>
+                <li><span class="property">npm uninstall:</span> Desinstala paquete</li>
+            </ul>
+        </div>
+
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+            <ul>
+                <li><strong>Nomenclatura consistente:</strong> Todo el equipo usa mismas convenciones</li>
+                <li><strong>const/let:</strong> Prevenir bugs por reasignación accidental</li>
+                <li><strong>=== siempre:</strong> Evitar bugs sutiles de coerción de tipos</li>
+                <li><strong>console.table:</strong> Debuggear arrays de objetos fácilmente</li>
+                <li><strong>debugger:</strong> Pausar y inspeccionar estado complejo</li>
+                <li><strong>Network tab:</strong> Debuggear llamadas a APIs, ver errores 404/500</li>
+                <li><strong>React:</strong> SPAs modernas, dashboards, e-commerce</li>
+                <li><strong>npm:</strong> Todos los proyectos modernos usan gestión de paquetes</li>
+            </ul>
+            <div class="code" style="margin-top: 30px;">
+                // Ejemplo: Debugging con múltiples herramientas<br>
+                console.time("API Call");<br>
+                const response = await fetch('/api/users');<br>
+                console.timeEnd("API Call");<br>
+                <br>
+                const users = await response.json();<br>
+                console.table(users); // Ver datos en tabla<br>
+                <br>
+                debugger; // Pausar para inspeccionar<br>
+                const active = users.filter(u => u.active === true);
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuál convención de nomenclatura es correcta en JavaScript?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Variables en snake_case, clases en kebab-case</div>
+                    <div class="quiz-option">B) Variables en camelCase, clases en PascalCase, constantes en UPPER_CASE</div>
+                    <div class="quiz-option">C) Todo en lowercase</div>
+                    <div class="quiz-option">D) No importa, es preferencia personal</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> Variables y funciones en camelCase (userName), clases en PascalCase (UserProfile), constantes en UPPER_CASE (MAX_SIZE).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. ¿Cuándo usar let en lugar de const?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Siempre usar let</div>
+                    <div class="quiz-option">B) Solo cuando el valor necesita reasignarse</div>
+                    <div class="quiz-option">C) Solo con números</div>
+                    <div class="quiz-option">D) const y let son idénticos</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> Usa const por defecto. Solo usa let cuando sepas que necesitarás reasignar la variable (contadores, acumuladores, etc).
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. ¿Por qué usar === en lugar de ==?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) === es más rápido</div>
+                    <div class="quiz-option">B) === compara sin conversión de tipos, previene bugs</div>
+                    <div class="quiz-option">C) == está deprecated</div>
+                    <div class="quiz-option">D) No hay diferencia práctica</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> === compara valor Y tipo sin conversión automática. Previene bugs sutiles donde 0 == false o '5' == 5.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. ¿Qué método de console usarías para visualizar un array de objetos?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) console.log()</div>
+                    <div class="quiz-option">B) console.table()</div>
+                    <div class="quiz-option">C) console.array()</div>
+                    <div class="quiz-option">D) console.list()</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: B)</strong> console.table() muestra arrays y objetos en formato de tabla, perfecto para visualizar múltiples registros.
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. ¿Cuál framework elegirías para un proyecto enterprise grande?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Vue (más simple)</div>
+                    <div class="quiz-option">B) React (más flexible)</div>
+                    <div class="quiz-option">C) Angular (estructura completa y opinionada)</div>
+                    <div class="quiz-option">D) Vanilla JavaScript</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: C)</strong> Angular está diseñado para proyectos enterprise grandes: TypeScript integrado, arquitectura robusta, herramientas completas. React también es válido.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Refactorizar Código</h3>
+                <p><strong>Objetivo:</strong> Aplicar buenas prácticas a código problemático</p>
+                <p><strong>Código original:</strong></p>
+                <div class="code" style="font-size: 0.9em;">
+                    var x = 5;<br>
+                    var y = "5";<br>
+                    if (x == y) { var z = "igual"; }<br>
+                    console.log(z);<br>
+                    function calc(a, b) { return a+b; }
+                </div>
+                <p><strong>Requisitos de refactorización:</strong></p>
+                <ul>
+                    <li>Reemplaza var con const/let apropiadamente</li>
+                    <li>Usa nombres descriptivos en lugar de x, y, z</li>
+                    <li>Cambia == por ===</li>
+                    <li>Agrega JSDoc a la función</li>
+                    <li>Agrega comentarios útiles explicando el "por qué"</li>
+                </ul>
+            </div>
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Debugging con DevTools</h3>
+                <p><strong>Objetivo:</strong> Practicar uso de herramientas de desarrollo</p>
+                <p><strong>Código con bug:</strong></p>
+                <div class="code" style="font-size: 0.9em;">
+                    const users = [<br>
+                    &nbsp;&nbsp;{id: 1, name: "Ana", age: "25"},<br>
+                    &nbsp;&nbsp;{id: 2, name: "Luis", age: "30"}<br>
+                    ];<br>
+                    const adults = users.filter(u => u.age >= 18);<br>
+                    console.log(adults);
+                </div>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Identifica el bug (pista: age es string)</li>
+                    <li>Usa console.table() para ver los datos</li>
+                    <li>Agrega debugger para pausar ejecución</li>
+                    <li>Usa console.log() para verificar tipos</li>
+                    <li>Corrige el bug y verifica con ===</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎉 ¡Domina las Buenas Prácticas!</h2>
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+            <ul style="margin-top: 30px;">
+                <li>camelCase para variables, PascalCase para clases, UPPER_CASE para constantes</li>
+                <li>const por defecto, let solo cuando reasignas, evita var</li>
+                <li>Siempre usa === y !== para comparaciones</li>
+                <li>Minimiza variables globales, usa módulos o IIFE</li>
+                <li>Comenta el "por qué", no el "qué"</li>
+                <li>console.table() para arrays, debugger para inspeccionar</li>
+                <li>Network tab para APIs, Performance tab para optimizar</li>
+                <li>React/Angular/Vue según tamaño y necesidades del proyecto</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡El código limpio es código profesional!</strong></p>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">15</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            if (n >= totalSlides) { currentSlide = totalSlides - 1; }
+            else if (n < 0) { currentSlide = 0; }
+            else { currentSlide = n; }
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        function changeSlide(direction) { showSlide(currentSlide + direction); }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        showSlide(0);
+    </script>
+</body>
+</html>
