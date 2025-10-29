@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos Bash y NPM - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .code .comment {
+            color: #6a9955;
+        }
+
+        .code .command {
+            color: #4ec9b0;
+        }
+
+        .code .output {
+            color: #ce9178;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .terminal-demo {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .prompt {
+            color: #4ec9b0;
+        }
+
+        .command-input {
+            color: #dcdcaa;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>💻 Introducción a Bash y NPM</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">Domina la línea de comandos y gestión de paquetes</p>
+            <p style="margin-top: 60px;">En este curso aprenderás los fundamentos de la terminal Bash y cómo usar NPM (Node Package Manager) para gestionar proyectos web modernos.</p>
+            <p>Estos conocimientos son esenciales para cualquier desarrollador web, ya que te permitirán navegar por el sistema de archivos, gestionar dependencias y ejecutar servidores locales para tus proyectos.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es la Terminal? -->
+        <div class="slide">
+            <h2>¿Qué es la Terminal/Bash?</h2>
+            <p>La terminal es una interfaz de texto que permite interactuar con el sistema operativo mediante comandos escritos.</p>
+
+            <div class="demo-container">
+                <div class="terminal-demo">
+                    <span class="prompt">usuario@computadora:~$</span> <span class="command-input">ls -la</span><br>
+                    drwxr-xr-x 5 usuario grupo 160 Oct 29 10:30 .<br>
+                    drwxr-xr-x 3 usuario grupo  96 Oct 28 14:20 ..<br>
+                    -rw-r--r-- 1 usuario grupo 512 Oct 29 09:15 index.html
+                </div>
+            </div>
+
+            <p><strong>¿Por qué usar la terminal?</strong></p>
+            <ul>
+                <li>Mayor control y precisión sobre el sistema</li>
+                <li>Automatización de tareas repetitivas</li>
+                <li>Herramientas de desarrollo requieren su uso</li>
+                <li>Más rápida que la interfaz gráfica para muchas tareas</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Comandos de Navegación -->
+        <div class="slide">
+            <h2>Comandos de Navegación Básicos</h2>
+            <p>Estos comandos te permiten moverte por el sistema de archivos:</p>
+
+            <div class="code">
+                <span class="comment"># Ver el directorio actual</span><br>
+                <span class="command">pwd</span><br>
+                <span class="output">/Users/usuario/proyectos</span><br><br>
+
+                <span class="comment"># Listar archivos y carpetas</span><br>
+                <span class="command">ls</span><br>
+                <span class="output">index.html  styles.css  scripts.js</span><br><br>
+
+                <span class="comment"># Listar con detalles</span><br>
+                <span class="command">ls -la</span><br><br>
+
+                <span class="comment"># Cambiar de directorio</span><br>
+                <span class="command">cd nombre-carpeta</span><br>
+                <span class="command">cd ..</span> <span class="comment"># Subir un nivel</span><br>
+                <span class="command">cd ~</span> <span class="comment"># Ir al directorio home</span>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Tip:</strong> Usa la tecla TAB para autocompletar nombres de archivos y carpetas.
+            </div>
+        </div>
+
+        <!-- Slide 4: Operaciones con Archivos -->
+        <div class="slide">
+            <h2>Operaciones con Archivos y Carpetas</h2>
+            <p>Comandos esenciales para crear, modificar y eliminar archivos:</p>
+
+            <div class="code">
+                <span class="comment"># Crear una carpeta</span><br>
+                <span class="command">mkdir mi-proyecto</span><br><br>
+
+                <span class="comment"># Crear un archivo vacío</span><br>
+                <span class="command">touch index.html</span><br><br>
+
+                <span class="comment"># Copiar archivo</span><br>
+                <span class="command">cp origen.txt destino.txt</span><br><br>
+
+                <span class="comment"># Mover o renombrar archivo</span><br>
+                <span class="command">mv viejo.txt nuevo.txt</span><br><br>
+
+                <span class="comment"># Eliminar archivo</span><br>
+                <span class="command">rm archivo.txt</span><br><br>
+
+                <span class="comment"># Eliminar carpeta y su contenido</span><br>
+                <span class="command">rm -rf carpeta/</span>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Advertencia:</strong> El comando <span class="property">rm -rf</span> elimina archivos permanentemente. ¡Úsalo con cuidado!
+            </div>
+        </div>
+
+        <!-- Slide 5: ¿Qué es NPM? -->
+        <div class="slide">
+            <h2>¿Qué es NPM?</h2>
+            <p><span class="property">NPM</span> (Node Package Manager) es el gestor de paquetes de JavaScript más popular del mundo.</p>
+
+            <p><strong>Funciones principales:</strong></p>
+            <ul>
+                <li><span class="property">Instalar librerías:</span> Agregar herramientas y frameworks a tu proyecto</li>
+                <li><span class="property">Gestionar dependencias:</span> Mantener versiones de paquetes organizadas</li>
+                <li><span class="property">Compartir código:</span> Publicar tus propios paquetes</li>
+                <li><span class="property">Ejecutar scripts:</span> Automatizar tareas de desarrollo</li>
+            </ul>
+
+            <div class="code">
+                <span class="comment"># Verificar si tienes npm instalado</span><br>
+                <span class="command">npm --version</span><br>
+                <span class="output">10.2.4</span><br><br>
+
+                <span class="comment"># Verificar versión de Node.js</span><br>
+                <span class="command">node --version</span><br>
+                <span class="output">v20.10.0</span>
+            </div>
+
+            <p style="margin-top: 30px;">NPM viene instalado automáticamente cuando instalas Node.js.</p>
+        </div>
+
+        <!-- Slide 6: package.json -->
+        <div class="slide">
+            <h2>El archivo package.json</h2>
+            <p>El archivo <span class="property">package.json</span> es el corazón de cualquier proyecto de Node.js/NPM.</p>
+
+            <div class="code">
+                {<br>
+                &nbsp;&nbsp;"name": "mi-proyecto-web",<br>
+                &nbsp;&nbsp;"version": "1.0.0",<br>
+                &nbsp;&nbsp;"description": "Mi primer proyecto web",<br>
+                &nbsp;&nbsp;"scripts": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"start": "http-server"<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;"dependencies": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"http-server": "^14.1.1"<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+
+            <p><strong>Secciones importantes:</strong></p>
+            <ul>
+                <li><span class="property">name:</span> Nombre del proyecto</li>
+                <li><span class="property">version:</span> Versión del proyecto</li>
+                <li><span class="property">scripts:</span> Comandos personalizados</li>
+                <li><span class="property">dependencies:</span> Paquetes necesarios para producción</li>
+                <li><span class="property">devDependencies:</span> Paquetes solo para desarrollo</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Inicializar un Proyecto -->
+        <div class="slide">
+            <h2>Inicializar un Proyecto NPM</h2>
+            <p>Antes de instalar paquetes, necesitas crear un <span class="property">package.json</span>:</p>
+
+            <div class="code">
+                <span class="comment"># Crear package.json con asistente interactivo</span><br>
+                <span class="command">npm init</span><br><br>
+
+                <span class="comment"># Crear package.json con valores por defecto</span><br>
+                <span class="command">npm init -y</span>
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Flujo de trabajo típico:</strong></p>
+                <div class="terminal-demo">
+                    <span class="prompt">$</span> <span class="command-input">mkdir mi-sitio-web</span><br>
+                    <span class="prompt">$</span> <span class="command-input">cd mi-sitio-web</span><br>
+                    <span class="prompt">$</span> <span class="command-input">npm init -y</span><br>
+                    Wrote to /Users/usuario/mi-sitio-web/package.json<br><br>
+                    <span class="prompt">$</span> <span class="command-input">touch index.html</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px;">Ahora tu proyecto está listo para instalar paquetes NPM.</p>
+        </div>
+
+        <!-- Slide 8: Instalar un Servidor Web -->
+        <div class="slide">
+            <h2>Instalar un Servidor Web con NPM</h2>
+            <p>Para visualizar tu página web localmente, necesitas un servidor. Instalemos <span class="property">http-server</span>:</p>
+
+            <div class="code">
+                <span class="comment"># Instalar http-server como dependencia de desarrollo</span><br>
+                <span class="command">npm install --save-dev http-server</span><br><br>
+
+                <span class="comment"># Forma corta del mismo comando</span><br>
+                <span class="command">npm i -D http-server</span><br><br>
+
+                <span class="comment"># Instalar globalmente (disponible en todo el sistema)</span><br>
+                <span class="command">npm install -g http-server</span>
+            </div>
+
+            <p><strong>Opciones de instalación:</strong></p>
+            <ul>
+                <li><span class="property">--save-dev (-D):</span> Instala solo para desarrollo</li>
+                <li><span class="property">--save:</span> Instala como dependencia de producción</li>
+                <li><span class="property">-g:</span> Instala globalmente en el sistema</li>
+            </ul>
+
+            <div class="tip">
+                <strong>💡 Alternativa:</strong> También puedes usar <span class="property">live-server</span>, que recarga automáticamente al hacer cambios.
+            </div>
+        </div>
+
+        <!-- Slide 9: Ejecutar el Servidor -->
+        <div class="slide">
+            <h2>Ejecutar el Servidor Web</h2>
+            <p>Una vez instalado, puedes ejecutar el servidor de varias formas:</p>
+
+            <div class="code">
+                <span class="comment"># Si lo instalaste localmente, usar npx</span><br>
+                <span class="command">npx http-server</span><br><br>
+
+                <span class="comment"># Si lo instalaste globalmente</span><br>
+                <span class="command">http-server</span><br><br>
+
+                <span class="comment"># Especificar puerto</span><br>
+                <span class="command">http-server -p 3000</span><br><br>
+
+                <span class="comment"># Abrir automáticamente en el navegador</span><br>
+                <span class="command">http-server -o</span>
+            </div>
+
+            <div class="demo-container">
+                <div class="terminal-demo">
+                    <span class="prompt">$</span> <span class="command-input">npx http-server</span><br>
+                    Starting up http-server, serving ./<br>
+                    Available on:<br>
+                    &nbsp;&nbsp;http://127.0.0.1:8080<br>
+                    &nbsp;&nbsp;http://192.168.1.100:8080<br>
+                    Hit CTRL-C to stop the server
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Acceder a tu Página Web -->
+        <div class="slide">
+            <h2>Acceder a tu Página Web</h2>
+            <p>Con el servidor corriendo, ya puedes ver tu sitio web en el navegador:</p>
+
+            <p><strong>Pasos para acceder:</strong></p>
+            <ul>
+                <li>Abre tu navegador web</li>
+                <li>Navega a <span class="property">http://localhost:8080</span></li>
+                <li>Verás tu archivo <span class="property">index.html</span></li>
+            </ul>
+
+            <div class="tip">
+                <strong>💡 Consejos:</strong>
+                <ul style="margin-top: 15px;">
+                    <li>El servidor debe estar corriendo para ver la página</li>
+                    <li>Usa <span class="property">CTRL+C</span> para detener el servidor</li>
+                    <li>Con <span class="property">live-server</span>, los cambios se ven automáticamente</li>
+                    <li>Puedes compartir la URL local en tu red (192.168.x.x)</li>
+                </ul>
+            </div>
+
+            <div class="code">
+                <span class="comment"># Crear un script en package.json</span><br>
+                "scripts": {<br>
+                &nbsp;&nbsp;"start": "http-server -p 3000 -o"<br>
+                }<br><br>
+                <span class="comment"># Ahora puedes usar:</span><br>
+                <span class="command">npm start</span>
+            </div>
+        </div>
+
+        <!-- Slide 11: Comandos NPM Comunes -->
+        <div class="slide">
+            <h2>Comandos NPM Esenciales</h2>
+            <p>Comandos que usarás frecuentemente en tus proyectos:</p>
+
+            <div class="code">
+                <span class="comment"># Instalar todas las dependencias del proyecto</span><br>
+                <span class="command">npm install</span><br><br>
+
+                <span class="comment"># Instalar un paquete específico</span><br>
+                <span class="command">npm install nombre-paquete</span><br><br>
+
+                <span class="comment"># Desinstalar un paquete</span><br>
+                <span class="command">npm uninstall nombre-paquete</span><br><br>
+
+                <span class="comment"># Actualizar paquetes</span><br>
+                <span class="command">npm update</span><br><br>
+
+                <span class="comment"># Ver paquetes instalados</span><br>
+                <span class="command">npm list</span><br><br>
+
+                <span class="comment"># Ejecutar un script definido en package.json</span><br>
+                <span class="command">npm run nombre-script</span>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> No subas la carpeta <span class="property">node_modules/</span> a Git. Agrégala a <span class="property">.gitignore</span>.
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina la Terminal y NPM!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>La terminal te da control total sobre tu sistema de desarrollo</li>
+                <li>Usa <span class="property">pwd, ls, cd</span> para navegar por archivos</li>
+                <li>Usa <span class="property">mkdir, touch, rm</span> para gestionar archivos</li>
+                <li><span class="property">NPM</span> es esencial para proyectos JavaScript modernos</li>
+                <li>Siempre inicia proyectos con <span class="property">npm init</span></li>
+                <li>Instala <span class="property">http-server</span> o <span class="property">live-server</span> para desarrollo local</li>
+                <li>Define scripts en <span class="property">package.json</span> para automatizar tareas</li>
+                <li>La práctica constante te hará más eficiente en la terminal</li>
+            </ul>
+
+            <p style="margin-top: 60px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Ahora puedes crear y servir tus proyectos web como un profesional!</strong></p>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>
