@@ -334,6 +334,228 @@
             color: #764ba2;
             width: 30%;
         }
+
+        /* Navbar Preview */
+        .navbar-preview {
+            background: #212529;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .navbar-preview .brand {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .navbar-preview .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-preview .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        .navbar-preview .nav-link.active {
+            color: white;
+        }
+
+        /* Form Preview */
+        .form-preview {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .form-preview label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .form-preview input,
+        .form-preview textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            font-family: inherit;
+        }
+
+        .form-preview input:focus,
+        .form-preview textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        }
+
+        .form-preview .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-preview .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .form-preview .checkbox-wrapper input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-preview .checkbox-wrapper label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        /* Modal Preview */
+        .modal-preview {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 15px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .modal-preview .modal-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-preview .modal-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .modal-preview .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #000;
+            opacity: 0.5;
+        }
+
+        .modal-preview .modal-body {
+            padding: 20px;
+            font-size: 0.95em;
+        }
+
+        .modal-preview .modal-footer {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            color: #0d6efd;
+            border: 1px solid #0d6efd;
+        }
+
+        /* Layout Preview */
+        .layout-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.85em;
+        }
+
+        .layout-preview .hero {
+            background: #e9ecef;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .layout-preview .hero h1 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .layout-preview .hero p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .layout-preview .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .layout-preview .feature-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .layout-preview .feature-card h5 {
+            font-size: 1em;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .layout-preview .feature-card p {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .preview-label {
+            background: #10b981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -502,7 +724,297 @@
             </div>
         </div>
 
-        <!-- Slide 7: Más Componentes -->
+        <!-- Slide 7: Navbar Completo -->
+        <div class="slide">
+            <h2>Ejemplo Completo - Navbar</h2>
+            <p>Navbar responsivo con logo, enlaces y botón hamburguesa:</p>
+
+            <div class="two-column">
+                <div>
+                    <span class="preview-label">📝 Código</span>
+                    <div class="code" style="font-size: 0.75em;">
+                        &lt;nav class="navbar navbar-expand-lg<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;navbar-dark bg-dark"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="container-fluid"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="navbar-brand"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href="#"&gt;Mi Sitio&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="navbar-toggler"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-bs-toggle="collapse"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-bs-target="#navbarNav"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="navbar-toggler-icon"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/span&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="collapse navbar-collapse"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id="navbarNav"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul class="navbar-nav ms-auto"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="nav-link active"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href="#"&gt;Inicio&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="nav-link"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href="#"&gt;Servicios&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="nav-link"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href="#"&gt;Contacto&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/nav&gt;
+                    </div>
+                </div>
+
+                <div>
+                    <span class="preview-label">👁️ Resultado Visual</span>
+                    <div class="navbar-preview">
+                        <div class="brand">Mi Sitio</div>
+                        <div class="nav-links">
+                            <a href="#" class="nav-link active">Inicio</a>
+                            <a href="#" class="nav-link">Servicios</a>
+                            <a href="#" class="nav-link">Contacto</a>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 15px; font-size: 0.9em;"><span class="highlight">Claves:</span></p>
+                    <ul style="font-size: 0.85em; margin-left: 20px;">
+                        <li><span class="property">navbar-expand-lg:</span> Colapsa en móviles</li>
+                        <li><span class="property">navbar-dark:</span> Tema oscuro</li>
+                        <li><span class="property">ms-auto:</span> Alinea a la derecha</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Formulario Completo -->
+        <div class="slide">
+            <h2>Ejemplo Completo - Formulario</h2>
+            <p>Formulario de registro con validación de Bootstrap:</p>
+
+            <div class="two-column">
+                <div>
+                    <span class="preview-label">📝 Código</span>
+                    <div class="code" style="font-size: 0.7em;">
+                        &lt;form class="row g-3"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="col-md-6"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="nombre"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form-label"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre&lt;/label&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form-control"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;placeholder="Juan"&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="col-md-6"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form-label"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email&lt;/label&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form-control"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;placeholder="juan@email.com"&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="col-12"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;label class="form-label"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mensaje&lt;/label&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;textarea class="form-control"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows="3"&gt;&lt;/textarea&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="col-12"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="checkbox"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form-check-input"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;label class="form-check-label"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acepto términos<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/label&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;button class="btn btn-primary"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Enviar<br>
+                        &nbsp;&nbsp;&lt;/button&gt;<br>
+                        &lt;/form&gt;
+                    </div>
+                </div>
+
+                <div>
+                    <span class="preview-label">👁️ Resultado Visual</span>
+                    <div class="form-preview">
+                        <div class="form-row">
+                            <div>
+                                <label>Nombre</label>
+                                <input type="text" placeholder="Juan">
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <input type="email" placeholder="juan@email.com">
+                            </div>
+                        </div>
+                        <label>Mensaje</label>
+                        <textarea rows="3" placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="terms">
+                            <label for="terms">Acepto los términos</label>
+                        </div>
+                        <button class="btn-demo btn-primary">Enviar</button>
+                    </div>
+                    <p style="font-size: 0.85em; margin-top: 10px;"><span class="highlight">g-3</span> = gap de 1rem entre columnas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Modal Completo -->
+        <div class="slide">
+            <h2>Ejemplo Completo - Modal</h2>
+            <p>Modal con header, body, footer y botones:</p>
+
+            <div class="two-column">
+                <div>
+                    <span class="preview-label">📝 Código</span>
+                    <div class="code" style="font-size: 0.65em;">
+                        &lt;!-- Botón que abre el modal --&gt;<br>
+                        &lt;button type="button"<br>
+                        &nbsp;&nbsp;class="btn btn-primary"<br>
+                        &nbsp;&nbsp;data-bs-toggle="modal"<br>
+                        &nbsp;&nbsp;data-bs-target="#miModal"&gt;<br>
+                        &nbsp;&nbsp;Abrir Modal<br>
+                        &lt;/button&gt;<br>
+                        <br>
+                        &lt;!-- Modal --&gt;<br>
+                        &lt;div class="modal fade"<br>
+                        &nbsp;&nbsp;id="miModal" tabindex="-1"&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="modal-dialog"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-content"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-header"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="modal-title"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Título del Modal<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/h5&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn-close"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-bs-dismiss="modal"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-body"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Contenido del modal aquí.&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-footer"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-secondary"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-bs-dismiss="modal"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cerrar<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Guardar cambios<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                </div>
+
+                <div>
+                    <span class="preview-label">👁️ Resultado Visual</span>
+                    <div class="modal-preview">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Título del Modal</h5>
+                            <button class="btn-close">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Contenido del modal aquí.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-demo btn-secondary">Cerrar</button>
+                            <button class="btn-demo btn-primary">Guardar cambios</button>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 15px; font-size: 0.9em;"><span class="highlight">Claves:</span></p>
+                    <ul style="font-size: 0.85em; margin-left: 20px;">
+                        <li><span class="property">data-bs-toggle:</span> Activa el modal</li>
+                        <li><span class="property">data-bs-target:</span> ID del modal a abrir</li>
+                        <li><span class="property">modal-dialog:</span> Contenedor del modal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Layout Completo -->
+        <div class="slide">
+            <h2>Ejemplo Completo - Layout de Página</h2>
+            <p>Estructura completa de una página con grid:</p>
+
+            <div class="two-column">
+                <div>
+                    <span class="preview-label">📝 Código</span>
+                    <div class="code" style="font-size: 0.6em;">
+                        &lt;div class="container mt-5"&gt;<br>
+                        &nbsp;&nbsp;&lt;!-- Hero Section --&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="row mb-4"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-12 text-center<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;py-5 bg-light rounded"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1 class="display-4"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bienvenido&lt;/h1&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="lead"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subtítulo descriptivo&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;btn-lg"&gt;Comenzar&lt;/button&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        <br>
+                        &nbsp;&nbsp;&lt;!-- Features en 3 columnas --&gt;<br>
+                        &nbsp;&nbsp;&lt;div class="row"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-4 mb-3"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card h-100"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feature 1&lt;/h5&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Descripción del feature.&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="btn btn-outline-primary"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver más&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Repetir para Card 2 y 3 --&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                </div>
+
+                <div>
+                    <span class="preview-label">👁️ Resultado Visual</span>
+                    <div class="layout-preview">
+                        <div class="hero">
+                            <h1>Bienvenido</h1>
+                            <p>Subtítulo descriptivo</p>
+                            <button class="btn-demo btn-primary">Comenzar</button>
+                        </div>
+                        <div class="features">
+                            <div class="feature-card">
+                                <h5>Feature 1</h5>
+                                <p>Descripción del feature.</p>
+                                <button class="btn-demo btn-outline-primary" style="font-size: 0.8em; padding: 6px 12px;">Ver más</button>
+                            </div>
+                            <div class="feature-card">
+                                <h5>Feature 2</h5>
+                                <p>Descripción del feature.</p>
+                                <button class="btn-demo btn-outline-primary" style="font-size: 0.8em; padding: 6px 12px;">Ver más</button>
+                            </div>
+                            <div class="feature-card">
+                                <h5>Feature 3</h5>
+                                <p>Descripción del feature.</p>
+                                <button class="btn-demo btn-outline-primary" style="font-size: 0.8em; padding: 6px 12px;">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 15px; font-size: 0.9em;"><span class="highlight">Claves:</span></p>
+                    <ul style="font-size: 0.85em; margin-left: 20px;">
+                        <li><span class="property">h-100:</span> Cards con misma altura</li>
+                        <li><span class="property">col-md-4:</span> 3 columnas iguales</li>
+                        <li><span class="property">py-5:</span> Padding vertical en hero</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Más Componentes -->
         <div class="slide">
             <h2>Más Componentes de Bootstrap</h2>
 
@@ -527,7 +1039,7 @@
             </div>
         </div>
 
-        <!-- Slide 8: Utilidades CSS -->
+        <!-- Slide 12: Utilidades CSS -->
         <div class="slide">
             <h2>Clases de Utilidad</h2>
             <p>Bootstrap proporciona clases auxiliares para tareas comunes sin escribir CSS:</p>
@@ -562,7 +1074,7 @@
             </div>
         </div>
 
-        <!-- Slide 9: Personalización -->
+        <!-- Slide 13: Personalización -->
         <div class="slide">
             <h2>Personalizar Bootstrap</h2>
             <p>Puedes sobrescribir los estilos de Bootstrap con tu propio CSS:</p>
@@ -593,7 +1105,7 @@
             <p style="margin-top: 20px;"><span class="highlight">Tip:</span> Bootstrap 5 usa CSS Variables (custom properties) para facilitar la personalización.</p>
         </div>
 
-        <!-- Slide 10: Cuándo Usar Bootstrap -->
+        <!-- Slide 14: Cuándo Usar Bootstrap -->
         <div class="slide">
             <h2>¿Cuándo Usar Bootstrap?</h2>
 
@@ -617,7 +1129,7 @@
             </ul>
         </div>
 
-        <!-- Slide 11: Casos de Uso Comunes -->
+        <!-- Slide 15: Casos de Uso Comunes -->
         <div class="slide">
             <h2>Casos de Uso Comunes</h2>
 
@@ -635,7 +1147,7 @@
             <p style="margin-top: 40px;"><span class="highlight">Dato:</span> Más del 20% de todos los sitios web usan Bootstrap, incluyendo empresas como Twitter, Spotify, y LinkedIn.</p>
         </div>
 
-        <!-- Slide 12: Quiz -->
+        <!-- Slide 16: Quiz -->
         <div class="slide">
             <h2>✅ Pon a Prueba tus Conocimientos</h2>
             <p>Evalúa tu comprensión de Bootstrap:</p>
@@ -711,7 +1223,7 @@
             </div>
         </div>
 
-        <!-- Slide 13: Exercises -->
+        <!-- Slide 17: Exercises -->
         <div class="slide">
             <h2>💪 Ejercicios Prácticos</h2>
             <p>Refuerza tus conocimientos con estos ejercicios:</p>
@@ -749,7 +1261,7 @@
             </div>
         </div>
 
-        <!-- Slide 14: Conclusión -->
+        <!-- Slide 18: Conclusión -->
         <div class="slide">
             <h2>🎉 ¡Domina Bootstrap!</h2>
 
@@ -779,7 +1291,7 @@
         <!-- Controles -->
         <div class="controls">
             <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
-            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">18</span></span>
             <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
         </div>
     </div>
