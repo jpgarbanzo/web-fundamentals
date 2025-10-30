@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap - Presentación Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .code {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .demo-container {
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            background: #f5f5f5;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .property {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .quiz-question {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+        }
+
+        .quiz-answer {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .exercise-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+
+        .exercise-box h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+
+        .bootstrap-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .demo-col {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .demo-col-4 {
+            grid-column: span 4;
+        }
+
+        .demo-col-6 {
+            grid-column: span 6;
+        }
+
+        .demo-col-12 {
+            grid-column: span 12;
+        }
+
+        .component-preview {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .btn-demo {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn-primary {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-success {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .card-demo {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 300px;
+            margin: 10px 0;
+        }
+
+        .card-header {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .alert-demo {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #cfe2ff;
+            border-color: #0d6efd;
+            color: #084298;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #664d03;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .comparison-table td:first-child {
+            background: #f5f5f5;
+            font-weight: bold;
+            color: #764ba2;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>🎯 Bootstrap</h1>
+            <p style="font-size: 1.5em; margin-top: 40px;">El framework CSS más popular del mundo</p>
+            <p style="margin-top: 60px;">Bootstrap es un framework front-end que acelera el desarrollo web proporcionando componentes prediseñados, un sistema de grid responsivo y utilidades CSS listas para usar.</p>
+            <p>Creado por Twitter en 2011, Bootstrap se ha convertido en el estándar de la industria para prototipar rápidamente y construir interfaces web responsivas y consistentes.</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es Bootstrap? -->
+        <div class="slide">
+            <h2>¿Qué es Bootstrap?</h2>
+            <p>Bootstrap es un <strong>framework CSS y JavaScript</strong> que proporciona componentes reutilizables y un sistema de diseño consistente.</p>
+
+            <p><strong>Conceptos clave:</strong></p>
+            <ul>
+                <li><span class="property">Framework CSS:</span> Conjunto de estilos predefinidos</li>
+                <li><span class="property">Mobile-first:</span> Diseñado primero para dispositivos móviles</li>
+                <li><span class="property">Grid System:</span> Sistema de 12 columnas responsivo</li>
+                <li><span class="property">Componentes:</span> Elementos UI listos para usar (botones, cards, modales, etc.)</li>
+                <li><span class="property">Utilidades:</span> Clases CSS para tareas comunes (spacing, colors, display)</li>
+                <li><span class="property">JavaScript:</span> Componentes interactivos (dropdowns, modals, tooltips)</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>Versión actual:</strong> Bootstrap 5 (sin dependencia de jQuery)</p>
+        </div>
+
+        <!-- Slide 3: Instalación -->
+        <div class="slide">
+            <h2>Cómo Instalar Bootstrap</h2>
+            <p>Hay dos formas principales de agregar Bootstrap a tu proyecto:</p>
+
+            <p><strong>1. CDN (Content Delivery Network) - Más rápido:</strong></p>
+            <div class="code">
+                &lt;!-- CSS --&gt;<br>
+                &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;<br>
+                <br>
+                &lt;!-- JavaScript (antes del cierre de body) --&gt;<br>
+                &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+            </div>
+
+            <p style="margin-top: 30px;"><strong>2. NPM (Node Package Manager) - Para proyectos grandes:</strong></p>
+            <div class="code">
+                npm install bootstrap<br>
+                <br>
+                # Luego importar en tu archivo CSS/JS:<br>
+                @import '~bootstrap/dist/css/bootstrap.min.css';
+            </div>
+
+            <p style="margin-top: 20px;"><span class="highlight">Recomendación:</span> Usa CDN para proyectos pequeños y prototipos, NPM para aplicaciones en producción.</p>
+        </div>
+
+        <!-- Slide 4: Sistema de Grid -->
+        <div class="slide">
+            <h2>Sistema de Grid</h2>
+            <p>Bootstrap usa un sistema de <strong>12 columnas</strong> basado en flexbox para crear layouts responsivos:</p>
+
+            <div class="code">
+                &lt;div class="container"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="row"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-4"&gt;4 columnas&lt;/div&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-4"&gt;4 columnas&lt;/div&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-4"&gt;4 columnas&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                &lt;/div&gt;
+            </div>
+
+            <div class="demo-container">
+                <p><strong>Ejemplo visual - 3 columnas de 4 (total 12):</strong></p>
+                <div class="demo-grid">
+                    <div class="demo-col demo-col-4">col-4</div>
+                    <div class="demo-col demo-col-4">col-4</div>
+                    <div class="demo-col demo-col-4">col-4</div>
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Columnas desiguales (6 + 6):</strong></p>
+                <div class="demo-grid">
+                    <div class="demo-col demo-col-6">col-6</div>
+                    <div class="demo-col demo-col-6">col-6</div>
+                </div>
+            </div>
+
+            <p><span class="highlight">Tip:</span> Las columnas siempre deben sumar 12 dentro de una row.</p>
+        </div>
+
+        <!-- Slide 5: Grid Responsivo -->
+        <div class="slide">
+            <h2>Grid Responsivo (Breakpoints)</h2>
+            <p>Bootstrap define <strong>breakpoints</strong> para diseños responsivos:</p>
+
+            <div class="code">
+                &lt;div class="row"&gt;<br>
+                &nbsp;&nbsp;&lt;!-- Móvil: 12 cols, Tablet: 6 cols, Desktop: 4 cols --&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-12 col-md-6 col-lg-4"&gt;Responsivo&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-12 col-md-6 col-lg-4"&gt;Responsivo&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="col-12 col-md-6 col-lg-4"&gt;Responsivo&lt;/div&gt;<br>
+                &lt;/div&gt;
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <td><strong>Extra Small (xs)</strong></td>
+                    <td>&lt;576px - Móviles (por defecto, no requiere prefijo)</td>
+                </tr>
+                <tr>
+                    <td><strong>Small (sm)</strong></td>
+                    <td>≥576px - Móviles grandes (col-sm-*)</td>
+                </tr>
+                <tr>
+                    <td><strong>Medium (md)</strong></td>
+                    <td>≥768px - Tablets (col-md-*)</td>
+                </tr>
+                <tr>
+                    <td><strong>Large (lg)</strong></td>
+                    <td>≥992px - Laptops (col-lg-*)</td>
+                </tr>
+                <tr>
+                    <td><strong>Extra Large (xl)</strong></td>
+                    <td>≥1200px - Desktops (col-xl-*)</td>
+                </tr>
+                <tr>
+                    <td><strong>XXL (xxl)</strong></td>
+                    <td>≥1400px - Pantallas grandes (col-xxl-*)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 6: Componentes - Botones y Cards -->
+        <div class="slide">
+            <h2>Componentes Principales</h2>
+            <p>Bootstrap incluye componentes prediseñados que ahorran tiempo:</p>
+
+            <p><strong>Botones:</strong></p>
+            <div class="code">
+                &lt;button class="btn btn-primary"&gt;Primario&lt;/button&gt;<br>
+                &lt;button class="btn btn-success"&gt;Éxito&lt;/button&gt;<br>
+                &lt;button class="btn btn-danger"&gt;Peligro&lt;/button&gt;
+            </div>
+
+            <div class="component-preview">
+                <button class="btn-demo btn-primary">Primario</button>
+                <button class="btn-demo btn-success">Éxito</button>
+                <button class="btn-demo btn-danger">Peligro</button>
+            </div>
+
+            <p style="margin-top: 30px;"><strong>Cards (Tarjetas):</strong></p>
+            <div class="code">
+                &lt;div class="card"&gt;<br>
+                &nbsp;&nbsp;&lt;div class="card-header"&gt;Header&lt;/div&gt;<br>
+                &nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h5&gt;Título&lt;/h5&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Contenido de la card&lt;/p&gt;<br>
+                &nbsp;&nbsp;&lt;/div&gt;<br>
+                &lt;/div&gt;
+            </div>
+
+            <div class="card-demo">
+                <div class="card-header">Card Header</div>
+                <div class="card-body">
+                    <strong>Card Title</strong>
+                    <p style="margin: 10px 0; font-size: 0.9em;">Esta es una card de Bootstrap con contenido de ejemplo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Más Componentes -->
+        <div class="slide">
+            <h2>Más Componentes de Bootstrap</h2>
+
+            <ul>
+                <li><span class="property">Navbar:</span> Barras de navegación responsivas con menú hamburguesa</li>
+                <li><span class="property">Modal:</span> Ventanas emergentes para diálogos y formularios</li>
+                <li><span class="property">Alerts:</span> Mensajes de notificación con diferentes estilos</li>
+                <li><span class="property">Forms:</span> Inputs, checkboxes, radios con estilos consistentes</li>
+                <li><span class="property">Carousel:</span> Sliders de imágenes con controles</li>
+                <li><span class="property">Accordion:</span> Paneles colapsables para FAQs</li>
+                <li><span class="property">Badges:</span> Etiquetas y contadores</li>
+                <li><span class="property">Progress bars:</span> Barras de progreso animadas</li>
+                <li><span class="property">Tooltips y Popovers:</span> Información contextual al hover</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>Ejemplo - Alert:</strong></p>
+            <div class="alert-demo alert-info">
+                <strong>Info:</strong> Este es un mensaje informativo.
+            </div>
+            <div class="alert-demo alert-warning">
+                <strong>Advertencia:</strong> Verifica esta información.
+            </div>
+        </div>
+
+        <!-- Slide 8: Utilidades CSS -->
+        <div class="slide">
+            <h2>Clases de Utilidad</h2>
+            <p>Bootstrap proporciona clases auxiliares para tareas comunes sin escribir CSS:</p>
+
+            <p><strong>Spacing (Espaciado):</strong></p>
+            <div class="code">
+                m-3  /* margin en todos los lados */<br>
+                mt-2 /* margin-top */<br>
+                px-4 /* padding horizontal (left + right) */<br>
+                mb-5 /* margin-bottom */<br>
+                <br>
+                Valores: 0, 1, 2, 3, 4, 5 (0 = 0, 5 = 3rem)
+            </div>
+
+            <p style="margin-top: 20px;"><strong>Display y Flexbox:</strong></p>
+            <div class="code">
+                d-flex         /* display: flex */<br>
+                d-none         /* display: none */<br>
+                d-block        /* display: block */<br>
+                justify-content-center<br>
+                align-items-center
+            </div>
+
+            <p style="margin-top: 20px;"><strong>Colores y Backgrounds:</strong></p>
+            <div class="code">
+                text-primary   /* color primario */<br>
+                bg-success     /* fondo verde */<br>
+                text-white     /* texto blanco */<br>
+                bg-dark        /* fondo oscuro */<br>
+                text-center    /* texto centrado */<br>
+                fw-bold        /* font-weight: bold */
+            </div>
+        </div>
+
+        <!-- Slide 9: Personalización -->
+        <div class="slide">
+            <h2>Personalizar Bootstrap</h2>
+            <p>Puedes sobrescribir los estilos de Bootstrap con tu propio CSS:</p>
+
+            <div class="code">
+                &lt;!-- 1. Primero carga Bootstrap --&gt;<br>
+                &lt;link href="bootstrap.min.css" rel="stylesheet"&gt;<br>
+                <br>
+                &lt;!-- 2. Luego tu CSS personalizado --&gt;<br>
+                &lt;link href="custom.css" rel="stylesheet"&gt;
+            </div>
+
+            <p style="margin-top: 30px;"><strong>Sobrescribir estilos en custom.css:</strong></p>
+            <div class="code">
+                /* Cambiar el color primario */<br>
+                .btn-primary {<br>
+                &nbsp;&nbsp;background-color: #6c5ce7;<br>
+                &nbsp;&nbsp;border-color: #6c5ce7;<br>
+                }<br>
+                <br>
+                /* Modificar breakpoints, fonts, etc */<br>
+                :root {<br>
+                &nbsp;&nbsp;--bs-primary: #6c5ce7;<br>
+                &nbsp;&nbsp;--bs-font-family: 'Poppins', sans-serif;<br>
+                }
+            </div>
+
+            <p style="margin-top: 20px;"><span class="highlight">Tip:</span> Bootstrap 5 usa CSS Variables (custom properties) para facilitar la personalización.</p>
+        </div>
+
+        <!-- Slide 10: Cuándo Usar Bootstrap -->
+        <div class="slide">
+            <h2>¿Cuándo Usar Bootstrap?</h2>
+
+            <p><strong>✅ Usa Bootstrap cuando:</strong></p>
+            <ul>
+                <li>Necesitas prototipar rápidamente</li>
+                <li>Quieres un diseño responsivo sin escribir mucho CSS</li>
+                <li>Tu equipo necesita consistencia en el diseño</li>
+                <li>Estás construyendo aplicaciones internas/dashboards</li>
+                <li>Necesitas soporte para navegadores antiguos</li>
+                <li>Prefieres componentes prediseñados y probados</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>❌ Evita Bootstrap cuando:</strong></p>
+            <ul>
+                <li>Necesitas un diseño completamente único/personalizado</li>
+                <li>Quieres optimizar al máximo el tamaño del bundle</li>
+                <li>Prefieres CSS puro o frameworks modernos como Tailwind</li>
+                <li>El proyecto requiere animaciones complejas</li>
+                <li>Ya usas frameworks JS con sus propios sistemas de diseño (Material-UI, Chakra, etc.)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 11: Casos de Uso Comunes -->
+        <div class="slide">
+            <h2>Casos de Uso Comunes</h2>
+
+            <ul>
+                <li><strong>Dashboards administrativos:</strong> Usa grid + cards + tables para paneles de control</li>
+                <li><strong>Landing pages:</strong> Hero sections + navbar + grid para marketing sites</li>
+                <li><strong>Formularios complejos:</strong> Utiliza form components con validación</li>
+                <li><strong>Blogs y sitios de contenido:</strong> Grid + cards + pagination</li>
+                <li><strong>E-commerce:</strong> Product cards + modals + carousels para galerías</li>
+                <li><strong>Portafolios:</strong> Grid system para galerías responsivas</li>
+                <li><strong>Aplicaciones web internas:</strong> Componentes consistentes para equipos grandes</li>
+                <li><strong>Prototipos rápidos:</strong> Valida ideas sin diseñar desde cero</li>
+            </ul>
+
+            <p style="margin-top: 40px;"><span class="highlight">Dato:</span> Más del 20% de todos los sitios web usan Bootstrap, incluyendo empresas como Twitter, Spotify, y LinkedIn.</p>
+        </div>
+
+        <!-- Slide 12: Quiz -->
+        <div class="slide">
+            <h2>✅ Pon a Prueba tus Conocimientos</h2>
+            <p>Evalúa tu comprensión de Bootstrap:</p>
+
+            <div class="quiz-question">
+                <p><strong>1. ¿Cuántas columnas tiene el sistema de grid de Bootstrap?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) 10 columnas</div>
+                    <div class="quiz-option">B) 12 columnas</div>
+                    <div class="quiz-option">C) 16 columnas</div>
+                    <div class="quiz-option">D) 24 columnas</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer1').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Respuesta correcta: B)</strong> Bootstrap usa un sistema de 12 columnas. Los layouts se crean combinando columnas que suman 12 (ej: 3 columnas de col-4, o 2 de col-6, etc). Es flexible y permite diseños complejos.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>2. ¿Qué significa "mobile-first" en Bootstrap?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Solo funciona en móviles</div>
+                    <div class="quiz-option">B) Los estilos base son para móviles y se agregan estilos para pantallas más grandes</div>
+                    <div class="quiz-option">C) Se diseña primero para desktop</div>
+                    <div class="quiz-option">D) Solo afecta a los botones</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer2').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Respuesta correcta: B)</strong> Mobile-first significa que los estilos base están optimizados para dispositivos móviles, y luego usas clases con breakpoints (col-md-*, col-lg-*) para agregar estilos a pantallas más grandes. Esto mejora el rendimiento en móviles.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>3. ¿Qué hace la clase "d-flex justify-content-center align-items-center"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) Oculta el elemento</div>
+                    <div class="quiz-option">B) Hace flexbox y centra el contenido horizontal y verticalmente</div>
+                    <div class="quiz-option">C) Solo centra el texto</div>
+                    <div class="quiz-option">D) Crea un grid de 12 columnas</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer3').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Respuesta correcta: B)</strong> d-flex activa display: flex, justify-content-center centra horizontalmente, y align-items-center centra verticalmente. Es una combinación común para centrar contenido perfectamente.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>4. ¿Cuál es la diferencia entre usar Bootstrap via CDN vs NPM?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) CDN es más lento que NPM</div>
+                    <div class="quiz-option">B) NPM solo funciona con React</div>
+                    <div class="quiz-option">C) CDN es más rápido para prototipos, NPM mejor para producción con build tools</div>
+                    <div class="quiz-option">D) No hay diferencia</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer4').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Respuesta correcta: C)</strong> CDN es ideal para prototipos rápidos (solo copias el link), mientras que NPM es mejor para producción porque permite personalización, tree-shaking (eliminar código no usado), y control de versiones con npm/webpack.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>5. ¿Qué significa "col-12 col-md-6 col-lg-4"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option">A) 12 columnas en todos los tamaños</div>
+                    <div class="quiz-option">B) Móvil: ancho completo, Tablet: media pantalla, Desktop: 1/3 de pantalla</div>
+                    <div class="quiz-option">C) Solo funciona en tablets</div>
+                    <div class="quiz-option">D) Es un error de sintaxis</div>
+                </div>
+                <button class="show-answer-btn" onclick="document.getElementById('answer5').classList.toggle('show')">Mostrar Respuesta</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Respuesta correcta: B)</strong> En móviles (&lt;768px) ocupa 12/12 columnas (ancho completo), en tablets (≥768px) ocupa 6/12 (mitad), y en desktop (≥992px) ocupa 4/12 (un tercio). Es la esencia del diseño responsivo en Bootstrap.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Exercises -->
+        <div class="slide">
+            <h2>💪 Ejercicios Prácticos</h2>
+            <p>Refuerza tus conocimientos con estos ejercicios:</p>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 1: Landing Page Responsiva</h3>
+                <p><strong>Objetivo:</strong> Crear una landing page completa usando Bootstrap</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Incluye Bootstrap 5 via CDN en el &lt;head&gt;</li>
+                    <li>Crea un navbar con logo y 3 enlaces (Home, Features, Contact)</li>
+                    <li>Hero section con texto centrado y botón call-to-action (usa d-flex, justify-content-center)</li>
+                    <li>Sección de features con 3 cards en grid responsivo (col-12 col-md-4)</li>
+                    <li>Cada card debe tener imagen, título y descripción</li>
+                    <li>Agrega clases de spacing (m-*, p-*) apropiadas</li>
+                    <li>Footer con texto centrado (text-center, bg-dark, text-white)</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Agrega un modal que se abra al hacer click en el botón call-to-action con un formulario de contacto (usa btn + modal components de Bootstrap)</p>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Ejercicio 2: Dashboard con Grid</h3>
+                <p><strong>Objetivo:</strong> Crear un dashboard administrativo usando el sistema de grid</p>
+                <p><strong>Requisitos:</strong></p>
+                <ul>
+                    <li>Layout con sidebar (col-md-3) y contenido principal (col-md-9)</li>
+                    <li>Sidebar con lista de navegación (list-group component)</li>
+                    <li>En el contenido principal, crea una fila con 4 cards estadísticas (col-6 col-lg-3)</li>
+                    <li>Cada card debe tener un número grande (display-4) y una etiqueta</li>
+                    <li>Agrega una tabla debajo (table, table-striped, table-hover) con datos ficticios</li>
+                    <li>Usa alerts para mostrar notificaciones (alert-info, alert-warning)</li>
+                    <li>Aplica utilidades de spacing para separar secciones (mb-4, mt-3)</li>
+                </ul>
+                <p><strong>Desafío Extra:</strong> Haz que el sidebar sea colapsable en móviles usando clases d-none d-md-block y crea un botón hamburguesa para mostrar/ocultar</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Conclusión -->
+        <div class="slide">
+            <h2>🎉 ¡Domina Bootstrap!</h2>
+
+            <p style="font-size: 1.3em; margin-top: 40px;"><strong>Puntos clave para recordar:</strong></p>
+
+            <ul style="margin-top: 30px;">
+                <li>Bootstrap es un framework CSS/JS para desarrollo rápido</li>
+                <li>Sistema de grid de <span class="property">12 columnas</span> con breakpoints responsivos</li>
+                <li>Mobile-first: diseña primero para móviles, luego escala</li>
+                <li>Componentes prediseñados: navbar, cards, modals, forms, etc.</li>
+                <li>Utilidades CSS: spacing (m-*, p-*), display (d-flex), colors (text-*, bg-*)</li>
+                <li>Instala via <span class="property">CDN</span> (rápido) o <span class="property">NPM</span> (personalizable)</li>
+                <li>Personaliza con CSS propio cargado después de Bootstrap</li>
+                <li>Bootstrap 5 no requiere jQuery (más ligero y moderno)</li>
+                <li>Ideal para prototipos, dashboards y aplicaciones internas</li>
+            </ul>
+
+            <p style="margin-top: 40px; font-size: 1.2em; color: #667eea; text-align: center;"><strong>¡Bootstrap acelera tu desarrollo web dramáticamente!</strong></p>
+
+            <div style="margin-top: 50px; padding: 20px; background: #f0f0f0; border-radius: 10px; border-left: 4px solid #0d6efd;">
+                <strong>📚 Recursos oficiales:</strong><br>
+                <a href="https://getbootstrap.com" target="_blank" style="color: #0d6efd; text-decoration: none; font-weight: bold;">getbootstrap.com</a> - Documentación oficial completa<br>
+                <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank" style="color: #0d6efd; text-decoration: none; font-weight: bold;">Bootstrap Examples</a> - Plantillas y ejemplos listos para usar
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← Anterior</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">14</span></span>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+
+            // Actualizar estado de botones
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Inicializar
+        showSlide(0);
+    </script>
+</body>
+</html>
